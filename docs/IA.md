@@ -90,7 +90,7 @@ Presentation: `AGENTS.md` → Works reader SOP. Contents is one line per thought
 4. **Prev / next** on every work section; grouped TOC for multi-book works.
 5. **Era honesty** — post-Nicene corpora (Julian, Cyril of Alexandria) carry a banner on work pages and are named on About.
 6. **Translation confidence** — short note on each **work** intro (not a Topics filter or badge UI). Collapsed “About this text” also names copy-text, other prints checked, and supplied stretches (`text_history`). The reading column has no apparatus.
-7. **No earlier English** — treatises with no earlier complete public-domain English are grouped on `/works/#no-earlier-english` and noted on the work intro and home. Do not invent a slogan button. Do not mark Julian (Victorian English of some of his words already exists inside Augustine). Do not put this on Topics.
+7. **No prior English** — treatises with no previous free English translation are grouped on `/works/#no-prior-english` (old `#no-earlier-english` still resolves) and marked on the work mast, cards, and About-this-text banner. Short UI: `No prior English`. Tooltip / About: `No previous free English translation`. Do not use a bare `English` badge (that reads as language-only). Do not invent a slogan button. Do not mark Julian (Victorian English of some of his words already exists inside Augustine). Do not put this on Topics. Keep true language metadata (`lang`, witness `language: Greek|Latin`) unchanged.
 
 ## Public copy
 
