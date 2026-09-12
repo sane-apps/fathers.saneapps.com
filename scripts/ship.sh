@@ -100,7 +100,7 @@ trap cleanup EXIT
 
 ok=0
 for _ in $(seq 1 30); do
-  if curl -fsS -o /dev/null "http://127.0.0.1:${PORT}/"; then
+  if curl -fsS -o /dev/null "http://127.0.0.1:${PORT}/" 2>/dev/null; then
     ok=1
     break
   fi
