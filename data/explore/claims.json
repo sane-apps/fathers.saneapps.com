@@ -1,0 +1,113 @@
+[
+  {
+    "topic": "free-will",
+    "title": "Free Will",
+    "claims": [
+      {
+        "id": "will-capable",
+        "label": "Will remains capable of choice",
+        "short": "Capable will"
+      },
+      {
+        "id": "will-impaired",
+        "label": "Will cannot choose the good without prior grace",
+        "short": "Impaired will"
+      }
+    ]
+  },
+  {
+    "topic": "sin-and-death",
+    "title": "Sin and Death",
+    "claims": [
+      {
+        "id": "personal-disobedience",
+        "label": "Death and guilt follow personal disobedience",
+        "short": "Personal guilt"
+      },
+      {
+        "id": "inherited-guilt",
+        "label": "Guilt or damning sin is inherited by birth",
+        "short": "Inherited guilt"
+      }
+    ]
+  },
+  {
+    "topic": "grace-and-assistance",
+    "title": "Grace and Divine Assistance",
+    "claims": [
+      {
+        "id": "grace-assists",
+        "label": "Grace assists a will that still acts",
+        "short": "Grace assists"
+      },
+      {
+        "id": "grace-precedes-alone",
+        "label": "Grace must first remake the will before any good act",
+        "short": "Grace remakes"
+      }
+    ]
+  },
+  {
+    "topic": "faith-and-obedience",
+    "title": "Faith and Obedience",
+    "claims": [
+      {
+        "id": "faith-with-obedience",
+        "label": "Faith is joined to obedience and choice",
+        "short": "Faith + choice"
+      },
+      {
+        "id": "faith-without-agency",
+        "label": "Faith arrives without human agency in the will",
+        "short": "Faith as gift"
+      }
+    ]
+  },
+  {
+    "topic": "image-likeness",
+    "title": "Image and Likeness",
+    "claims": [
+      {
+        "id": "image-retained",
+        "label": "The image of God remains after the fall",
+        "short": "Image kept"
+      },
+      {
+        "id": "image-destroyed",
+        "label": "The image is destroyed so nature itself is evil",
+        "short": "Image lost"
+      }
+    ]
+  },
+  {
+    "topic": "gifts-and-order",
+    "title": "Gifts and Order",
+    "claims": [
+      {
+        "id": "charismata-continue",
+        "label": "Gifts of the Spirit still operate in the churches",
+        "short": "Gifts continue"
+      },
+      {
+        "id": "prophecy-tested",
+        "label": "Prophetic claims must be tested by life and assembly order",
+        "short": "Test prophecy"
+      },
+      {
+        "id": "gifts-with-office",
+        "label": "Appointed officers share the ministry of prophets and teachers",
+        "short": "Gifts + office"
+      },
+      {
+        "id": "paraclete-monopoly",
+        "label": "A new prophetic circle alone owns the Paraclete",
+        "short": "Paraclete monopoly"
+      },
+      {
+        "id": "signs-then-not-now",
+        "label": "Spectacular baptismal signs were then common; now they are rare or gone",
+        "short": "Then, not now"
+      }
+    ]
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "author": "Augustine of Hippo",
+    "author_slug": "augustine-of-hippo",
+    "period": "c. 396–430",
+    "year": 412,
+    "era_band": "Post-Nicene",
+    "kind": "contrast",
+    "disclaimer": "Contrast summaries only — full Augustine works are not yet in this library. Readings are editorial, for comparison on the timeline.",
+    "points": [
+      {
+        "id": "augustine-free-will-contrast",
+        "topic": "free-will",
+        "claim_id": "will-impaired",
+        "stance": "affirms",
+        "year": 412,
+        "summary": "After Adam, the will is not free to turn to God for salvation without prior grace; choice alone cannot restore what was lost.",
+        "citation": "Contrast card (late Augustine on grace and the will)"
+      },
+      {
+        "id": "augustine-sin-contrast",
+        "topic": "sin-and-death",
+        "claim_id": "inherited-guilt",
+        "stance": "affirms",
+        "year": 412,
+        "summary": "Infants inherit a guilt and mortality tied to Adam’s sin; baptism remits that original guilt.",
+        "citation": "Contrast card (original sin)"
+      },
+      {
+        "id": "augustine-grace-contrast",
+        "topic": "grace-and-assistance",
+        "claim_id": "grace-precedes-alone",
+        "stance": "affirms",
+        "year": 418,
+        "summary": "Grace does not merely assist an already willing person; it must precede and enable the will’s good turn.",
+        "citation": "Contrast card (operative / preceding grace)"
+      },
+      {
+        "id": "augustine-faith-contrast",
+        "topic": "faith-and-obedience",
+        "claim_id": "faith-without-agency",
+        "stance": "qualified",
+        "year": 418,
+        "summary": "Faith itself is among the gifts grace works in the person; it is not credited as an unaided achievement of the will.",
+        "citation": "Contrast card (faith as gift)"
+      },
+      {
+        "id": "augustine-image-contrast",
+        "topic": "image-likeness",
+        "claim_id": "image-retained",
+        "stance": "qualified",
+        "year": 400,
+        "summary": "The image is wounded and darkened, not simply erased — yet without grace the will does not use it aright for God.",
+        "citation": "Contrast card (wounded image)"
+      }
+    ]
+  }
+]

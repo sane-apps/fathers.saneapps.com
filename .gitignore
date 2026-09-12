@@ -1,0 +1,32 @@
+# Generated site — rebuild with scripts/build_site.py; never hand-edit
+/dist/
+
+# Wrangler / Cloudflare local cache (may hold account metadata)
+.wrangler/
+.dev.vars
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+
+# Local receipts / visual audits (keep out of source history)
+/outputs/
+
+# OS / editor
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
+
+# Secrets / credentials
+*.pem
+*.key
+*.p8
+credentials.*
+secrets.*

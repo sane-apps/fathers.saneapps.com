@@ -1,0 +1,778 @@
+[
+  {
+    "topic": "resurrection-body",
+    "title": "Resurrection of the Body",
+    "claims": [
+      {
+        "id": "flesh-rises",
+        "label": "This flesh / body rises",
+        "short": "Flesh rises"
+      },
+      {
+        "id": "soul-only-recompense",
+        "label": "Only the soul is recompensed; the flesh does not rise",
+        "short": "Soul only"
+      },
+      {
+        "id": "same-identity",
+        "label": "The risen body is the same identity that died",
+        "short": "Same body"
+      }
+    ]
+  },
+  {
+    "topic": "old-and-new",
+    "title": "Old and New Continuity",
+    "claims": [
+      {
+        "id": "one-god-both",
+        "label": "One God of both Testaments",
+        "short": "One God both"
+      },
+      {
+        "id": "two-gods-split",
+        "label": "Law and Gospel belong to two different gods",
+        "short": "Two gods"
+      },
+      {
+        "id": "new-from-same",
+        "label": "The new covenant comes from the same God as the old",
+        "short": "New from same"
+      }
+    ]
+  },
+  {
+    "topic": "hermeneutics-types",
+    "title": "Hermeneutics and Types",
+    "claims": [
+      {
+        "id": "ot-types-christ",
+        "label": "Old Testament laws and events are types of Christ",
+        "short": "OT types"
+      },
+      {
+        "id": "gnostic-shadows",
+        "label": "This world is only a shadow of a bodiless heavenly order",
+        "short": "Gnostic shadows"
+      },
+      {
+        "id": "philosophy-prep",
+        "label": "Greek philosophy can prepare the mind for the faith",
+        "short": "Philosophy prep"
+      }
+    ]
+  },
+  {
+    "topic": "spirit-prophecy",
+    "title": "Spirit and Prophecy",
+    "claims": [
+      {
+        "id": "spirit-spoke-prophets",
+        "label": "The Spirit / Word spoke in the prophets",
+        "short": "Spirit in prophets"
+      },
+      {
+        "id": "prophets-tried",
+        "label": "True and false prophets are tried by life",
+        "short": "Try prophets"
+      },
+      {
+        "id": "human-only-oracles",
+        "label": "The prophets spoke only their own words",
+        "short": "Human oracles"
+      }
+    ]
+  },
+  {
+    "topic": "spirit-sanctifies",
+    "title": "Spirit Who Sanctifies",
+    "claims": [
+      {
+        "id": "spirit-dwells",
+        "label": "The Holy Spirit dwells in the faithful and makes holy",
+        "short": "Spirit dwells"
+      },
+      {
+        "id": "spirit-grieved",
+        "label": "Vice darkens or drives out the Spirit",
+        "short": "Spirit grieved"
+      }
+    ]
+  },
+  {
+    "topic": "scripture-inspiration",
+    "title": "Scripture and Inspiration",
+    "claims": [
+      {
+        "id": "prophetic-spirit-wrote",
+        "label": "The prophetic Spirit published the Scriptures",
+        "short": "Spirit published"
+      },
+      {
+        "id": "apostles-in-writing",
+        "label": "The apostolic Gospel was handed down in the Scriptures",
+        "short": "Apostles wrote"
+      },
+      {
+        "id": "poets-equal",
+        "label": "Poets and philosophers stand on a level with the prophets",
+        "short": "Poets equal"
+      }
+    ]
+  },
+  {
+    "topic": "judgment-second-coming",
+    "title": "Judgment and the Second Coming",
+    "claims": [
+      {
+        "id": "lord-comes",
+        "label": "The Lord comes to judge the living and the dead",
+        "short": "Lord comes"
+      },
+      {
+        "id": "eternal-fire",
+        "label": "The wicked are punished in eternal fire",
+        "short": "Eternal fire"
+      }
+    ]
+  },
+  {
+    "topic": "sexual-marriage",
+    "title": "Marriage and Continence",
+    "claims": [
+      {
+        "id": "marriage-good",
+        "label": "Marriage is good for faithful union and children",
+        "short": "Marriage good"
+      },
+      {
+        "id": "fornication-forbidden",
+        "label": "Fornication and adultery are forbidden",
+        "short": "No fornication"
+      },
+      {
+        "id": "second-marriage-refused",
+        "label": "A second marriage is refused as if it were extra wives",
+        "short": "No second marriage"
+      }
+    ]
+  },
+  {
+    "topic": "martyrdom-witness",
+    "title": "Martyrdom as Witness",
+    "claims": [
+      {
+        "id": "confession-witness",
+        "label": "Martyrdom is confession and warfare for God",
+        "short": "Witness"
+      },
+      {
+        "id": "suffer-willingly-only",
+        "label": "Christians complain of persecution while wanting to suffer",
+        "short": "Want the pain"
+      }
+    ]
+  },
+  {
+    "topic": "apologetic-method",
+    "title": "Apologetic Method",
+    "claims": [
+      {
+        "id": "prophecy-proof",
+        "label": "Argument from the prophets and Israel's older writings",
+        "short": "Prophecy proof"
+      },
+      {
+        "id": "philosophy-prep",
+        "label": "Greek philosophy can prepare hearers for the truth",
+        "short": "Philosophy prep"
+      }
+    ]
+  },
+  {
+    "topic": "wealth-alms",
+    "title": "Wealth and Alms",
+    "claims": [
+      {
+        "id": "alms-required",
+        "label": "Wealth is for alms and the poor",
+        "short": "Give alms"
+      },
+      {
+        "id": "no-abiding-city",
+        "label": "Do not pile up lands as if this city were home",
+        "short": "No abiding city"
+      },
+      {
+        "id": "rich-and-poor-need",
+        "label": "Rich and poor help one another",
+        "short": "Elm and vine"
+      }
+    ]
+  },
+  {
+    "topic": "civil-authority",
+    "title": "Civil Authority",
+    "claims": [
+      {
+        "id": "pray-for-rulers",
+        "label": "Pray for emperors; God appoints their office",
+        "short": "Pray for rulers"
+      },
+      {
+        "id": "caesar-not-lord",
+        "label": "Do not call Caesar Lord in God's place",
+        "short": "Caesar not Lord"
+      },
+      {
+        "id": "no-idol-camp",
+        "label": "Refuse idolatrous military honors",
+        "short": "No camp idolatry"
+      }
+    ]
+  },
+  {
+    "topic": "spirit-and-baptism",
+    "title": "Spirit and Baptism",
+    "claims": [
+      {
+        "id": "baptize-triad",
+        "label": "Baptize into the Father, Son, and Holy Spirit",
+        "short": "Triune baptism"
+      },
+      {
+        "id": "water-regenerates",
+        "label": "The washing is regeneration and new birth",
+        "short": "Water regenerates"
+      },
+      {
+        "id": "spirit-with-water",
+        "label": "The Spirit is invoked with the water",
+        "short": "Spirit with water"
+      },
+      {
+        "id": "faith-without-baptism",
+        "label": "Faith without baptism is enough",
+        "short": "Faith without water"
+      }
+    ]
+  },
+  {
+    "topic": "against-idols",
+    "title": "Against Idols",
+    "claims": [
+      {
+        "id": "idols-dead-matter",
+        "label": "Idols are soulless made things",
+        "short": "Idols dead"
+      },
+      {
+        "id": "demons-behind",
+        "label": "Demons work through the images",
+        "short": "Demons behind"
+      },
+      {
+        "id": "many-gods-from-start",
+        "label": "Many gods existed from the beginning",
+        "short": "Many gods"
+      }
+    ]
+  },
+  {
+    "topic": "heresy-schism",
+    "title": "Heresy and Schism",
+    "claims": [
+      {
+        "id": "flee-false-doctrine",
+        "label": "Flee heresy and strange doctrine",
+        "short": "Flee heresy"
+      },
+      {
+        "id": "schism-cuts-body",
+        "label": "Schism cuts the body of Christ",
+        "short": "Schism cuts"
+      },
+      {
+        "id": "heretic-baptism",
+        "label": "Heretics and schismatics have a true baptism of their own",
+        "short": "Heretic baptism"
+      }
+    ]
+  },
+  {
+    "topic": "millennium-debate",
+    "title": "Millennium Debate",
+    "claims": [
+      {
+        "id": "earthly-thousand",
+        "label": "Christ will reign a thousand years on earth / in Jerusalem",
+        "short": "Earthly thousand"
+      },
+      {
+        "id": "not-bald-earthly",
+        "label": "The reign in Revelation is not a bald earthly kingdom",
+        "short": "Not bald earthly"
+      }
+    ]
+  },
+  {
+    "topic": "heaven-hell-intermediate",
+    "title": "Intermediate State",
+    "claims": [
+      {
+        "id": "souls-wait",
+        "label": "Souls wait in an allotted place until the resurrection",
+        "short": "Souls wait"
+      },
+      {
+        "id": "immediate-above",
+        "label": "The just go immediately above the heavens at death",
+        "short": "Immediate heaven"
+      },
+      {
+        "id": "hades-real",
+        "label": "Hades is a real place of waiting or torment",
+        "short": "Hades real"
+      }
+    ]
+  },
+  {
+    "topic": "love-neighbor-enemy",
+    "title": "Love of Neighbor and Enemy",
+    "claims": [
+      {
+        "id": "love-neighbor",
+        "label": "Love God and neighbor as the way of life",
+        "short": "Love neighbor"
+      },
+      {
+        "id": "love-enemies",
+        "label": "Love enemies; pray for those who persecute",
+        "short": "Love enemies"
+      }
+    ]
+  },
+  {
+    "topic": "passion-resurrection",
+    "title": "Passion and Resurrection",
+    "claims": [
+      {
+        "id": "truly-suffered",
+        "label": "Christ truly suffered, died, and rose",
+        "short": "Truly suffered"
+      },
+      {
+        "id": "seemed-only",
+        "label": "He only seemed to suffer",
+        "short": "Seemed only"
+      },
+      {
+        "id": "rose-in-flesh",
+        "label": "He rose still possessed of flesh",
+        "short": "Rose in flesh"
+      }
+    ]
+  },
+  {
+    "topic": "one-god-creator",
+    "title": "One God the Creator",
+    "claims": [
+      {
+        "id": "one-maker",
+        "label": "One God made all things from nothing",
+        "short": "One maker"
+      },
+      {
+        "id": "another-creator",
+        "label": "Another god besides the Creator made the world",
+        "short": "Another creator"
+      }
+    ]
+  },
+  {
+    "topic": "father-son-spirit",
+    "title": "Father, Son, and Spirit",
+    "claims": [
+      {
+        "id": "triad-named",
+        "label": "Father, Son, and Spirit are named together",
+        "short": "Triad named"
+      },
+      {
+        "id": "son-distinct",
+        "label": "The Son is not the Father",
+        "short": "Son distinct"
+      },
+      {
+        "id": "two-gods",
+        "label": "Calling the Son God makes two Gods",
+        "short": "Two Gods"
+      }
+    ]
+  },
+  {
+    "topic": "attributes-providence",
+    "title": "Attributes and Providence",
+    "claims": [
+      {
+        "id": "uncreated-good",
+        "label": "God is uncreated, good, and seen in his works",
+        "short": "Uncreated good"
+      },
+      {
+        "id": "providence-with-liberty",
+        "label": "Providence does not cancel human liberty",
+        "short": "Providence + liberty"
+      },
+      {
+        "id": "god-needs-gifts",
+        "label": "God needs material offerings",
+        "short": "God needs gifts"
+      }
+    ]
+  },
+  {
+    "topic": "canon-rule-of-truth",
+    "title": "Canon and the Rule of Truth",
+    "claims": [
+      {
+        "id": "church-rule",
+        "label": "The church received one rule of faith from the apostles",
+        "short": "Rule of faith"
+      },
+      {
+        "id": "scripture-plus-tradition",
+        "label": "Truth is drawn from apostolic Scripture in the church",
+        "short": "Scripture in church"
+      },
+      {
+        "id": "secret-over-scripture",
+        "label": "Secret tradition outweighs the public Scriptures",
+        "short": "Secret over Scripture"
+      }
+    ]
+  },
+  {
+    "topic": "incarnation-word-flesh",
+    "title": "Incarnation — Word Made Flesh",
+    "claims": [
+      {
+        "id": "word-became-flesh",
+        "label": "The Word truly became flesh",
+        "short": "Word became flesh"
+      },
+      {
+        "id": "appearance-only",
+        "label": "The incarnation was appearance only",
+        "short": "Appearance only"
+      }
+    ]
+  },
+  {
+    "topic": "one-church",
+    "title": "One Church",
+    "claims": [
+      {
+        "id": "one-church-unity",
+        "label": "There is one church gathered to the bishop",
+        "short": "One church"
+      },
+      {
+        "id": "one-episcopate",
+        "label": "The episcopate is one and undivided",
+        "short": "One episcopate"
+      },
+      {
+        "id": "outside-no-mother",
+        "label": "Remission of sins is not granted except in the church",
+        "short": "Only in the church"
+      }
+    ]
+  },
+  {
+    "topic": "bishops-presbyters",
+    "title": "Bishops and Presbyters",
+    "claims": [
+      {
+        "id": "nothing-without-bishop",
+        "label": "Do nothing in the church without the bishop",
+        "short": "Nothing without bishop"
+      },
+      {
+        "id": "bishop-presbyters-deacons",
+        "label": "Bishop, presbyters, and deacons belong together",
+        "short": "Threefold order"
+      },
+      {
+        "id": "appoint-bishops-deacons",
+        "label": "The assembly appoints bishops and deacons",
+        "short": "Appoint bishops"
+      }
+    ]
+  },
+  {
+    "topic": "lxx-and-form",
+    "title": "Form of Scripture They Used",
+    "claims": [
+      {
+        "id": "seventy-form",
+        "label": "The seventy's Greek is the form they argue from",
+        "short": "LXX form"
+      },
+      {
+        "id": "hebrew-corrects-lxx",
+        "label": "Later Hebrew teachers may discard the seventy's readings",
+        "short": "Correct the LXX"
+      }
+    ]
+  },
+  {
+    "topic": "virgin-birth",
+    "title": "Virgin Birth",
+    "claims": [
+      {
+        "id": "born-of-virgin",
+        "label": "Christ was born of a virgin, as Isaiah said",
+        "short": "Born of virgin"
+      },
+      {
+        "id": "ordinary-generation",
+        "label": "He was born by ordinary human generation",
+        "short": "Ordinary birth"
+      }
+    ]
+  },
+  {
+    "topic": "discipline-penance",
+    "title": "Discipline and Penance",
+    "claims": [
+      {
+        "id": "further-repentance",
+        "label": "A further repentance after baptism is granted, narrowly",
+        "short": "Further repentance"
+      },
+      {
+        "id": "hasty-peace",
+        "label": "Peace and communion may be given before confession",
+        "short": "Hasty peace"
+      },
+      {
+        "id": "public-exomologesis",
+        "label": "Repentance must be carried out in a public act",
+        "short": "Public confession"
+      }
+    ]
+  },
+  {
+    "topic": "eucharist-thanksgiving",
+    "title": "Eucharist and Thanksgiving",
+    "claims": [
+      {
+        "id": "eucharist-is-flesh",
+        "label": "The Eucharist is the flesh and blood of Christ",
+        "short": "Flesh and blood"
+      },
+      {
+        "id": "church-oblation",
+        "label": "The church's thanksgiving is a pure sacrifice",
+        "short": "Church oblation"
+      },
+      {
+        "id": "baptized-only",
+        "label": "Only the baptized may eat",
+        "short": "Baptized only"
+      }
+    ]
+  },
+  {
+    "topic": "apostolic-succession",
+    "title": "Apostolic Succession",
+    "claims": [
+      {
+        "id": "bishops-from-apostles",
+        "label": "Bishops can be listed from the apostles",
+        "short": "From the apostles"
+      },
+      {
+        "id": "show-the-roll",
+        "label": "A church must show its apostolic roll",
+        "short": "Show the roll"
+      },
+      {
+        "id": "unauthorized-meetings",
+        "label": "Unauthorized meetings have the same claim as the apostolic churches",
+        "short": "Any meeting"
+      }
+    ]
+  },
+  {
+    "topic": "liturgy-prayer",
+    "title": "Liturgy and Prayer",
+    "claims": [
+      {
+        "id": "lords-day",
+        "label": "Assemble on the Lord's Day",
+        "short": "Lord's Day"
+      },
+      {
+        "id": "set-prayer",
+        "label": "Pray the Lord's prayer as commanded",
+        "short": "Set prayer"
+      },
+      {
+        "id": "keep-sabbath",
+        "label": "Keep the old Sabbath as the church's day",
+        "short": "Keep Sabbath"
+      }
+    ]
+  },
+  {
+    "topic": "two-natures-seed",
+    "title": "True God and True Man",
+    "claims": [
+      {
+        "id": "god-and-man",
+        "label": "The same one is God and a perfect human being",
+        "short": "God and man"
+      },
+      {
+        "id": "man-only",
+        "label": "Christ is man only",
+        "short": "Man only"
+      },
+      {
+        "id": "god-without-flesh",
+        "label": "He is God without true flesh",
+        "short": "God without flesh"
+      }
+    ]
+  },
+  {
+    "topic": "against-docetism",
+    "title": "Against Docetism",
+    "claims": [
+      {
+        "id": "truly-born-suffered",
+        "label": "He was truly born, ate, suffered, and rose",
+        "short": "Truly born"
+      },
+      {
+        "id": "dokew",
+        "label": "He suffered only in appearance",
+        "short": "Only appeared"
+      }
+    ]
+  },
+  {
+    "topic": "salvation-by-christ",
+    "title": "Salvation in Christ",
+    "claims": [
+      {
+        "id": "by-sons-blood",
+        "label": "Rescue is by the incarnate Son's blood",
+        "short": "By his blood"
+      },
+      {
+        "id": "by-our-worth",
+        "label": "We were saved because we were already righteous",
+        "short": "By our worth"
+      }
+    ]
+  },
+  {
+    "topic": "atonement-recapitulation",
+    "title": "Recapitulation and Victory",
+    "claims": [
+      {
+        "id": "recap-adam",
+        "label": "Christ sums up and restores Adam's story",
+        "short": "Recapitulation"
+      },
+      {
+        "id": "flesh-for-flesh",
+        "label": "He gives his flesh and blood for ours",
+        "short": "Flesh for flesh"
+      }
+    ]
+  },
+  {
+    "topic": "baptism-and-new-birth",
+    "title": "Baptism and New Birth",
+    "claims": [
+      {
+        "id": "baptism-regenerates",
+        "label": "Baptism is regeneration and illumination",
+        "short": "Regeneration"
+      },
+      {
+        "id": "faith-then-water",
+        "label": "Instruction and faith come before the washing",
+        "short": "Faith then water"
+      }
+    ]
+  },
+  {
+    "topic": "two-ways",
+    "title": "The Two Ways",
+    "claims": [
+      {
+        "id": "two-ways",
+        "label": "There are two ways, of life and of death",
+        "short": "Two ways"
+      },
+      {
+        "id": "way-is-love",
+        "label": "The way of life is love of God and neighbor",
+        "short": "Way is love"
+      }
+    ]
+  },
+  {
+    "topic": "fate-and-foreknowledge",
+    "title": "Fate and Foreknowledge",
+    "claims": [
+      {
+        "id": "choice-not-fate",
+        "label": "People succeed or sin by deliberate choice, not fate",
+        "short": "Choice not fate"
+      },
+      {
+        "id": "atoms-chance",
+        "label": "The world runs by atoms colliding at random",
+        "short": "Atoms / chance"
+      }
+    ]
+  },
+  {
+    "topic": "universal-call",
+    "title": "Universal Call and Human Refusal",
+    "claims": [
+      {
+        "id": "call-and-refusal",
+        "label": "God gives the good; some who could work it will not",
+        "short": "Call and refusal"
+      },
+      {
+        "id": "all-healed",
+        "label": "The whole rational nature will at last come under the Word",
+        "short": "All healed"
+      }
+    ]
+  },
+  {
+    "topic": "reward-and-judgment",
+    "title": "Reward and Judgment",
+    "claims": [
+      {
+        "id": "deeds-judged",
+        "label": "Acts, not fate or status, are judged",
+        "short": "Deeds judged"
+      },
+      {
+        "id": "death-ends-all",
+        "label": "After death we are nothing, so virtue is foolish",
+        "short": "Death ends all"
+      }
+    ]
+  }
+]

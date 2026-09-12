@@ -1,0 +1,69 @@
+# fathers.saneapps.com
+
+Public Fathers library: **Topics** (ante-Nicene dogmatics map) and **Works**
+(full treatises — Origen complete; Julian of Eclanum surviving arguments).
+
+- Live: https://fathers.saneapps.com
+- Donate: https://github.com/sponsors/MrSaneApps
+- IA: `docs/IA.md`
+
+## Build
+
+```bash
+~/SaneApps/clients/translations/.venv/bin/python scripts/build_site.py
+```
+
+Reads:
+
+- `~/SaneApps/clients/translations/books/ante-nicene-topics/`
+- `~/SaneApps/clients/translations/books/origen-prayer-martyrdom/`
+- `~/SaneApps/clients/translations/books/julian-of-eclanum/`
+- `data/explore/` (stance tags + rupture captions for `/explore/`)
+
+Writes `dist/`. Cross-refs live in `WORK_TOPICS` inside `scripts/build_site.py`.
+
+## Ship (one command)
+
+Build → smoke key URLs → Cloudflare Pages deploy → print CSS `?v=` hash:
+
+```bash
+./scripts/ship.sh
+```
+
+Dry-run (no deploy):
+
+```bash
+./scripts/ship.sh --dry-run
+```
+
+Needs the translations venv (PyYAML) and `CLOUDFLARE_API_TOKEN` (usually via `source ~/.config/nv/env`).
+
+## `dist/` policy
+
+**Never hand-edit `dist/`.** Edit builder + `assets/` (+ explore data / books), then rebuild.
+See `docs/DIST.md`. A hand-patched `dist/` was once ahead of source and a rebuild would have wiped `/contribute/`.
+
+## Prepped Homilies (Pass B queue, read-only)
+
+List machine-crib `prepped` claims still waiting on Pass B (does not touch the translations tree):
+
+```bash
+python3 scripts/list_prepped_pass_b.py
+```
+
+## Deploy
+
+Prefer `./scripts/ship.sh`. Manual path:
+
+Cloudflare Pages project `fathers-site` → custom domain `fathers.saneapps.com`.
+
+```bash
+source ~/.config/nv/env
+npx --yes wrangler@4 pages deploy dist --project-name fathers-site --commit-dirty=true
+```
+
+## Local preview
+
+```bash
+python3 -m http.server 8765 --directory dist
+```
