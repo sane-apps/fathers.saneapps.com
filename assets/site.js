@@ -64,6 +64,72 @@
     });
   });
 
+  // Reader Contents: highlight the passage currently in view.
+  const tocRoot = document.querySelector(".reader-rail .toc, #contents .toc");
+  if (tocRoot) {
+    const links = [...tocRoot.querySelectorAll('a[href*="#s"]')];
+    const entries = links
+      .map((link) => {
+        const hash = (link.getAttribute("href") || "").split("#")[1];
+        if (!hash) return null;
+        const target = document.getElementById(hash);
+        return target ? { link, target } : null;
+      })
+      .filter(Boolean);
+
+    const setCurrent = (active) => {
+      for (const { link } of entries) {
+        const on = link === active;
+        link.classList.toggle("is-current", on);
+        if (on) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      }
+      if (active && tocRoot.closest(".reader-rail")) {
+        const rail = tocRoot;
+        const row = active.closest("li");
+        if (!row) return;
+        const rowTop = row.offsetTop;
+        const rowBottom = rowTop + row.offsetHeight;
+        const viewTop = rail.scrollTop;
+        const viewBottom = viewTop + rail.clientHeight;
+        if (rowTop < viewTop + 8) rail.scrollTop = Math.max(0, rowTop - 12);
+        else if (rowBottom > viewBottom - 8) rail.scrollTop = rowBottom - rail.clientHeight + 12;
+      }
+    };
+
+    if (entries.length) {
+      const pick = () => {
+        const probe = window.scrollY + Math.min(160, window.innerHeight * 0.28);
+        let current = entries[0];
+        for (const entry of entries) {
+          const top = entry.target.getBoundingClientRect().top + window.scrollY;
+          if (top <= probe) current = entry;
+          else break;
+        }
+        setCurrent(current.link);
+      };
+
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          pick();
+          ticking = false;
+        });
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      pick();
+
+      tocRoot.addEventListener("click", (ev) => {
+        const a = ev.target.closest('a[href*="#s"]');
+        if (!a || !tocRoot.contains(a)) return;
+        setCurrent(a);
+      });
+    }
+  }
+
   function escapeHtml(s) {
     return String(s)
       .replace(/&/g, "&amp;")

@@ -246,19 +246,70 @@ body {
   color: var(--ink-soft);
   font-size: 0.92rem;
 }
-.toc li a { flex-direction: row; gap: 0.45rem; align-items: baseline; }
+.toc li a {
+  flex-direction: row;
+  gap: 0.45rem;
+  align-items: baseline;
+  border-bottom: none;
+  border-radius: 0.4rem;
+  margin: 0 -0.35rem;
+  padding: 0.45rem 0.45rem;
+  transition:
+    background-color 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease;
+}
+.toc li {
+  border-bottom: 1px solid color-mix(in srgb, var(--rule) 70%, transparent);
+}
+.toc li:last-child { border-bottom: none; }
 .toc .num {
   flex: 0 0 auto;
   font-variant-numeric: tabular-nums;
   color: var(--gold-deep);
   min-width: 1.5rem;
   text-align: end;
+  transition: color 0.16s ease;
 }
 .toc .toc-label {
   flex: 1 1 auto;
   min-width: 0;
   overflow-wrap: break-word;
   white-space: normal;
+}
+/* Contents: clear hover wash + distinct current row (parchment / gold, not neon). */
+.toc li a:hover {
+  background: color-mix(in srgb, var(--gold) 14%, var(--paper-2));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 22%, transparent);
+}
+.toc li a:hover .num { color: var(--gold-deep); }
+.toc li a:focus { outline: none; }
+.toc li a:focus-visible {
+  background: color-mix(in srgb, var(--gold) 10%, var(--paper));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--gold) 45%, transparent);
+  color: var(--ink);
+}
+.toc li a.is-current {
+  background: color-mix(in srgb, var(--gold) 20%, var(--paper));
+  box-shadow: inset 3px 0 0 var(--gold-deep);
+  color: var(--ink);
+}
+.toc li a.is-current .num {
+  color: var(--gold-deep);
+  font-weight: 650;
+}
+.toc li a.is-current .toc-label { font-weight: 550; }
+.toc li a.is-current:hover {
+  background: color-mix(in srgb, var(--gold) 26%, var(--paper-2));
+  box-shadow:
+    inset 3px 0 0 var(--gold-deep),
+    inset 0 0 0 1px color-mix(in srgb, var(--gold) 28%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .toc li a { transition: none; }
 }
 
 .toolbar {
@@ -551,20 +602,31 @@ details summary { cursor: pointer; font-weight: 650; }
   max-height: min(55vh, 28rem);
   overflow: auto;
   margin: 0.35rem 0 0;
-  padding: 0 0 0.25rem;
+  padding: 0.15rem 0.15rem 0.35rem;
+  scrollbar-gutter: stable;
 }
 .reader-rail .toc li a {
   font-size: 0.86rem;
   line-height: 1.35;
-  padding: 0.28rem 0;
+  padding: 0.4rem 0.5rem;
+  margin: 0;
   gap: 0.4rem;
 }
 .reader-rail .toc .num {
   min-width: 1.35rem;
   font-size: 0.8rem;
 }
+.reader-rail details.toc-group > summary:hover {
+  background: color-mix(in srgb, var(--gold) 8%, var(--paper-2));
+}
+.reader-rail details.toc-group > summary:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--gold) 55%, transparent);
+  outline-offset: -2px;
+}
 .reader-main { min-width: 0; }
 .reader-main .section-nav { max-width: none; margin-top: 0; }
+.reader-sec { scroll-margin-top: 5rem; }
+.reader .vnum { scroll-margin-top: 5rem; }
 
 @media (max-width: 900px) {
   .reader-layout {
@@ -579,7 +641,17 @@ details summary { cursor: pointer; font-weight: 650; }
     border-top: 1px solid var(--rule);
     padding-top: 1rem;
   }
-  .reader-rail .toc { max-height: 16rem; }
+  .reader-rail .toc {
+    max-height: min(42vh, 22rem);
+  }
+  .reader-rail .toc li a {
+    padding: 0.55rem 0.55rem; /* easier tap targets */
+    font-size: 0.9rem;
+  }
+  .reader-rail details.toc-group > summary {
+    padding: 0.85rem 0.75rem;
+    min-height: 2.75rem;
+  }
   .reader-rail .reader-contents:not([open]) { margin-bottom: 0; }
 }
 
