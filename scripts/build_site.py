@@ -470,31 +470,35 @@ def _reader_title_from_matthew(matthew: str | None) -> str:
     return f"Matthew {ref}"
 
 
-# Treatises with no earlier complete English a reader could freely use.
+# Product meaning: no previous complete free English translation (not “language = English”).
+# Short UI / cards: NO_PRIOR_ENGLISH_LABEL. Tooltip / About: NO_PRIOR_ENGLISH_TITLE.
 # Julian is omitted: some of his words already sit in Victorian Augustine translations.
+NO_PRIOR_ENGLISH_LABEL = "No prior English"
+NO_PRIOR_ENGLISH_TITLE = "No previous free English translation"
+NO_PRIOR_ENGLISH_INTRO = (
+    "No previous free English translation. The English on these pages is new."
+)
 FIRST_ENGLISH_NOTES: dict[str, str] = {
     "origen-on-prayer": (
-        "This treatise had no earlier complete English a reader could freely use. "
-        "The English here is new."
+        "No previous free English translation. The English here is new."
     ),
     "origen-exhortation-to-martyrdom": (
-        "This treatise had no earlier complete English a reader could freely use. "
-        "The English here is new."
+        "No previous free English translation. The English here is new."
     ),
     "origen-dialogue-heraclides": (
-        "This dialogue had no earlier complete English a reader could freely use. "
-        "The Greek was recovered in the 1940s. The English here is new."
+        "No previous free English translation. The Greek was recovered in the 1940s. "
+        "The English here is new."
     ),
     "origen-on-pascha": (
-        "This treatise had no earlier complete English a reader could freely use. "
-        "The Greek was recovered in the twentieth century. The English here is new."
+        "No previous free English translation. The Greek was recovered in the twentieth "
+        "century. The English here is new."
     ),
     "cyril-adoration-1": (
-        "Cyril’s long work On Adoration (seventeen books) has never had a complete English. "
-        "This is Book 1 only. The English here is new."
+        "No previous free English translation of Cyril’s long On Adorations "
+        "(seventeen books). This is Book 1 only. The English here is new."
     ),
     "origen-homilies-jeremiah": (
-        "These Greek homilies had no earlier complete English a reader could freely use. "
+        "No previous free English translation of these Greek homilies. "
         "This page is Homilies 1–2 only. The English here is new."
     ),
 }
@@ -612,9 +616,15 @@ def _pack_work(
 
 def work_card_html(w: dict) -> str:
     st = "In progress" if w["status"] == "in_progress" else "Available"
+    mark = ""
+    if w.get("first_english"):
+        mark = (
+            f' · <abbr class="no-prior-english" title="{escape(NO_PRIOR_ENGLISH_TITLE)}">'
+            f"{escape(NO_PRIOR_ENGLISH_LABEL)}</abbr>"
+        )
     return (
         f'<li><a href="/works/{escape(w["slug"])}/"><strong>{escape(w["title"])}</strong>'
-        f"<span>{escape(w['author'])} · {w['section_count']} sections · {st}</span></a></li>"
+        f"<span>{escape(w['author'])} · {w['section_count']} sections · {st}{mark}</span></a></li>"
     )
 
 
@@ -1493,7 +1503,7 @@ def build() -> None:
 <section class="hero">
   <p class="eyebrow">Public library · donation supported</p>
   <h1>The Fathers, readable</h1>
-  <p class="lede">Teaching by topic, and whole treatises chapter by chapter. Ante-Nicene voices first; later writers are labeled when they appear. Several treatises here had no earlier complete English.</p>
+  <p class="lede">Teaching by topic, and whole treatises chapter by chapter. Ante-Nicene voices first; later writers are labeled when they appear. Several treatises here had no previous free English translation.</p>
   <div class="hero-actions">
     <a class="btn primary" href="/topics/">Browse topics</a>
     <a class="btn" href="/works/">Browse works</a>
@@ -1501,10 +1511,10 @@ def build() -> None:
   </div>
 </section>
 <section>
-  <h2>Treatises with no earlier English</h2>
-  <p class="intro">These had no earlier complete English a reader could freely use. The English here is new.</p>
+  <h2>Treatises with no prior English</h2>
+  <p class="intro">{escape(NO_PRIOR_ENGLISH_INTRO)}</p>
   <ul class="card-list">{first_cards}</ul>
-  <p><a href="/works/#no-earlier-english">All of them on the works page →</a></p>
+  <p><a href="/works/#no-prior-english">All of them on the works page →</a></p>
 </section>
 <section class="split">
   <div>
@@ -1733,9 +1743,10 @@ def build() -> None:
             "Works",
             f"""<h1>Works</h1>
 <p class="intro">Whole treatises, section by section. Later writers are labeled on their pages. Each work links to related topics.</p>
-<section id="no-earlier-english">
-<h2>Treatises with no earlier English</h2>
-<p class="intro">These had no earlier complete English a reader could freely use. The English here is new.</p>
+<section id="no-prior-english">
+<span id="no-earlier-english" class="anchor-alias" aria-hidden="true"></span>
+<h2>Treatises with no prior English</h2>
+<p class="intro">{escape(NO_PRIOR_ENGLISH_INTRO)}</p>
 <ul class="card-list">{first_list}</ul>
 </section>
 <section>
@@ -1766,8 +1777,14 @@ def build() -> None:
         era = f"<p class='banner'>{escape(w['era_note'])}</p>" if w.get("era_note") else ""
         first_banner = ""
         if w.get("first_english"):
+            detail = (
+                w.get("first_english_note")
+                or FIRST_ENGLISH_NOTES.get(w["slug"])
+                or f"{NO_PRIOR_ENGLISH_TITLE}. The English here is new."
+            ).strip()
             first_banner = (
-                f'<p class="banner first-english">{escape(w.get("first_english_note") or FIRST_ENGLISH_NOTES.get(w["slug"]) or "")}</p>'
+                f'<p class="banner first-english" title="{escape(NO_PRIOR_ENGLISH_TITLE)}">'
+                f"<strong>{escape(NO_PRIOR_ENGLISH_LABEL)}.</strong> {escape(detail)}</p>"
             )
         blurb = f"<p class='intro'>{escape(w['blurb'])}</p>" if w.get("blurb") else ""
         has_greek = any(s.get("greek") for s in w["sections"])
@@ -1780,10 +1797,17 @@ def build() -> None:
         else:
             conf = CONFIDENCE_NOTE
         confidence = f"<p class='intro fine'>{escape(conf)}</p>"
+        prior_mark = ""
+        if w.get("first_english"):
+            prior_mark = (
+                f' · <abbr class="no-prior-english" title="{escape(NO_PRIOR_ENGLISH_TITLE)}">'
+                f"{escape(NO_PRIOR_ENGLISH_LABEL)}</abbr>"
+            )
         work_mast = (
             f"<header class=\"reader-mast\">"
             f"<h1>{escape(w['title'])}</h1>"
-            f"<p class=\"meta\">{escape(w['author'])} · {escape(w['period'])} · {escape(w['edition'])}</p>"
+            f"<p class=\"meta\">{escape(w['author'])} · {escape(w['period'])} · "
+            f"{escape(w['edition'])}{prior_mark}</p>"
             f"</header>"
         )
         history_html = text_history_html(w.get("text_history"))
@@ -2078,10 +2102,17 @@ def build() -> None:
                 else:
                     bnav_bits.append('<span class="pn next"></span>')
                 bnav = '<nav class="section-nav" aria-label="Books">' + "".join(bnav_bits) + "</nav>"
+                book_prior = ""
+                if w.get("first_english"):
+                    book_prior = (
+                        f' · <abbr class="no-prior-english" title="{escape(NO_PRIOR_ENGLISH_TITLE)}">'
+                        f"{escape(NO_PRIOR_ENGLISH_LABEL)}</abbr>"
+                    )
                 book_mast = (
                     f"<header class=\"reader-mast\">"
                     f"<h1>{escape(w['title'])} <span class=\"h1-book\">— {escape(g['title'])}</span></h1>"
-                    f"<p class=\"meta\">{escape(w['author'])} · {escape(w['period'])} · {escape(w['edition'])}</p>"
+                    f"<p class=\"meta\">{escape(w['author'])} · {escape(w['period'])} · "
+                    f"{escape(w['edition'])}{book_prior}</p>"
                     f"</header>"
                 )
                 write(
@@ -2507,7 +2538,7 @@ More detail: `docs/SOP.md`.</code></pre>
             f"""<h1>About</h1>
             <p>Fathers is a free public library: a <strong>topic map</strong> of ante-Nicene teaching, <strong>whole works</strong> in edition order, and an <strong>Explore</strong> timeline that shows how writers line up on a claim across time.</p>
             <p>Works online today include Origen’s treatises as they are finished, Cyril of Alexandria, and Julian of Eclanum’s surviving arguments. Later writers are labeled on those pages. Augustine appears first as contrast cards on Explore until his works are loaded.</p>
-            <p>Some treatises here had no earlier complete English a reader could freely use. They are listed together on the <a href="/works/#no-earlier-english">works page</a>, and each one says so at the start. The English here is new.</p>
+            <p>Some treatises here are marked <strong title="{escape(NO_PRIOR_ENGLISH_TITLE)}">{escape(NO_PRIOR_ENGLISH_LABEL)}</strong>: {escape(NO_PRIOR_ENGLISH_TITLE).rstrip('.')}. They are listed together on the <a href="/works/#no-prior-english">works page</a>, and each one says so at the start.</p>
             <p>This is not a complete scholarly edition. Where Greek or Latin is loaded, open it under the reading text.</p>
             <p>Each whole work names the print it follows. Other public-domain Greek or Latin prints of the same work are checked when they exist. The reading English follows that copy-text. Where a stretch is missing there and is supplied from another witness, it is marked. Open <strong>About this text</strong> on a work for the list.</p>
             <p>Explore stance tags are editorial readings for study — not rankings of who was right. Start with <a href="/explore/?topic=free-will">Free will over time</a>.</p>
