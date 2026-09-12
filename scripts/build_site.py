@@ -2016,7 +2016,8 @@ def build() -> None:
                 label = ch["head"] or chunk_label(ch).split("  ", 1)[-1]
                 out.append(
                     f'<li><a href="{href_prefix}#s{escape(first)}">'
-                    f'<span class="num">{escape(num)}</span> {escape(label[:90])}</a></li>'
+                    f'<span class="num">{escape(num)}</span>'
+                    f'<span class="toc-label">{escape(label)}</span></a></li>'
                 )
             return "".join(out)
 
