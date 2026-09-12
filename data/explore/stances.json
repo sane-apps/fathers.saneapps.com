@@ -742,5 +742,21 @@
     "stance": "affirms",
     "year": 180,
     "note": "God recapitulates Adam’s ancient fashioning to destroy sin, empty death, and vivify man."
+  },
+  {
+    "ref": "excerpt:didache_7_baptism",
+    "topic": "baptism-and-new-birth",
+    "claim_id": "baptism-regenerates",
+    "stance": "affirms",
+    "year": 100,
+    "note": "Triune baptism in living water after teaching; fasting before the washing."
+  },
+  {
+    "ref": "excerpt:justin_1apol_40_call",
+    "topic": "universal-call",
+    "claim_id": "call-and-refusal",
+    "stance": "affirms",
+    "year": 155,
+    "note": "God calls everyone to repentance before the day of judgment."
   }
 ]
