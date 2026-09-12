@@ -327,7 +327,7 @@ body {
 .banner.first-english {
   border-left-color: var(--gold-deep);
 }
-abbr.no-prior-english {
+abbr.original-english {
   text-decoration: none;
   cursor: help;
   font-weight: 600;
@@ -366,6 +366,7 @@ details summary { cursor: pointer; font-weight: 650; }
   padding: 0.75rem 1rem;
   margin: 1rem 0;
 }
+#original-english,
 #no-prior-english,
 #no-earlier-english {
   scroll-margin-top: 5rem;
