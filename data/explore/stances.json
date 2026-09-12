@@ -726,5 +726,13 @@
     "stance": "affirms",
     "year": 180,
     "note": "Rule of faith: the Son’s return sums up all things and raises all flesh."
+  },
+  {
+    "ref": "excerpt:diognetus_10_image",
+    "topic": "image-likeness",
+    "claim_id": "image-retained",
+    "stance": "affirms",
+    "year": 150,
+    "note": "God formed humans from his own image and sent the Son to them."
   }
 ]
