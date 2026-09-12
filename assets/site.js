@@ -12,20 +12,28 @@
   const results = document.querySelector("#results");
   if (q && results) {
     let index = [];
+    let ready = false;
+    results.innerHTML = '<li class="search-hint">Loading search…</li>';
     fetch("/data/search-index.json")
       .then((r) => r.json())
       .then((data) => {
         index = data;
+        ready = true;
         if (q.value) render(q.value);
+        else results.innerHTML = '<li class="search-hint">Type at least two letters.</li>';
       })
       .catch(() => {
-        results.innerHTML = "<li>Search index unavailable.</li>";
+        results.innerHTML = '<li class="search-hint">Search is unavailable right now.</li>';
       });
 
     const render = (term) => {
       const t = term.trim().toLowerCase();
+      if (!ready) {
+        results.innerHTML = '<li class="search-hint">Loading search…</li>';
+        return;
+      }
       if (t.length < 2) {
-        results.innerHTML = "";
+        results.innerHTML = '<li class="search-hint">Type at least two letters.</li>';
         return;
       }
       const hits = [];
@@ -33,6 +41,10 @@
         const blob = `${row.title} ${row.author || ""} ${row.text || ""}`.toLowerCase();
         if (blob.includes(t)) hits.push(row);
         if (hits.length >= 40) break;
+      }
+      if (!hits.length) {
+        results.innerHTML = '<li class="search-hint">No matches.</li>';
+        return;
       }
       results.innerHTML = hits
         .map(
@@ -77,12 +89,33 @@
       })
       .filter(Boolean);
 
+    const contents = tocRoot.closest(".reader-contents") || document.querySelector("#contents");
+    const meta = contents?.querySelector(".toc-summary-meta");
+    let hereEl = meta?.querySelector(".toc-here");
+    if (meta && !hereEl) {
+      hereEl = document.createElement("span");
+      hereEl.className = "toc-here";
+      hereEl.setAttribute("aria-live", "polite");
+      meta.appendChild(hereEl);
+    }
+
     const setCurrent = (active) => {
-      for (const { link } of entries) {
+      let idx = -1;
+      for (let i = 0; i < entries.length; i++) {
+        const { link, target } = entries[i];
         const on = link === active;
         link.classList.toggle("is-current", on);
-        if (on) link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
+        if (on) {
+          link.setAttribute("aria-current", "location");
+          idx = i;
+        } else {
+          link.removeAttribute("aria-current");
+        }
+        const sec = target.closest(".reader-sec");
+        if (sec) sec.classList.toggle("is-current", on);
+      }
+      if (hereEl && idx >= 0) {
+        hereEl.textContent = `Here · ${idx + 1} of ${entries.length}`;
       }
       if (active && tocRoot.closest(".reader-rail")) {
         const rail = tocRoot;
