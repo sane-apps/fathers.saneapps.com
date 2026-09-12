@@ -1,4 +1,6 @@
 (() => {
+  document.documentElement.classList.add("js");
+
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector("#site-nav");
   if (toggle && nav) {
@@ -161,6 +163,29 @@
         setCurrent(a);
       });
     }
+  }
+
+  // Contents ↑ control: appear after the reader has been scrolled a bit.
+  const topBtn = document.querySelector(".reader-top");
+  if (topBtn) {
+    const syncTop = () => {
+      const show = window.scrollY > Math.min(420, window.innerHeight * 0.55);
+      topBtn.classList.toggle("is-visible", show);
+    };
+    let topTick = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (topTick) return;
+        topTick = true;
+        window.requestAnimationFrame(() => {
+          syncTop();
+          topTick = false;
+        });
+      },
+      { passive: true }
+    );
+    syncTop();
   }
 
   function escapeHtml(s) {
