@@ -418,6 +418,58 @@ def _section_sort_key(sec: str):
     return (1, nums[0], nums[1], nums[2])
 
 
+def _source_rows(raw) -> list[dict]:
+    """Accept a bare section list or a {sections: [...]} wrapper."""
+    if isinstance(raw, list):
+        return [s for s in raw if isinstance(s, dict)]
+    if isinstance(raw, dict):
+        for key in ("sections", "fragments", "rows"):
+            rows = raw.get(key)
+            if isinstance(rows, list):
+                return [s for s in rows if isinstance(s, dict)]
+    return []
+
+
+def _text_history_from_meta(meta: dict) -> dict:
+    """Prefer nested text_history; else lift method/witnesses/joins from meta root."""
+    th = meta.get("text_history")
+    if isinstance(th, dict) and th:
+        return th
+    lifted = {
+        k: meta[k]
+        for k in ("method", "witnesses", "joins")
+        if k in meta and meta.get(k) not in (None, "", [])
+    }
+    return lifted
+
+
+_BIBLE_LOCUS_TITLE = re.compile(
+    r"^(On )?(Matthew|Mark|Luke|John|Acts|Romans|Genesis|Exodus)\s+\d+",
+    re.I,
+)
+_CPG_TITLE = re.compile(r"^CPG\s+\d+", re.I)
+
+
+def _matthew_ref_sort_key(matthew, fragment, section) -> tuple:
+    nums = [int(x) for x in re.findall(r"\d+", str(matthew or ""))]
+    ch = nums[0] if nums else 999
+    vs = nums[1] if len(nums) > 1 else 0
+    try:
+        sec = int(section)
+    except (TypeError, ValueError):
+        sec = 0
+    fr = int(fragment) if fragment is not None else sec
+    return (0, ch, vs, fr, sec)
+
+
+def _reader_title_from_matthew(matthew: str | None) -> str:
+    raw = (matthew or "").strip()
+    if not raw:
+        return ""
+    ref = re.sub(r"(?<=\d)-(?=\d)", "–", raw)
+    return f"Matthew {ref}"
+
+
 # Treatises with no earlier complete English a reader could freely use.
 # Julian is omitted: some of his words already sit in Victorian Augustine translations.
 FIRST_ENGLISH_NOTES: dict[str, str] = {
@@ -529,7 +581,13 @@ def _pack_work(
     first_english_note: str = "",
     text_history: dict | None = None,
 ) -> dict:
-    sections = sorted(sections, key=lambda s: _section_sort_key(str(s["section"])))
+    if sections and any(s.get("sort_key") is not None for s in sections):
+        sections = sorted(
+            sections,
+            key=lambda s: s.get("sort_key") or _section_sort_key(str(s["section"])),
+        )
+    else:
+        sections = sorted(sections, key=lambda s: _section_sort_key(str(s["section"])))
     is_first = bool(first_english) if first_english is not None else slug in FIRST_ENGLISH_NOTES
     note = (first_english_note or FIRST_ENGLISH_NOTES.get(slug) or "").strip()
     return {
@@ -685,7 +743,11 @@ def _origen_rows(english_rows, source_map) -> list[dict]:
         src = source_map.get(sec, {})
         titled = (row.get("title") or "").strip()
         raw = (src.get("head") or "").strip()
-        if titled:
+        matthew = str(row.get("matthew") or src.get("matthew") or "").strip()
+        # Gospel-fragment works: never let CPG/edition heads be the reader title.
+        if matthew and (_CPG_TITLE.match(titled) or _CPG_TITLE.match(raw) or not titled):
+            head = _reader_title_from_matthew(matthew)
+        elif titled:
             head = titled
         elif (
             not raw
@@ -693,11 +755,22 @@ def _origen_rows(english_rows, source_map) -> list[dict]:
             or "printed" in raw.lower()
             or "read as" in raw.lower()
             or "head survives" in raw.lower()
+            or _CPG_TITLE.match(raw)
         ):
             head = "Proem" if sec.lower() == "proem" else f"Chapter {sec}"
         else:
             head = raw
         supplied = str(row.get("supplied_from") or src.get("supplied_from") or "").strip()
+        scholar = str(
+            row.get("scholar_label")
+            or row.get("edition_head")
+            or (raw if _CPG_TITLE.match(raw) else "")
+            or ""
+        ).strip()
+        fragment = row.get("fragment", src.get("fragment"))
+        sort_key = None
+        if matthew:
+            sort_key = _matthew_ref_sort_key(matthew, fragment, sec)
         out.append(
             {
                 "section": sec,
@@ -707,6 +780,8 @@ def _origen_rows(english_rows, source_map) -> list[dict]:
                 "latin": eng_list(src.get("latin")),
                 "source_url": None,
                 "supplied_from": supplied,
+                "scholar_label": scholar,
+                "sort_key": sort_key,
             }
         )
     return out
@@ -868,8 +943,8 @@ def load_cyril_works() -> list[dict]:
             rows = json.loads(en_path.read_text(encoding="utf-8"))
             if not isinstance(rows, list) or not rows:
                 continue
-            src_rows = _json_load(trans / f"{stem}_source.json", [])
-            src_map = {str(s.get("section")): s for s in src_rows if isinstance(s, dict)}
+            src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
+            src_map = {str(s.get("section")): s for s in src_rows}
             meta = _json_load(trans / f"{stem}_meta.json", {})
             slug = meta.get("slug") or f"cyril-{stem.replace('_', '-')}"
             title = meta.get("title") or stem.replace("_", " ").title()
@@ -887,7 +962,7 @@ def load_cyril_works() -> list[dict]:
                     era_note=era,
                     first_english=bool(meta.get("first_english", True)),
                     first_english_note=meta.get("first_english_note") or "",
-                    text_history=meta.get("text_history") or {},
+                    text_history=_text_history_from_meta(meta),
                 )
             )
             if slug not in WORK_TOPICS and meta.get("topics"):
@@ -1770,6 +1845,9 @@ def build() -> None:
                 low,
             ):
                 return ""
+            # Edition apparatus must never be the reader heading.
+            if _CPG_TITLE.match(head):
+                return ""
             return head
 
         def chunk_sections(secs: list[dict]) -> list[dict]:
@@ -1778,13 +1856,22 @@ def build() -> None:
             Same cleaned title → one editorial thought (edition slices mid-stream).
             Untitled / locus-only runs (fragment works) group by size so a source
             panel never covers an unreasonable stretch.
+            Biblical locus titles (e.g. Matthew 1:16) stay visible in Contents but
+            do not merge distinct fragments that share a verse.
             """
             chunks: list[dict] = []
             cur: dict | None = None
             for s in secs:
                 h = display_head(s)
                 n = sum(len(p) for p in s["english"])
-                same_title = cur is not None and h and cur["head"] == h and cur["chars"] < 9000
+                bible_locus = bool(h and _BIBLE_LOCUS_TITLE.match(h))
+                same_title = (
+                    cur is not None
+                    and h
+                    and cur["head"] == h
+                    and cur["chars"] < 9000
+                    and not bible_locus
+                )
                 untitled_run = (
                     cur is not None and not h and not cur["head"]
                     and cur["chars"] < 3500 and len(cur["secs"]) < 8
@@ -1840,6 +1927,9 @@ def build() -> None:
                             f'title="Section {escape(sid)} — page for citing and sharing">{escape(sid)}</a>'
                         )
                     paras.append(f"<p>{marker}{escape(p)}</p>")
+                scholar = (s.get("scholar_label") or "").strip()
+                if scholar:
+                    paras.append(f'<p class="meta scholar">{escape(scholar)}</p>')
             gk, la, wit = [], [], []
             for s in secs:
                 sid = str(s["section"])
