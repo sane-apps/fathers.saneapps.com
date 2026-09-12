@@ -774,5 +774,61 @@
     "stance": "affirms",
     "year": 100,
     "note": "Fire of testing; those who endure are saved; Lord comes on the clouds."
+  },
+  {
+    "ref": "excerpt:hermas_mand_6_two_angels",
+    "topic": "two-ways",
+    "claim_id": "two-ways",
+    "stance": "affirms",
+    "year": 140,
+    "note": "Two angels with the person: righteousness and wickedness, known by their works."
+  },
+  {
+    "ref": "excerpt:barnabas_5_destroy_death",
+    "topic": "sin-and-death",
+    "claim_id": "death-destroyed",
+    "stance": "affirms",
+    "year": 100,
+    "note": "He endured in flesh to abolish death and show the resurrection."
+  },
+  {
+    "ref": "excerpt:hermas_sim_9_16_seal",
+    "topic": "baptism-and-new-birth",
+    "claim_id": "baptism-regenerates",
+    "stance": "affirms",
+    "year": 140,
+    "note": "The seal is the water: dead go down, living come up into the kingdom."
+  },
+  {
+    "ref": "excerpt:tatian_oratio_7_fate",
+    "topic": "fate-and-foreknowledge",
+    "claim_id": "choice-not-fate",
+    "stance": "affirms",
+    "year": 165,
+    "note": "The Word foretells outcomes by free choosers’ judgment, not by fate."
+  },
+  {
+    "ref": "excerpt:clement_strom_1_7_38_grace",
+    "topic": "grace-and-assistance",
+    "claim_id": "grace-assists",
+    "stance": "affirms",
+    "year": 200,
+    "note": "Teaching of godliness is a gift; faith itself is grace."
+  },
+  {
+    "ref": "excerpt:tatian_oratio_7_image",
+    "topic": "image-likeness",
+    "claim_id": "image-retained",
+    "stance": "affirms",
+    "year": 165,
+    "note": "The heavenly Word made the human an image of immortality."
+  },
+  {
+    "ref": "excerpt:clement_strom_1_11_51_call",
+    "topic": "universal-call",
+    "claim_id": "call-and-refusal",
+    "stance": "affirms",
+    "year": 200,
+    "note": "The Word’s proclamation calls whoever wills; crowning is for whoever can."
   }
 ]
