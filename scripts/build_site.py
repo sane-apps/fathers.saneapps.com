@@ -1884,6 +1884,14 @@ def build() -> None:
                     chunks.append(cur)
             return chunks
 
+        def untitled_snip(ch: dict, *, limit: int = 72) -> str:
+            """First-line English for untitled chunks — Contents and H2 share this."""
+            snip = " ".join(ch["secs"][0].get("english") or []).strip()
+            snip = re.sub(r"\s+", " ", snip)
+            if limit and len(snip) > limit:
+                snip = snip[: limit - 3].rsplit(" ", 1)[0] + "…"
+            return snip
+
         def chunk_label(ch: dict) -> str:
             secs = ch["secs"]
             first, last = str(secs[0]["section"]), str(secs[-1]["section"])
@@ -1891,10 +1899,7 @@ def build() -> None:
             if ch["head"]:
                 return f"{rng}  {ch['head']}"
             # Untitled chunk: soft first-line summary so Contents is not empty.
-            snip = " ".join(secs[0].get("english") or []).strip()
-            snip = re.sub(r"\s+", " ", snip)
-            if len(snip) > 72:
-                snip = snip[:69].rsplit(" ", 1)[0] + "…"
+            snip = untitled_snip(ch)
             return f"{rng}  {snip}" if snip else rng
 
         def chunk_block(ch: dict) -> str:
@@ -1907,7 +1912,18 @@ def build() -> None:
                     f'<span class="range">{escape(rng)}</span></h2>'
                 )
             else:
-                heading = f'<h2 class="reader-head"><span class="reader-title range-title">{escape(rng)}</span></h2>'
+                # Same rule as titled chunks: plain-English thought first; § stays a mark.
+                snip = untitled_snip(ch, limit=110)
+                if snip:
+                    heading = (
+                        f'<h2 class="reader-head"><span class="reader-title">{escape(snip)}</span>'
+                        f'<span class="range">{escape(rng)}</span></h2>'
+                    )
+                else:
+                    heading = (
+                        f'<h2 class="reader-head"><span class="reader-title range-title">'
+                        f'{escape(rng)}</span></h2>'
+                    )
             cues = [(s.get("supplied_from") or "").strip() for s in secs]
             unique_cues = {c for c in cues if c}
             chunk_cue = ""
