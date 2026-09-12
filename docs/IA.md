@@ -36,6 +36,7 @@ Update `WORK_TOPICS` when a new treatise lands. Topic ids must match
 |------|---------|
 | `/` | Brand + enter Topics / Works + donate |
 | `/about/` | Evergreen mission, how to read, badge meaning, Sponsors (no work inventory) |
+| `/methodology/` | How English is made: sources, two passes, OET meaning, apparatus vs reader |
 | `/search/` | Search across topics + works |
 | `/authors/` | Author index (both doors) |
 | `/authors/{slug}/` | Author hub → works + topical hits + topics |
@@ -90,7 +91,7 @@ Presentation: `AGENTS.md` → Works reader SOP. Contents is one line per thought
 4. **Prev / next** on every work section; grouped TOC for multi-book works.
 5. **Era honesty** — post-Nicene corpora carry a banner on their work pages. About stays evergreen and does not name a rotating title list.
 6. **Translation confidence** — short note on each **work** intro (not a Topics filter or badge UI). Collapsed “About this text” also names copy-text, other prints checked, and supplied stretches (`text_history`). The reading column has no apparatus.
-7. **Original English Translation** — treatises with no previous complete free English are grouped on `/works/#original-english` (aliases `#no-prior-english` and `#no-earlier-english` still resolve) and marked on the work mast, cards, and About-this-text banner with the full phrase `Original English Translation` (tooltip explains: new free rendering; no previous complete free English). Do not use a bare `English` badge (that reads as language-only). Prefer the full phrase over a shortened chip unless space truly cannot fit. Do not invent a slogan button. Do not mark Julian (Victorian English of some of his words already exists inside Augustine). Do not put this on Topics. Keep true language metadata (`lang`, witness `language: Greek|Latin`) unchanged.
+7. **Original English Translation** — treatises with **no previous English translation** (no complete prior English of the work) are grouped on `/works/#original-english` (aliases `#no-prior-english` and `#no-earlier-english` still resolve) and marked on the work mast, cards, and About-this-text banner with the full phrase `Original English Translation` (tooltip: `Original English Translation — no previous English translation`). Do **not** say “free English” / “previous free English” / “complete free English” in public copy. Do not use a bare `English` badge (that reads as language-only). Prefer the full phrase over a shortened chip unless space truly cannot fit. Do not invent a slogan button. Do not mark Julian (Victorian English of some of his words already exists inside Augustine). Do not put this on Topics. Keep true language metadata (`lang`, witness `language: Greek|Latin`) unchanged. Deep essay: `/methodology/`.
 
 ## Public copy
 

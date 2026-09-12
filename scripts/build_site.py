@@ -470,44 +470,45 @@ def _reader_title_from_matthew(matthew: str | None) -> str:
     return f"Matthew {ref}"
 
 
-# Product meaning: this site’s English is a new/original free rendering because
-# there was no previous complete free English. Not “language = English.”
+# Product meaning: Original English Translation = there was no previous English
+# translation (no complete prior English of the work). Not “language = English.”
+# Do not say “free English” / “previous free English” in public copy.
 # Chip / mast / cards: ORIGINAL_ENGLISH_CHIP. Formal mark: ORIGINAL_ENGLISH_LABEL.
 # Tooltip / About nuance: ORIGINAL_ENGLISH_TITLE.
 # Julian is omitted: some of his words already sit in Victorian Augustine translations.
 ORIGINAL_ENGLISH_CHIP = "Original English Translation"
 ORIGINAL_ENGLISH_LABEL = "Original English Translation"
 ORIGINAL_ENGLISH_TITLE = (
-    "Original English Translation — new free rendering; no previous complete free English"
+    "Original English Translation — no previous English translation"
 )
 ORIGINAL_ENGLISH_INTRO = (
-    "These are original English translations: new free renderings where there was no "
-    "previous complete free English."
+    "These are original English translations: new English of works that had no "
+    "previous English translation."
 )
 FIRST_ENGLISH_NOTES: dict[str, str] = {
     "origen-on-prayer": (
-        "Original English Translation — no previous complete free English. "
+        "Original English Translation — no previous English translation. "
         "The English here is new."
     ),
     "origen-exhortation-to-martyrdom": (
-        "Original English Translation — no previous complete free English. "
+        "Original English Translation — no previous English translation. "
         "The English here is new."
     ),
     "origen-dialogue-heraclides": (
-        "Original English Translation — no previous complete free English. "
+        "Original English Translation — no previous English translation. "
         "The Greek was recovered in the 1940s. The English here is new."
     ),
     "origen-on-pascha": (
-        "Original English Translation — no previous complete free English. "
+        "Original English Translation — no previous English translation. "
         "The Greek was recovered in the twentieth century. The English here is new."
     ),
     "cyril-adoration-1": (
         "Original English Translation of Cyril’s long On Adorations (seventeen books) — "
-        "no previous complete free English. This is Book 1 only. The English here is new."
+        "no previous English translation. This is Book 1 only. The English here is new."
     ),
     "origen-homilies-jeremiah": (
-        "Original English Translation of these Greek homilies — no previous complete free "
-        "English. This page is Homilies 1–2 only. The English here is new."
+        "Original English Translation of these Greek homilies — no previous English "
+        "translation. This page is Homilies 1–2 only. The English here is new."
     ),
 }
 
@@ -1422,7 +1423,7 @@ def layout(
 {body}
 </main>
 <footer class="site-footer">
-  <p>Free public library · <a href="{SPONSORS}">Support on GitHub Sponsors</a></p>
+  <p>Free public library · <a href="/about/">About</a> · <a href="/methodology/">Methodology</a> · <a href="{SPONSORS}">Support on GitHub Sponsors</a></p>
   <p class="fine">Ancient texts · new English for study · not a complete critical edition</p>
 </footer>
 <script src="/assets/site.js?v={ASSET_VER}" defer></script>
@@ -1511,7 +1512,7 @@ def build() -> None:
 <section class="hero">
   <p class="eyebrow">Public library · donation supported</p>
   <h1>The Fathers, readable</h1>
-  <p class="lede">Teaching by topic, and whole treatises chapter by chapter. Ante-Nicene voices first; later writers are labeled when they appear. Several treatises here are original English translations — new free renderings with no previous complete free English.</p>
+  <p class="lede">Teaching by topic, and whole treatises chapter by chapter. Ante-Nicene voices first; later writers are labeled when they appear. Several treatises here are original English translations — new English of works with no previous English translation.</p>
   <div class="hero-actions">
     <a class="btn primary" href="/topics/">Browse topics</a>
     <a class="btn" href="/works/">Browse works</a>
@@ -2547,7 +2548,8 @@ More detail: `docs/SOP.md`.</code></pre>
             f"""<h1>About</h1>
             <p>Fathers is a free public library: a <strong>topic map</strong> of ante-Nicene teaching, <strong>whole works</strong> in edition order, and an <strong>Explore</strong> timeline that shows how writers line up on a claim across time.</p>
             <p>The catalog is always moving. New treatises and topic excerpts land as they are finished; status and era labels live on each work page, not as a fixed inventory here. Authors not yet loaded as whole works may appear first as contrast cards on Explore.</p>
-            <p>Some treatises are marked <strong title="{escape(ORIGINAL_ENGLISH_TITLE)}">{escape(ORIGINAL_ENGLISH_LABEL)}</strong>: a new free rendering where there was no previous complete free English. That group is kept current on the <a href="/works/#original-english">works page</a>, and each marked work says so at the start.</p>
+            <p>Some treatises are marked <strong title="{escape(ORIGINAL_ENGLISH_TITLE)}">{escape(ORIGINAL_ENGLISH_LABEL)}</strong>: there was no previous English translation of the complete work. That group is kept current on the <a href="/works/#original-english">works page</a>, and each marked work says so at the start.</p>
+            <p>How the English is made — two passes, source locking, witnesses, and what stays off the reading page — is on the <a href="/methodology/">methodology</a> page.</p>
             <p>This is not a complete scholarly edition. Where Greek or Latin is loaded, open it under the reading text.</p>
             <p>Each whole work names the print it follows. Other public-domain Greek or Latin prints of the same work are checked when they exist. The reading English follows that copy-text. Where a stretch is missing there and is supplied from another witness, it is marked. Open <strong>About this text</strong> on a work for the list.</p>
             <p>Explore stance tags are editorial readings for study — not rankings of who was right. Start with <a href="/explore/?topic=free-will">Free will over time</a>.</p>
@@ -2555,6 +2557,53 @@ More detail: `docs/SOP.md`.</code></pre>
             <p>If it helps you, you can <a href="{SPONSORS}">support the work on GitHub Sponsors</a>.</p>""",
             crumb=[("Home", "/"), ("About", "")],
             active="about",
+        ),
+    )
+
+    write(
+        DIST / "methodology" / "index.html",
+        layout(
+            "Methodology",
+            f"""<h1>Methodology</h1>
+            <p class="lede">How this library makes English, and how to trust a page.</p>
+
+            <h2>Why this exists</h2>
+            <p>Fathers is a free public library for study: teaching by topic, whole works in edition order, and an Explore timeline. It is not a complete critical edition. The aim is readable English that stays honest about its sources.</p>
+
+            <h2>What you will find</h2>
+            <p><strong>Topics</strong> answer “what did they teach about X?” <strong>Works</strong> let you read a treatise straight through. <strong>Explore</strong> shows how writers line up on a claim across time. The catalog is always moving — new treatises and excerpts land as they finish. Status and era labels live on each work page. This site does not keep a rotting title inventory on About or here.</p>
+
+            <h2>How to read a work</h2>
+            <p>Each work opens as a continuous reader. Contents lists one line per thought in plain English, not one line per edition slice. Jump links land on the first section of that thought. Greek or Latin, when loaded, sits under the reading text. Cite pages still exist for a single section; use “Read continuously” to return to the reader at that place.</p>
+            <p>The reading column stays clean. Apparatus — copy-text, other prints checked, supplied stretches, confidence notes — lives in the collapsed <strong>About this text</strong> rail, not beside every paragraph.</p>
+
+            <h2>Sources and witnesses</h2>
+            <p>English is made from named public-domain Greek or Latin prints, not from modern copyrighted English. For each work we lock as many independent original-language witnesses as exist: a best public-domain critical edition, a second scan or transcription of that print, earlier prints (for example Migne), ancient versions of the same work, and fragment or catena collections when they preserve extra lines.</p>
+            <p>The reading text follows one named <strong>copy-text</strong>. Other prints are <strong>checks</strong>, not silent merges. Where a stretch is missing in the copy-text and is supplied from another witness, it is marked. We do not call the result a manuscript, and we do not claim a combination that was not done.</p>
+
+            <h2>Two passes of English</h2>
+            <p><strong>Pass A</strong> is a literal sense gloss with key lemmas from the locked source block only. Unreadable places stay marked; nothing is invented to fill a gap.</p>
+            <p><strong>Pass B</strong> is the reading English — modern literary prose in the author’s voice. It may not add a concept that is not already in Pass A. Pass A is not pasted as Pass B. Modern copyrighted English is never the source of either pass.</p>
+
+            <h2>Original English Translation</h2>
+            <p>The badge <strong title="{escape(ORIGINAL_ENGLISH_TITLE)}">{escape(ORIGINAL_ENGLISH_LABEL)}</strong> means there was <strong>no previous English translation</strong> of the complete work — no complete prior English of that treatise. It does not mean “this page is in English,” and it is not a claim about “free English.”</p>
+            <p>Marked works are grouped on the <a href="/works/#original-english">works page</a> and named again at the start of each work. Treatises that already have older English (often inside another author’s reply) are not marked that way; they are still here so the arguments can be read in one place.</p>
+
+            <h2>What opens next</h2>
+            <p>When opening a new whole work, priority runs from the earliest untranslated texts forward — works with no previous English translation first. A densify-in-progress lane may finish the current work before starting the next. The public catalog still moves as pieces ship; it is not a fixed roadmap page.</p>
+
+            <h2>What we never claim</h2>
+            <ul>
+              <li>A complete critical edition of every Father.</li>
+              <li>That the reading text is a manuscript.</li>
+              <li>Silent merges of competing recensions.</li>
+              <li>That Explore stance tags are rankings of who was right.</li>
+            </ul>
+
+            <p>Short summary: <a href="/about/">About</a>. Corrections and help: <a href="/contribute/">Help</a>.</p>""",
+            crumb=[("Home", "/"), ("Methodology", "")],
+            active="about",
+            description="How Fathers makes English: sources, two passes, Original English Translation, and what stays off the reading page",
         ),
     )
 

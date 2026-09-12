@@ -9,6 +9,7 @@
 - Donate: GitHub Sponsors `MrSaneApps`. No paywall.
 - Deploy to Cloudflare Pages `fathers-site`; hostname `fathers.saneapps.com`.
 - Prefer `./scripts/ship.sh` (build → smoke → deploy → print CSS `?v=`).
+- **Original English Translation** = no previous English translation (complete prior English of the work). Never say “free English” in public copy. Deep essay: `/methodology/`.
 - Never hand-edit `dist/`; only `scripts/build_site.py` + `assets/` (+ data/books), then rebuild. See `docs/DIST.md`.
 - Mini-first for live visual verification after deploy.
 - Read `docs/IA.md` before changing URL structure.

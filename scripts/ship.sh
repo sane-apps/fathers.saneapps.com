@@ -15,6 +15,7 @@ SMOKE_PATHS=(
   "/works/"
   "/topics/"
   "/about/"
+  "/methodology/"
 )
 
 usage() {
