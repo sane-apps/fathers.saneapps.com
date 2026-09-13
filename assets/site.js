@@ -101,6 +101,16 @@
       meta.appendChild(hereEl);
     }
 
+    // While the pointer is in Contents, do not auto-scroll the rail —
+    // rail motion under a moving mouse leaves ghost hover / stuck highlights.
+    let pointerInToc = false;
+    tocRoot.addEventListener("pointerenter", () => {
+      pointerInToc = true;
+    });
+    tocRoot.addEventListener("pointerleave", () => {
+      pointerInToc = false;
+    });
+
     const setCurrent = (active) => {
       let idx = -1;
       for (let i = 0; i < entries.length; i++) {
@@ -119,6 +129,7 @@
       if (hereEl && idx >= 0) {
         hereEl.textContent = `Here · ${idx + 1} of ${entries.length}`;
       }
+      if (pointerInToc) return;
       if (active && tocRoot.closest(".reader-rail")) {
         const rail = tocRoot;
         const row = active.closest("li");

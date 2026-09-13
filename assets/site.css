@@ -280,7 +280,7 @@ body {
   white-space: normal;
   line-height: 1.35;
 }
-/* Contents: warm parchment hover vs solid “you are here” current — never the same cue. */
+/* Contents: hover wash vs current (gold bar only) — never two washes at once. */
 .toc li a::before {
   content: "";
   position: absolute;
@@ -292,28 +292,12 @@ body {
   background: var(--gold-deep);
   transition: width 0.18s ease, opacity 0.18s ease;
   opacity: 0;
+  pointer-events: none;
 }
-.toc li a:hover {
-  background: color-mix(in srgb, var(--gold) 16%, var(--paper-2));
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 24%, transparent);
-}
-.toc li a:hover::before {
-  width: 2px;
-  opacity: 0.55;
-}
-.toc li a:hover .num { color: var(--gold-deep); }
-.toc li a:focus { outline: none; }
-.toc li a:focus-visible {
-  background: color-mix(in srgb, var(--gold) 10%, var(--paper));
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent),
-    0 0 0 2px color-mix(in srgb, var(--gold) 45%, transparent);
-  color: var(--ink);
-}
+/* Current = thin gold leading mark + weight. No wash (wash is hover-only). */
 .toc li a.is-current {
-  background: color-mix(in srgb, var(--gold) 22%, var(--paper));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 18%, transparent);
+  background: transparent;
+  box-shadow: none;
   color: var(--ink);
 }
 .toc li a.is-current::before {
@@ -325,8 +309,40 @@ body {
   font-weight: 650;
 }
 .toc li a.is-current .toc-label { font-weight: 600; }
-.toc li a.is-current:hover {
-  background: color-mix(in srgb, var(--gold) 28%, var(--paper-2));
+/* Hover: only the row under the pointer gets the parchment wash. */
+.toc li a:hover {
+  background: color-mix(in srgb, var(--gold) 16%, var(--paper-2));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 24%, transparent);
+}
+.toc li a:hover::before {
+  width: 2px;
+  opacity: 0.55;
+}
+.toc li a.is-current:hover::before {
+  width: 3px;
+  opacity: 1;
+}
+.toc li a:hover .num { color: var(--gold-deep); }
+/* While scanning the list, mute non-hovered current so it cannot ghost beside hover. */
+.toc:hover li a.is-current:not(:hover) {
+  background: transparent;
+  box-shadow: none;
+}
+.toc:hover li a.is-current:not(:hover)::before {
+  opacity: 0.35;
+}
+.toc li a:focus { outline: none; }
+.toc li a:focus:not(:focus-visible) {
+  background: transparent;
+  box-shadow: none;
+}
+.toc li a:focus-visible {
+  background: color-mix(in srgb, var(--gold) 10%, var(--paper));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--gold) 45%, transparent);
+  color: var(--ink);
 }
 @media (prefers-reduced-motion: reduce) {
   .toc li a,
@@ -392,6 +408,16 @@ body {
   margin: 0.35rem 0 0.75rem;
 }
 .body p { margin: 0 0 1rem; }
+a.bible-ref {
+  color: var(--gold-deep);
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--gold) 55%, transparent);
+  font-variant-numeric: lining-nums;
+}
+a.bible-ref:hover {
+  color: var(--ink);
+  border-bottom-color: var(--gold-deep);
+}
 .badge {
   display: inline-block;
   font-size: 0.72rem;

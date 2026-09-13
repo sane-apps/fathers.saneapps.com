@@ -8,6 +8,7 @@ import shutil
 from collections import defaultdict
 from html import escape
 from pathlib import Path
+from urllib.parse import quote_plus
 
 try:
     import yaml
@@ -108,9 +109,77 @@ def eng_list(val) -> list[str]:
     return [str(val)]
 
 
+# Logos Personal Book Bible datatype: [[Malachi 3:1-3 >> Bible:Malachi 3:1-3]]
+# Web must never show the raw tag — render display text as a real link.
+_LOGOS_BIBLE_RE = re.compile(
+    r"\[\[\s*([^\[\]]*?)\s*>>\s*Bible:\s*([^\[\]]*?)\s*\]\]"
+)
+_LOGOS_ANY_RE = re.compile(r"\[\[[^\]]*\]\]")
+
+
+def strip_logos_markup(text: str) -> str:
+    """Plain text for cards/snippets: keep Bible display labels, drop other [[…]]."""
+    if not text:
+        return ""
+    def _bible(m: re.Match[str]) -> str:
+        display = (m.group(1) or "").strip()
+        target = (m.group(2) or "").strip()
+        if not display or display.lower() == "display" or "…" in display or "..." in display:
+            return target if target and "…" not in target and "..." not in target else ""
+        return display
+
+    out = _LOGOS_BIBLE_RE.sub(_bible, text)
+    out = _LOGOS_ANY_RE.sub("", out)
+    return re.sub(r"\s+", " ", out).strip()
+
+
+def render_reader_html(text: str) -> str:
+    """HTML-escape reader prose; turn Logos Bible tags into real links."""
+    if not text:
+        return ""
+    parts: list[str] = []
+    pos = 0
+    for m in _LOGOS_BIBLE_RE.finditer(text):
+        parts.append(escape(text[pos : m.start()]))
+        display = (m.group(1) or "").strip()
+        target = (m.group(2) or "").strip()
+        placeholder = (
+            not display
+            or display.lower() == "display"
+            or "…" in display
+            or "..." in display
+            or not target
+            or "…" in target
+            or "..." in target
+        )
+        if placeholder:
+            # Instruction leftovers — omit; do not paint raw markup.
+            pos = m.end()
+            continue
+        href = (
+            "https://www.biblegateway.com/passage/?search="
+            f"{quote_plus(target)}&version=NRSVUE"
+        )
+        parts.append(
+            f'<a class="bible-ref" href="{escape(href)}" rel="noopener noreferrer" '
+            f'title="{escape(target)}">{escape(display)}</a>'
+        )
+        pos = m.end()
+    rest = text[pos:]
+    # Drop any non-Bible [[…]] leftovers (Headword, TN, etc.) from web prose.
+    rest_parts: list[str] = []
+    rpos = 0
+    for m in _LOGOS_ANY_RE.finditer(rest):
+        rest_parts.append(escape(rest[rpos : m.start()]))
+        rpos = m.end()
+    rest_parts.append(escape(rest[rpos:]))
+    parts.append("".join(rest_parts))
+    return "".join(parts)
+
+
 def soft_snippet(text: str, limit: int = 280) -> str:
     """Trim for preview cards: prefer sentence, else word boundary + ellipsis."""
-    t = re.sub(r"\s+", " ", (text or "").strip())
+    t = re.sub(r"\s+", " ", strip_logos_markup(text or "")).strip()
     if len(t) <= limit:
         return t
     cut = t[: limit + 1]
@@ -476,42 +545,82 @@ def _reader_title_from_matthew(matthew: str | None) -> str:
 # Do not say “free English” / “previous free English” in public copy.
 # Chip / mast / cards: ORIGINAL_ENGLISH_CHIP. Formal mark: ORIGINAL_ENGLISH_LABEL.
 # Tooltip / About nuance: ORIGINAL_ENGLISH_TITLE.
+# Banner = label + one short gloss (never repeat the label in the gloss).
 # Julian is omitted: some of his words already sit in Victorian Augustine translations.
+# Works with known prior complete English must never get the badge (see NEVER_OET_SLUGS).
 ORIGINAL_ENGLISH_CHIP = "Original English Translation"
 ORIGINAL_ENGLISH_LABEL = "Original English Translation"
 ORIGINAL_ENGLISH_TITLE = (
     "Original English Translation — no previous English translation"
 )
+ORIGINAL_ENGLISH_GLOSS = "No previous English translation."
 ORIGINAL_ENGLISH_INTRO = (
     "These are original English translations: new English of works that had no "
     "previous English translation."
 )
+# Hard deny-list: prior complete English exists. Meta cannot override.
+NEVER_OET_SLUGS = frozenset(
+    {
+        "irenaeus-demonstration",  # Robinson 1920 / Wilson
+    }
+)
+# Gloss only — do not start with the OET label (banner already prints it).
 FIRST_ENGLISH_NOTES: dict[str, str] = {
-    "origen-on-prayer": (
-        "Original English Translation — no previous English translation. "
-        "The English here is new."
-    ),
-    "origen-exhortation-to-martyrdom": (
-        "Original English Translation — no previous English translation. "
-        "The English here is new."
-    ),
+    "origen-on-prayer": "No previous English translation.",
+    "origen-exhortation-to-martyrdom": "No previous English translation.",
     "origen-dialogue-heraclides": (
-        "Original English Translation — no previous English translation. "
-        "The Greek was recovered in the 1940s. The English here is new."
+        "No previous English translation. The Greek was recovered in the 1940s."
     ),
     "origen-on-pascha": (
-        "Original English Translation — no previous English translation. "
-        "The Greek was recovered in the twentieth century. The English here is new."
+        "No previous English translation. The Greek was recovered in the twentieth century."
     ),
     "cyril-adoration-1": (
-        "Original English Translation of Cyril’s long On Adorations (seventeen books) — "
-        "no previous English translation. This is Book 1 only. The English here is new."
+        "No previous English translation of Cyril’s long On Adorations (seventeen books). "
+        "This page is Book 1 only."
     ),
     "origen-homilies-jeremiah": (
-        "Original English Translation of these Greek homilies — no previous English "
-        "translation. This page is Homilies 1–2 only. The English here is new."
+        "No previous English translation of these Greek homilies."
     ),
 }
+
+
+def oet_banner_gloss(note: str = "") -> str:
+    """One short gloss for the OET banner. Never repeats the label."""
+    raw = (note or "").strip()
+    if not raw:
+        return ORIGINAL_ENGLISH_GLOSS
+    gloss = raw
+    gloss = re.sub(
+        r"^Original English Translation(?:\s+of\s+.+?)?\s*[—.–:]\s*",
+        "",
+        gloss,
+        count=1,
+        flags=re.I,
+    ).strip()
+    gloss = re.sub(
+        r"^Original English Translation\.\s*",
+        "",
+        gloss,
+        count=1,
+        flags=re.I,
+    ).strip()
+    gloss = re.sub(
+        r"\s*The English here is new(?:[^.]*\.)?\s*",
+        " ",
+        gloss,
+        count=1,
+        flags=re.I,
+    ).strip()
+    gloss = re.sub(r"\s+", " ", gloss).strip(" .")
+    if gloss:
+        gloss = gloss[0].upper() + gloss[1:]
+        if not gloss.endswith("."):
+            gloss += "."
+    if not gloss or gloss.lower() in {"new.", "the english here is new."}:
+        return ORIGINAL_ENGLISH_GLOSS
+    if gloss.lower().startswith("no previous"):
+        return gloss
+    return f"{ORIGINAL_ENGLISH_GLOSS} {gloss}"
 
 WITNESS_ROLE_LABEL = {
     "copy-text": "Copy-text",
@@ -602,8 +711,18 @@ def _pack_work(
         )
     else:
         sections = sorted(sections, key=lambda s: _section_sort_key(str(s["section"])))
-    is_first = bool(first_english) if first_english is not None else slug in FIRST_ENGLISH_NOTES
-    note = (first_english_note or FIRST_ENGLISH_NOTES.get(slug) or "").strip()
+    if slug in NEVER_OET_SLUGS:
+        is_first = False
+        note = ""
+    else:
+        is_first = (
+            bool(first_english)
+            if first_english is not None
+            else slug in FIRST_ENGLISH_NOTES
+        )
+        note = (first_english_note or FIRST_ENGLISH_NOTES.get(slug) or "").strip()
+        if is_first:
+            note = oet_banner_gloss(note)
     return {
         "slug": slug,
         "title": title,
@@ -1645,7 +1764,7 @@ def build() -> None:
         items_html = []
         current_author = None
         for x in rows:
-            paras = "".join(f"<p>{escape(p)}</p>" for p in eng_list(x.get("english")))
+            paras = "".join(f"<p>{render_reader_html(p)}</p>" for p in eng_list(x.get("english")))
             author = x.get("author") or "Unknown"
             if author != current_author:
                 if current_author is not None:
@@ -1841,13 +1960,13 @@ def build() -> None:
         era = f"<p class='banner'>{escape(w['era_note'])}</p>" if w.get("era_note") else ""
         first_banner = ""
         if w.get("first_english"):
-            detail = (
+            detail = oet_banner_gloss(
                 w.get("first_english_note")
                 or FIRST_ENGLISH_NOTES.get(w["slug"])
-                or f"{ORIGINAL_ENGLISH_TITLE}. The English here is new."
-            ).strip()
+                or ""
+            )
             first_banner = (
-                f'<p class="banner first-english" title="{escape(ORIGINAL_ENGLISH_TITLE)}">'
+                f'<p class="banner first-english">'
                 f"<strong>{escape(ORIGINAL_ENGLISH_LABEL)}.</strong> {escape(detail)}</p>"
             )
         blurb = f"<p class='intro'>{escape(w['blurb'])}</p>" if w.get("blurb") else ""
@@ -2030,7 +2149,7 @@ def build() -> None:
                             f'<a class="vnum" id="s{escape(sid)}" href="/works/{escape(w["slug"])}/{escape(sid)}/" '
                             f'title="Section {escape(sid)} — page for citing and sharing">{escape(sid)}</a>'
                         )
-                    paras.append(f"<p>{marker}{escape(p)}</p>")
+                    paras.append(f"<p>{marker}{render_reader_html(p)}</p>")
                 scholar = (s.get("scholar_label") or "").strip()
                 if scholar:
                     paras.append(f'<p class="meta scholar">{escape(scholar)}</p>')
@@ -2218,7 +2337,7 @@ def build() -> None:
             )
 
         for idx, s in enumerate(w["sections"]):
-            paras = "".join(f"<p>{escape(p)}</p>" for p in s["english"])
+            paras = "".join(f"<p>{render_reader_html(p)}</p>" for p in s["english"])
             # Same pattern as excerpt pages: English body, then language panels at the bottom.
             src_block = ""
             if s.get("greek"):
