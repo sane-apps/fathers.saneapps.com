@@ -59,6 +59,10 @@ ORIGEN_PAULINE_FRAGMENT_BOOKS = [
     BOOKS / "origen-proverbs-fragments",
     BOOKS / "origen-psalms-excerpta",
     BOOKS / "origen-psalms-fragments-greek",
+    BOOKS / "africanus-cesti",
+    BOOKS / "gregory-thaumaturgus-jeremiah-fragments",
+    BOOKS / "gregory-thaumaturgus-matthew-fragment",
+    BOOKS / "eustathius-engastrimytho",
 ]
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
@@ -3221,10 +3225,11 @@ def load_origen_nt_fragments() -> list[dict]:
 
 
 def load_origen_pauline_fragments() -> list[dict]:
-    """Origen Pauline Khazarzar fragments — tip SERIES CLOSEOUT hubs (true OET)."""
+    """Tip SERIES CLOSEOUT fragment hubs (Origen + other Rank-1 scraps; true OET)."""
     works: list[dict] = []
-    era = (
-        "Origen died around 253 — within the first three centuries of the church."
+    default_era = (
+        "These Greek scraps belong to the first three centuries of the church "
+        "(or the early fourth, disclosed in the work note when later)."
     )
     for folder in ORIGEN_PAULINE_FRAGMENT_BOOKS:
         trans = folder / "translations"
@@ -3246,8 +3251,12 @@ def load_origen_pauline_fragments() -> list[dict]:
                     mapped["greek"] = mapped.get("text")
                 src_map[sec] = mapped
             meta = _json_load(trans / f"{stem}_meta.json", {})
-            slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
+            slug = meta.get("slug") or folder.name
             title = meta.get("title") or stem.replace("_", " ").title()
+            author = meta.get("author") or "Origen of Alexandria"
+            author_slug = meta.get("author_slug") or re.sub(
+                r"[^a-z0-9]+", "-", author.lower()
+            ).strip("-")
             sections = _origen_rows(rows, src_map)
             existing = next((w for w in works if w["slug"] == slug), None)
             if existing is not None:
@@ -3273,15 +3282,15 @@ def load_origen_pauline_fragments() -> list[dict]:
                 _pack_work(
                     slug=slug,
                     title=title,
-                    author="Origen of Alexandria",
-                    author_slug="origen",
-                    period=meta.get("period") or "c. 230–250",
+                    author=author,
+                    author_slug=author_slug,
+                    period=meta.get("period") or "c. 200–340",
                     status=meta.get("status") or "available",
-                    edition=meta.get("edition") or "PG 14 (Khazarzar)",
+                    edition=meta.get("edition") or "PG (Khazarzar)",
                     sections=sections,
                     blurb=meta.get("blurb")
-                    or "Origen Pauline fragments (Greek). SERIES CLOSEOUT.",
-                    era_note=era,
+                    or f"{author} Greek fragments. SERIES CLOSEOUT.",
+                    era_note=meta.get("era_note") or default_era,
                     first_english=bool(meta.get("first_english", True)),
                     first_english_note=meta.get("first_english_note") or "",
                     text_history=_text_history_from_meta(meta),
