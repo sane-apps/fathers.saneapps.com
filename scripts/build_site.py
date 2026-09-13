@@ -3416,6 +3416,7 @@ def build() -> None:
         + load_origen_matthew_later()
         + load_origen_contra_celsum()
         + load_origen_principiis()
+        + load_origen_philocalia()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
