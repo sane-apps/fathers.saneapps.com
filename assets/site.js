@@ -104,6 +104,11 @@
     // While the pointer is in Contents, do not auto-scroll the rail —
     // rail motion under a moving mouse leaves ghost hover / stuck highlights.
     let pointerInToc = false;
+    // After a TOC click, freeze rail follow + current highlight until the page
+    // jump settles — otherwise smooth page scroll makes scrollspy walk every
+    // intermediate row (and inherited smooth rail scroll stacks into chaos).
+    let railFollowUntil = 0;
+    let lockedLink = null;
     tocRoot.addEventListener("pointerenter", () => {
       pointerInToc = true;
     });
@@ -111,7 +116,23 @@
       pointerInToc = false;
     });
 
-    const setCurrent = (active) => {
+    const snapRailTo = (active) => {
+      if (!active || !tocRoot.closest(".reader-rail")) return;
+      const rail = tocRoot;
+      const row = active.closest("li");
+      if (!row) return;
+      const prev = rail.style.scrollBehavior;
+      rail.style.scrollBehavior = "auto";
+      const rowTop = row.offsetTop;
+      const rowBottom = rowTop + row.offsetHeight;
+      const viewTop = rail.scrollTop;
+      const viewBottom = viewTop + rail.clientHeight;
+      if (rowTop < viewTop + 8) rail.scrollTop = Math.max(0, rowTop - 12);
+      else if (rowBottom > viewBottom - 8) rail.scrollTop = rowBottom - rail.clientHeight + 12;
+      rail.style.scrollBehavior = prev;
+    };
+
+    const setCurrent = (active, { followRail = true } = {}) => {
       let idx = -1;
       for (let i = 0; i < entries.length; i++) {
         const { link, target } = entries[i];
@@ -129,22 +150,19 @@
       if (hereEl && idx >= 0) {
         hereEl.textContent = `Here · ${idx + 1} of ${entries.length}`;
       }
+      if (!followRail) return;
       if (pointerInToc) return;
-      if (active && tocRoot.closest(".reader-rail")) {
-        const rail = tocRoot;
-        const row = active.closest("li");
-        if (!row) return;
-        const rowTop = row.offsetTop;
-        const rowBottom = rowTop + row.offsetHeight;
-        const viewTop = rail.scrollTop;
-        const viewBottom = viewTop + rail.clientHeight;
-        if (rowTop < viewTop + 8) rail.scrollTop = Math.max(0, rowTop - 12);
-        else if (rowBottom > viewBottom - 8) rail.scrollTop = rowBottom - rail.clientHeight + 12;
-      }
+      if (Date.now() < railFollowUntil) return;
+      snapRailTo(active);
     };
 
     if (entries.length) {
       const pick = () => {
+        if (Date.now() < railFollowUntil && lockedLink) {
+          setCurrent(lockedLink, { followRail: false });
+          return;
+        }
+        lockedLink = null;
         const probe = window.scrollY + Math.min(160, window.innerHeight * 0.28);
         let current = entries[0];
         for (const entry of entries) {
@@ -171,7 +189,11 @@
       tocRoot.addEventListener("click", (ev) => {
         const a = ev.target.closest('a[href*="#s"]');
         if (!a || !tocRoot.contains(a)) return;
-        setCurrent(a);
+        // Highlight + snap rail once, now. Keep rail still while the page scrolls.
+        lockedLink = a;
+        railFollowUntil = Date.now() + 900;
+        setCurrent(a, { followRail: false });
+        snapRailTo(a);
       });
     }
   }
