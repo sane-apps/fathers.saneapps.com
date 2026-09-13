@@ -57,6 +57,8 @@ ORIGEN_PAULINE_FRAGMENT_BOOKS = [
     BOOKS / "origen-job-enarrationes",
     BOOKS / "origen-proverbs-expositio",
     BOOKS / "origen-proverbs-fragments",
+    BOOKS / "origen-psalms-excerpta",
+    BOOKS / "origen-psalms-fragments-greek",
 ]
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
