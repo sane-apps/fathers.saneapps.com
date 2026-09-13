@@ -652,6 +652,10 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Commentary "
         "on the Song of Songs Liber I (ANF lacks this; Lawson ACW is copyrighted)."
     ),
+    "origen-song-commentary-liber-2": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on the Song of Songs Liber II (ANF lacks this; Lawson ACW is copyrighted)."
+    ),
 }
 
 
