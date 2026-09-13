@@ -1285,6 +1285,10 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Commentary "
         "on Matthew Tomus XVII (ANF lacks these later books; Heine is copyrighted)."
     ),
+    "origen-matthew-series": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Matthew Series (ANF lacks it; Heine is copyrighted)."
+    ),
 }
 
 
@@ -2508,7 +2512,7 @@ def load_origen_matthew_later() -> list[dict]:
         stem = en_path.name[: -len("_english.json")]
         if stem.startswith("_"):
             continue
-        if not re.fullmatch(r"mt_[xiv]+", stem):
+        if not re.fullmatch(r"(mt_[xiv]+|mt_series)", stem):
             continue
         rows = json.loads(en_path.read_text(encoding="utf-8"))
         if not isinstance(rows, list) or not rows:
