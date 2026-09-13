@@ -82,6 +82,9 @@ OTHER_RANK1_TIP_BOOKS = sorted(
     | set(BOOKS.glob("diodorus-*"))
     | set(BOOKS.glob("theophilus-alex-*"))
     | set(BOOKS.glob("ammonius-*"))
+    | set(BOOKS.glob("eudokia-*"))
+    | set(BOOKS.glob("georgius-*"))
+    | set(BOOKS.glob("john-antioch-*"))
 )
 TIP_FRAGMENT_BOOKS = (
     ORIGEN_PAULINE_FRAGMENT_BOOKS
