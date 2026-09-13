@@ -1277,6 +1277,10 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Commentary "
         "on Matthew Tomus XV (ANF lacks these later books; Heine is copyrighted)."
     ),
+    "origen-matthew-tomus-16": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Matthew Tomus XVI (ANF lacks these later books; Heine is copyrighted)."
+    ),
 }
 
 
