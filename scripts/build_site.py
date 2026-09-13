@@ -2505,6 +2505,8 @@ def load_origen_matthew_later() -> list[dict]:
             mapped = dict(s)
             if not mapped.get("greek") and mapped.get("text"):
                 mapped["greek"] = mapped.get("text")
+            if not mapped.get("latin") and mapped.get("text"):
+                mapped["latin"] = mapped.get("text")
             src_map[sec] = mapped
         return src_map
 
@@ -2518,15 +2520,19 @@ def load_origen_matthew_later() -> list[dict]:
         if not isinstance(rows, list) or not rows:
             continue
         src_map = _greek_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
-        rem_en = trans / f"{stem}_rem_english.json"
-        if rem_en.is_file():
-            rem_rows = json.loads(rem_en.read_text(encoding="utf-8"))
-            if isinstance(rem_rows, list) and rem_rows:
-                rows = list(rows) + rem_rows
-                rem_src = _greek_src_map(
-                    _source_rows(_json_load(trans / f"{stem}_rem_source.json", []))
-                )
-                src_map.update(rem_src)
+        # Fold companion slices: _rem, then lettered continuations (_g, _h, …).
+        for suffix in ("rem", *[chr(c) for c in range(ord("g"), ord("z") + 1)]):
+            slice_en = trans / f"{stem}_{suffix}_english.json"
+            if not slice_en.is_file():
+                continue
+            slice_rows = json.loads(slice_en.read_text(encoding="utf-8"))
+            if not isinstance(slice_rows, list) or not slice_rows:
+                continue
+            rows = list(rows) + slice_rows
+            slice_src = _greek_src_map(
+                _source_rows(_json_load(trans / f"{stem}_{suffix}_source.json", []))
+            )
+            src_map.update(slice_src)
         meta = _json_load(trans / f"{stem}_meta.json", {})
         first_english = bool(meta.get("first_english", True))
         slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
