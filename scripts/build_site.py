@@ -1833,7 +1833,7 @@ def build() -> None:
                         ("Excerpt", ""),
                     ],
                     active="topics",
-                    description=(eng_list(x.get("english")) or [""])[0][:160],
+                    description=strip_logos_markup((eng_list(x.get("english")) or [""])[0])[:160],
                 ),
             )
             search_index.append(
@@ -1845,7 +1845,7 @@ def build() -> None:
                     "href": f"/e/{x['id']}/",
                     "topic": tid,
                     "verified": x.get("confidence") == "source_verified",
-                    "text": " ".join(eng_list(x.get("english")))[:400],
+                    "text": strip_logos_markup(" ".join(eng_list(x.get("english"))))[:400],
                 }
             )
         if current_author is not None:
@@ -2093,8 +2093,7 @@ def build() -> None:
 
         def untitled_snip(ch: dict, *, limit: int = 72) -> str:
             """First-line English for untitled chunks — Contents and H2 share this."""
-            snip = " ".join(ch["secs"][0].get("english") or []).strip()
-            snip = re.sub(r"\s+", " ", snip)
+            snip = strip_logos_markup(" ".join(ch["secs"][0].get("english") or []))
             if limit and len(snip) > limit:
                 snip = snip[: limit - 3].rsplit(" ", 1)[0] + "…"
             return snip
@@ -2397,7 +2396,7 @@ def build() -> None:
                         (f"§{s['section']}", ""),
                     ],
                     active="works",
-                    description=(s["english"] or [""])[0][:160],
+                    description=strip_logos_markup((s["english"] or [""])[0])[:160],
                 ),
             )
             search_index.append(
@@ -2408,7 +2407,7 @@ def build() -> None:
                     "author": w["author"],
                     "href": f"/works/{w['slug']}/{s['section']}/",
                     "verified": False,
-                    "text": " ".join(s["english"])[:400],
+                    "text": strip_logos_markup(" ".join(s["english"]))[:400],
                 }
             )
 
