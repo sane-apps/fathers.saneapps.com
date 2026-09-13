@@ -39,6 +39,7 @@ ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
 CYRIL_BOOKS = sorted(BOOKS.glob("cyril-alexandria*"))
 IRENAEUS_DEMO_BOOK = BOOKS / "irenaeus-demonstration"
+ORIGEN_JOHN_LATER_BOOK = BOOKS / "origen-john-later"
 JULIAN_BOOK = BOOKS / "julian-of-eclanum"
 EXPLORE_DATA = ROOT / "data" / "explore"
 SPONSORS = "https://github.com/sponsors/MrSaneApps"
@@ -613,6 +614,10 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
     ),
     "origen-homilies-jeremiah": (
         "No previous English translation of these Greek homilies."
+    ),
+    "origen-john-13": (
+        "No previous English translation of Origen’s Commentary on John Book 13 "
+        "(later tomoi; ANF covers only earlier books)."
     ),
 }
 
@@ -1221,6 +1226,64 @@ def load_irenaeus_demonstration() -> list[dict]:
     return works
 
 
+def load_origen_john_later() -> list[dict]:
+    """Origen Commentary on John later tomoi (13, 19, 20, 28, 32) — true OET."""
+    works: list[dict] = []
+    trans = ORIGEN_JOHN_LATER_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+    for en_path in sorted(trans.glob("*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("_"):
+            continue
+        rows = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(rows, list) or not rows:
+            continue
+        src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
+        src_map = {str(s.get("section")): s for s in src_rows}
+        # Preuschen Greek often lives in `text` / `greek`.
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("greek") and mapped.get("text"):
+                mapped["greek"] = mapped.get("text")
+            src_map[sec] = mapped
+        meta = _json_load(trans / f"{stem}_meta.json", {})
+        # True OET for these later tomoi (ANF lacks them).
+        first_english = bool(meta.get("first_english", True))
+        slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
+        book_no = None
+        m = re.search(r"john(\d+)", stem)
+        if m:
+            book_no = m.group(1)
+        title = meta.get("title") or (
+            f"Commentary on John, Book {book_no}" if book_no else stem.replace("_", " ").title()
+        )
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=title,
+                author="Origen of Alexandria",
+                author_slug="origen",
+                period=meta.get("period") or "c. 231–248",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition")
+                or "Preuschen, Origenes Werke IV = GCS 10 (1903)",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Origen’s Commentary on John, later tomoi. "
+                    "Original English Translation — ANF does not cover these books."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
 def load_julian_works() -> list[dict]:
     """Early fifth-century Julian — disclosed as not ante-Nicene."""
     era = (
@@ -1682,6 +1745,7 @@ def build() -> None:
         load_origen_works()
         + load_origen_book2()
         + load_origen_book3()
+        + load_origen_john_later()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
