@@ -856,6 +856,22 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Homilia II "
         "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
     ),
+    "origen-numbers-homily-4": (
+        "No previous public-domain English translation of Origen’s Homilia IV "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-5": (
+        "No previous public-domain English translation of Origen’s Homilia V "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-6": (
+        "No previous public-domain English translation of Origen’s Homilia VI "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-7": (
+        "No previous public-domain English translation of Origen’s Homilia VII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
 }
 
 
