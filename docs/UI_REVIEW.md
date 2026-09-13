@@ -13,6 +13,7 @@ Cloudflare connector. Publish from the established deployment environment with
 | High | The supplied iPhone screenshot has pale text on pale reader panels. Desktop Chrome did not reproduce the forced-dark appearance. Gradient images can stay light when automatic darkening changes ink. | Replace reader gradients with solid paired foreground/background colors, including current and alternating passages. Keep the established light parchment design. |
 | High | Search skipped every `kind: work` record, although these records represent individual passages. It also indexed only the first 400 characters. | Search work passages and full text. Load the larger index only when someone searches. |
 | High | Multiple source batches with one work slug overwrote the continuous reader. Earlier citation pages then linked to missing sections. | Merge batches by work slug and section, retaining source witnesses, notes, topic associations, and groups. Preserve the existing last-batch precedence for duplicate sections. |
+| High | Newly added whole-work authors had no generated hub pages (36 missing destinations in the newer main branch). | Generate a hub for every work author, also including matching topical excerpts. |
 | Medium | Long sticky mobile menus could obscure reading; Contents was below the whole work. | Non-sticky phone header, a compact Jump to contents link, measured desktop anchor offsets, reopen collapsed Contents, and keyboard-safe rail following. |
 | Medium | No-JavaScript mobile navigation vanished; menu lacked Escape behavior. | Navigation remains visible without JavaScript; enhanced menu closes with Escape and restores focus. |
 | Medium | Search errors silently looked like no results. | Explicit error and retry, helpful empty states, valid filter fallback, and a clear distinction between catalog filters and whole-library passage results. |
@@ -31,19 +32,19 @@ Cloudflare connector. Publish from the established deployment environment with
 | 3 | Continuous reader and Latin panel | Working in Chrome viewport frames at 320, 390, 768, and 1280px. Menu/Escape, Contents jump, passage jump, and Latin disclosure exercised. Real iOS dark-mode verification remains open. |
 | 4 | Topics and topic detail | Working. Followed Free Will from the mobile index into its excerpts and related works. |
 | 5 | Explore | Topic selection, mobile filter expansion, and era selection exercised; timeline renders. Named points and selected scale state visible in the DOM. |
-| 6 | Authors | Readable mobile index; generated hub destinations checked by the full link scan. |
+| 6 | Authors | Readable mobile index; opened the repaired Agathias Scholasticus hub and verified its work link. All generated hub destinations checked by the full link scan. |
 | 7 | Help | Readable fallback navigation and donation/application links. No donation or purchase submitted. |
 | 8 | About | Readable mobile page; internal destinations checked. |
 | 9 | Methodology | Readable mobile headings and text; internal destinations checked. |
 
 ## Verification
 
-- Final ship dry run: all seven HTTP smoke routes pass, asset version `94c81e32e4`.
-- Full generated-site check: **7,590 pages, 189,444 internal links, zero missing destinations or fragments**.
+- Ship dry run before main-branch integration: all seven HTTP smoke routes pass, asset version `94c81e32e4`.
+- Full generated-site check: **13,689 pages, 338,452 internal links, zero missing destinations or fragments** after integrating main `78c639a`.
 - **Six passing regression tests**: work/full-text search, index failure/retry, invalid filters/empty state, menu Escape/focus, Contents reopening, and lazy index loading.
 - JavaScript syntax, Python compilation, and whitespace checks pass.
 - Build corpus: translations commit `124a8122d3e12116432ae5ae62404291bfea9159`.
-- Output: 262 unique works, 5,301 work sections, 1,925 topical excerpts, 7,226 search records. Previously the same input counted 999 source batches as works and produced 1,420 distinct broken fragment targets. No translation source files were edited.
+- Final output: 581 unique works, 11,045 work sections, 1,925 topical excerpts, 12,970 search records. The initial checkout counted source batches as works and produced 1,420 distinct broken fragment targets; the later main-branch changes also introduced 36 missing author destinations. Both classes are resolved. No translation source files were edited.
 
 These checks cover every generated local URL/fragment and representative
 interactive flows, not every possible interaction on every page. External
@@ -52,6 +53,8 @@ newer than the observed production deployment; review/pin the intended corpus
 before publishing. This was Chrome responsive-frame QA, not a physical iPhone,
 Safari extension test, or full screen-reader/accessibility certification. The
 user's exact automatic-darkening configuration could not be reproduced here.
+
+Screenshots record the inspected states throughout this review; catalog counts in earlier captures predate the final main-branch integration.
 
 ## Visual evidence
 
