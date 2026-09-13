@@ -697,6 +697,38 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Homilia VIII "
         "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
     ),
+    "origen-genesis-homily-9": (
+        "No previous public-domain English translation of Origen’s Homilia IX "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-genesis-homily-10": (
+        "No previous public-domain English translation of Origen’s Homilia X "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-genesis-homily-11": (
+        "No previous public-domain English translation of Origen’s Homilia XI "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-genesis-homily-12": (
+        "No previous public-domain English translation of Origen’s Homilia XII "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-genesis-homily-13": (
+        "No previous public-domain English translation of Origen’s Homilia XIII "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-genesis-homily-14": (
+        "No previous public-domain English translation of Origen’s Homilia XIV "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-genesis-homily-15": (
+        "No previous public-domain English translation of Origen’s Homilia XV "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-genesis-homily-16": (
+        "No previous public-domain English translation of Origen’s Homilia XVI "
+        "on Genesis (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
 }
 
 
