@@ -961,6 +961,107 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Homilia I "
         "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
     ),
+
+    "origen-joshua-homily-2": (
+        "No previous public-domain English translation of Origen’s Homilia II "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-3": (
+        "No previous public-domain English translation of Origen’s Homilia III "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-4": (
+        "No previous public-domain English translation of Origen’s Homilia IV "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-5": (
+        "No previous public-domain English translation of Origen’s Homilia V "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-6": (
+        "No previous public-domain English translation of Origen’s Homilia VI "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-7": (
+        "No previous public-domain English translation of Origen’s Homilia VII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-8": (
+        "No previous public-domain English translation of Origen’s Homilia VIII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-9": (
+        "No previous public-domain English translation of Origen’s Homilia IX "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-10": (
+        "No previous public-domain English translation of Origen’s Homilia X "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-11": (
+        "No previous public-domain English translation of Origen’s Homilia XI "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-12": (
+        "No previous public-domain English translation of Origen’s Homilia XII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-13": (
+        "No previous public-domain English translation of Origen’s Homilia XIII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-14": (
+        "No previous public-domain English translation of Origen’s Homilia XIV "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-15": (
+        "No previous public-domain English translation of Origen’s Homilia XV "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-16": (
+        "No previous public-domain English translation of Origen’s Homilia XVI "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-17": (
+        "No previous public-domain English translation of Origen’s Homilia XVII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-18": (
+        "No previous public-domain English translation of Origen’s Homilia XVIII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-19": (
+        "No previous public-domain English translation of Origen’s Homilia XIX "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-20": (
+        "No previous public-domain English translation of Origen’s Homilia XX "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-21": (
+        "No previous public-domain English translation of Origen’s Homilia XXI "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-22": (
+        "No previous public-domain English translation of Origen’s Homilia XXII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-23": (
+        "No previous public-domain English translation of Origen’s Homilia XXIII "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-24": (
+        "No previous public-domain English translation of Origen’s Homilia XXIV "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-25": (
+        "No previous public-domain English translation of Origen’s Homilia XXV "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-26": (
+        "No previous public-domain English translation of Origen’s Homilia XXVI "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
+    ),
 }
 
 
