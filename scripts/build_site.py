@@ -72,6 +72,7 @@ OTHER_RANK1_TIP_BOOKS = sorted(
     | set(BOOKS.glob("theodorus-heracleensis-*"))
     | set(BOOKS.glob("africanus-*"))
     | set(BOOKS.glob("asterius-*"))
+    | set(BOOKS.glob("didymus-*"))
 )
 TIP_FRAGMENT_BOOKS = (
     ORIGEN_PAULINE_FRAGMENT_BOOKS
