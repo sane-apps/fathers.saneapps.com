@@ -787,6 +787,66 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Homilia I "
         "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
     ),
+    "origen-leviticus-homily-2": (
+        "No previous public-domain English translation of Origen’s Homilia II "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-3": (
+        "No previous public-domain English translation of Origen’s Homilia III "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-4": (
+        "No previous public-domain English translation of Origen’s Homilia IV "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-5": (
+        "No previous public-domain English translation of Origen’s Homilia V "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-6": (
+        "No previous public-domain English translation of Origen’s Homilia VI "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-7": (
+        "No previous public-domain English translation of Origen’s Homilia VII "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-8": (
+        "No previous public-domain English translation of Origen’s Homilia VIII "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-9": (
+        "No previous public-domain English translation of Origen’s Homilia IX "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-10": (
+        "No previous public-domain English translation of Origen’s Homilia X "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-11": (
+        "No previous public-domain English translation of Origen’s Homilia XI "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-12": (
+        "No previous public-domain English translation of Origen’s Homilia XII "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-13": (
+        "No previous public-domain English translation of Origen’s Homilia XIII "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-14": (
+        "No previous public-domain English translation of Origen’s Homilia XIV "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-15": (
+        "No previous public-domain English translation of Origen’s Homilia XV "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
+    "origen-leviticus-homily-16": (
+        "No previous public-domain English translation of Origen’s Homilia XVI "
+        "on Leviticus (ANF lacks these; Barkley FOTC is copyrighted)."
+    ),
 }
 
 
