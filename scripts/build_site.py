@@ -872,6 +872,90 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Homilia VII "
         "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
     ),
+    "origen-numbers-homily-8": (
+        "No previous public-domain English translation of Origen’s Homilia VIII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-9": (
+        "No previous public-domain English translation of Origen’s Homilia IX "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-10": (
+        "No previous public-domain English translation of Origen’s Homilia X "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-11": (
+        "No previous public-domain English translation of Origen’s Homilia XI "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-12": (
+        "No previous public-domain English translation of Origen’s Homilia XII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-13": (
+        "No previous public-domain English translation of Origen’s Homilia XIII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-14": (
+        "No previous public-domain English translation of Origen’s Homilia XIV "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-15": (
+        "No previous public-domain English translation of Origen’s Homilia XV "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-16": (
+        "No previous public-domain English translation of Origen’s Homilia XVI "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-17": (
+        "No previous public-domain English translation of Origen’s Homilia XVII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-18": (
+        "No previous public-domain English translation of Origen’s Homilia XVIII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-19": (
+        "No previous public-domain English translation of Origen’s Homilia XIX "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-20": (
+        "No previous public-domain English translation of Origen’s Homilia XX "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-21": (
+        "No previous public-domain English translation of Origen’s Homilia XXI "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-22": (
+        "No previous public-domain English translation of Origen’s Homilia XXII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-23": (
+        "No previous public-domain English translation of Origen’s Homilia XXIII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-24": (
+        "No previous public-domain English translation of Origen’s Homilia XXIV "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-25": (
+        "No previous public-domain English translation of Origen’s Homilia XXV "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-26": (
+        "No previous public-domain English translation of Origen’s Homilia XXVI "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-27": (
+        "No previous public-domain English translation of Origen’s Homilia XXVII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-numbers-homily-28": (
+        "No previous public-domain English translation of Origen’s Homilia XXVIII "
+        "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
 }
 
 
