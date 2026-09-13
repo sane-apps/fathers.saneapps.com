@@ -6,7 +6,7 @@ Updated 2026-09-13. The owner authorized the audit, repairs, source checks and d
 
 Deployed successfully through scripts/ship.sh:
 - Production: https://fathers.saneapps.com
-- Deployment: https://805826ea.fathers-site.pages.dev
+- Deployment: https://edaf2b75.fathers-site.pages.dev
 - Site implementation commit: e5e5b18
 - Corpus implementation commit: c07955e79
 - CSS version: 898957519c
@@ -48,7 +48,7 @@ Canonical drafting and promotion reject missing evidence, omissions, false or un
 
 Live byte comparisons and post-deployment screenshots are recorded below when completed.
 
-The permanent live gate is now in scripts/check_links.py and runs from ship.sh. It checks current homepage, catalogue, search index and assets, then probes every held work URL for a real 404 without scaffold text. The first production run correctly failed: the custom domain returned 200 for all 573 held URLs, while the Pages deployment URL returned 404. Host, URL, prefix and zone cache purges did not clear those old Pages edge objects. A scoped cache Page Rule lacked effect and was removed. The DNS record and original fathers-site binding were restored after a temporary validation experiment. Production must remain a no-go until the custom domain serves the same 404s as the Pages deployment.
+The permanent live gate is now in scripts/check_links.py and runs from ship.sh. It checks current homepage, catalogue, search index and assets, then probes every held work URL for a real 404 without scaffold text. The first production run correctly failed: the custom domain returned 200 for all 573 held URLs, while the Pages deployment URL returned 404. Host, URL, prefix and zone cache purges did not clear those old Pages edge objects. A scoped cache Page Rule lacked effect and was removed. The DNS record and original fathers-site binding were restored after a temporary validation experiment. Production was a no-go until the Pages Function allowlist shipped (see below).
 
 ## Incident and remaining work
 
@@ -57,3 +57,17 @@ A separate Cursor publishing job restored the old builder from a22c2b7 and pushe
 Source authenticity, completeness and fidelity review remain unfinished for legacy content. Repair held families one at a time through the existing claim queue; do not use catalogue volume as a quality target. No open GitHub issues were returned in either repository during this audit. No Logos recompilation was performed during the website audit.
 
 Shared work guards remain active because other Mini work continues. Do not stop unrelated jobs.
+
+
+## Withdrawn-URL preservation cache (2026-09-13)
+
+**Symptom:** custom domain returned HTTP 200 for all held `/works/<slug>/` URLs (often with `x-robots-tag: noindex`), while the matching `*.fathers-site.pages.dev` deployment returned 404. Purge by URL/host and zone Cache/Page/Transform checks did not clear it. DNS and the `fathers-site` domain binding were clean.
+
+**Cause:** Cloudflare Pages asset-server preservation for the custom hostname when the current deployment has no file for that path. `_redirects` 404 rules are not enough on that hostname.
+
+**Fix:** `scripts/generate_works_gate.py` writes `functions/works/[[path]].js` (live-slug allowlist) plus staging `_routes.json` (`include: ["/works/*"]`). `scripts/ship.sh` regenerates both after the reviewed artifact is staged. Denied slugs return a synthetic 404 body containing `Page unavailable` and never call `ASSETS.fetch` on the withdrawn path. Keep `_redirects` as a second layer for the deployment hostname. Live gate remains `scripts/check_links.py --live`.
+
+**Verified live 2026-09-13:** deployment `https://edaf2b75.fathers-site.pages.dev`. `check_links.py --live https://fathers.saneapps.com` → 578 checks, 573 held → 404 with `Page unavailable`, 0 failures. A live work (`/works/cyril-adoration-1/`) and `/works/` remain 200. First ship after the Function upload failed the live gate only because of edge cutover lag; ship.sh now probes one held URL for 404 before the full gate.
+
+**Ops note:** Pages Functions on the Workers free plan can "fail open" to static assets when the daily Functions allowance is exhausted — prefer fail-closed for this project in the dashboard if available.
+
