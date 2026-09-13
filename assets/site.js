@@ -10,45 +10,129 @@
     });
   }
 
-  const q = document.querySelector("#q");
-  const results = document.querySelector("#results");
-  if (q && results) {
+  // Works catalog: find + sort + era/OET filters (Search tab merged here).
+  const worksRoot = document.querySelector("[data-works-browse]");
+  if (worksRoot) {
+    const list = worksRoot.querySelector("#works-list");
+    const status = worksRoot.querySelector("#works-status");
+    const qInput = worksRoot.querySelector("#works-q");
+    const passageSec = worksRoot.querySelector("#passage-hits");
+    const passageList = worksRoot.querySelector("#passage-results");
+    const sortBtns = [...worksRoot.querySelectorAll(".works-sort [data-sort]")];
+    const filterBtns = [...worksRoot.querySelectorAll(".works-filters [data-filter]")];
+    let sort = "chrono";
+    let filter = "all";
     let index = [];
-    let ready = false;
-    results.innerHTML = '<li class="search-hint">Loading search…</li>';
-    fetch("/data/search-index.json")
-      .then((r) => r.json())
-      .then((data) => {
-        index = data;
-        ready = true;
-        if (q.value) render(q.value);
-        else results.innerHTML = '<li class="search-hint">Type at least two letters.</li>';
-      })
-      .catch(() => {
-        results.innerHTML = '<li class="search-hint">Search is unavailable right now.</li>';
-      });
+    let indexReady = false;
 
-    const render = (term) => {
-      const t = term.trim().toLowerCase();
-      if (!ready) {
-        results.innerHTML = '<li class="search-hint">Loading search…</li>';
+    const params = new URLSearchParams(location.search);
+    if (["chrono", "author", "title"].includes(params.get("sort") || "")) {
+      sort = params.get("sort");
+    }
+    if (params.get("filter")) filter = params.get("filter");
+    if (params.get("q") && qInput) qInput.value = params.get("q");
+    if (location.hash === "#original-english" || location.hash === "#no-prior-english") {
+      filter = "oet";
+    }
+
+    const setPressed = (btns, attr, value) => {
+      btns.forEach((b) => b.setAttribute("aria-pressed", b.getAttribute(attr) === value ? "true" : "false"));
+    };
+    setPressed(sortBtns, "data-sort", sort);
+    setPressed(filterBtns, "data-filter", filter);
+
+    const syncUrl = () => {
+      const next = new URLSearchParams();
+      if (sort !== "chrono") next.set("sort", sort);
+      if (filter !== "all") next.set("filter", filter);
+      const qv = (qInput?.value || "").trim();
+      if (qv) next.set("q", qv);
+      const qs = next.toString();
+      const url = qs ? `${location.pathname}?${qs}` : location.pathname;
+      history.replaceState(null, "", url + (filter === "oet" && !qv ? "#original-english" : ""));
+    };
+
+    const sortItems = (items) => {
+      const arr = [...items];
+      arr.sort((a, b) => {
+        if (sort === "author") {
+          return (
+            (a.dataset.author || "").localeCompare(b.dataset.author || "", undefined, { sensitivity: "base" }) ||
+            (a.dataset.title || "").localeCompare(b.dataset.title || "", undefined, { sensitivity: "base" })
+          );
+        }
+        if (sort === "title") {
+          return (a.dataset.title || "").localeCompare(b.dataset.title || "", undefined, { sensitivity: "base" });
+        }
+        const ya = Number(a.dataset.year || 9999);
+        const yb = Number(b.dataset.year || 9999);
+        return ya - yb || (a.dataset.author || "").localeCompare(b.dataset.author || "", undefined, { sensitivity: "base" });
+      });
+      return arr;
+    };
+
+    const apply = () => {
+      if (!list) return;
+      const term = (qInput?.value || "").trim().toLowerCase();
+      const items = [...list.querySelectorAll(":scope > li")];
+      let shown = 0;
+      for (const li of sortItems(items)) {
+        list.appendChild(li);
+        const blob = li.dataset.blob || "";
+        const era = li.dataset.era || "";
+        const oet = li.dataset.oet === "1";
+        let ok = true;
+        if (filter === "oet") ok = oet;
+        else if (filter !== "all") ok = era === filter;
+        if (ok && term.length >= 2) ok = blob.includes(term);
+        else if (ok && term.length === 1) ok = blob.includes(term);
+        li.hidden = !ok;
+        if (ok) shown += 1;
+      }
+      const sortLabel =
+        sort === "author" ? "author name" : sort === "title" ? "work title" : "author era (earliest first)";
+      const filterLabel =
+        filter === "oet" ? "Original English only" : filter === "all" ? "all eras" : filter;
+      if (status) {
+        status.textContent = `${shown} treatise${shown === 1 ? "" : "s"} · sorted by ${sortLabel} · ${filterLabel}`;
+      }
+      syncUrl();
+      renderPassages(term);
+    };
+
+    const escapeHtml = (s) =>
+      String(s || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+
+    const renderPassages = (term) => {
+      if (!passageSec || !passageList) return;
+      if (!term || term.length < 2) {
+        passageSec.hidden = true;
+        passageList.innerHTML = "";
         return;
       }
-      if (t.length < 2) {
-        results.innerHTML = '<li class="search-hint">Type at least two letters.</li>';
+      if (!indexReady) {
+        passageSec.hidden = false;
+        passageList.innerHTML = '<li class="search-hint">Loading passages…</li>';
         return;
       }
       const hits = [];
       for (const row of index) {
+        if (row.kind === "work") continue; // already in treatise list
         const blob = `${row.title} ${row.author || ""} ${row.text || ""}`.toLowerCase();
-        if (blob.includes(t)) hits.push(row);
-        if (hits.length >= 40) break;
+        if (blob.includes(term)) hits.push(row);
+        if (hits.length >= 30) break;
       }
       if (!hits.length) {
-        results.innerHTML = '<li class="search-hint">No matches.</li>';
+        passageSec.hidden = true;
+        passageList.innerHTML = "";
         return;
       }
-      results.innerHTML = hits
+      passageSec.hidden = false;
+      passageList.innerHTML = hits
         .map(
           (h) =>
             `<li><a href="${h.href}"><strong>${escapeHtml(h.title)}</strong><span>${escapeHtml(
@@ -58,7 +142,34 @@
         .join("");
     };
 
-    q.addEventListener("input", () => render(q.value));
+    fetch("/data/search-index.json")
+      .then((r) => r.json())
+      .then((data) => {
+        index = data;
+        indexReady = true;
+        apply();
+      })
+      .catch(() => {
+        indexReady = true;
+        apply();
+      });
+
+    sortBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        sort = btn.getAttribute("data-sort") || "chrono";
+        setPressed(sortBtns, "data-sort", sort);
+        apply();
+      });
+    });
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filter = btn.getAttribute("data-filter") || "all";
+        setPressed(filterBtns, "data-filter", filter);
+        apply();
+      });
+    });
+    qInput?.addEventListener("input", () => apply());
+    apply();
   }
 
   document.querySelectorAll("[data-copy]").forEach((btn) => {

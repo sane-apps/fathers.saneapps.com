@@ -293,12 +293,39 @@ def load_authors() -> dict[str, dict]:
 AUTHORS = load_authors()
 
 
+def alpha_key(s: str | None) -> str:
+    """Case-insensitive Latin sort key for browse lists."""
+    return (s or "").casefold().lstrip()
+
+
+def author_record(name: str | None) -> dict:
+    """Resolve Authors.json even when the display name is longer (e.g. Origen of Alexandria)."""
+    if not name:
+        return {}
+    if name in AUTHORS:
+        return AUTHORS[name] or {}
+    # Common “Name of Place” displays
+    for key, rec in AUTHORS.items():
+        if name.startswith(key) or key.startswith(name):
+            return rec or {}
+    first = name.split()[0]
+    if first in AUTHORS:
+        return AUTHORS[first] or {}
+    return {}
+
+
 def author_sort_year(name: str | None, period: str | None = None) -> int:
-    rec = AUTHORS.get(name or "") or {}
+    """Floruit / death year for chronology. Prefer authors.json; else first year in period."""
+    rec = author_record(name)
     if rec.get("sort_year"):
         return int(rec["sort_year"])
     y = year_from_period(period)
     return y if y is not None else 9999
+
+
+def work_chrono_year(w: dict) -> int:
+    """Works catalog chronology: author era first, then work period as tie-break."""
+    return author_sort_year(w.get("author"), w.get("period"))
 
 
 def _plain_tag(s: str) -> str:
@@ -431,13 +458,18 @@ def build_explore_index(
                 "claims": block.get("claims") or [],
             }
         )
+    topics_out.sort(key=lambda t: alpha_key(t.get("title")))
 
     eras = []
     for band in ("Apostolic", "Ante-Nicene", "Nicene", "Post-Nicene", "Unknown"):
         if any(p.get("era_band") == band for p in points):
             eras.append(band)
 
-    author_list = [{"slug": s, "name": n} for s, n in sorted(authors.items(), key=lambda kv: kv[1].lower())]
+    author_list = [{"slug": s, "name": n} for s, n in sorted(authors.items(), key=lambda kv: alpha_key(kv[1]))]
+
+    paths = _json_load(EXPLORE_DATA / "paths.json", [])
+    if not isinstance(paths, list):
+        paths = []
 
     return {
         "version": 1,
@@ -451,6 +483,7 @@ def build_explore_index(
         "eras": eras,
         "authors": author_list,
         "points": points,
+        "paths": paths,
     }
 
 
@@ -743,7 +776,7 @@ def _pack_work(
     }
 
 
-def work_card_html(w: dict) -> str:
+def work_card_html(w: dict, *, catalog: bool = False) -> str:
     st = "In progress" if w["status"] == "in_progress" else "Available"
     mark = ""
     if w.get("first_english"):
@@ -751,9 +784,36 @@ def work_card_html(w: dict) -> str:
             f' · <abbr class="original-english" title="{escape(ORIGINAL_ENGLISH_TITLE)}">'
             f"{escape(ORIGINAL_ENGLISH_CHIP)}</abbr>"
         )
+    year = work_chrono_year(w)
+    era = era_band(year if year != 9999 else year_from_period(w.get("period")))
+    topics = " ".join(w.get("related_topics") or [])
+    blob = " ".join(
+        [
+            w.get("title") or "",
+            w.get("author") or "",
+            w.get("period") or "",
+            w.get("blurb") or "",
+            topics,
+            ORIGINAL_ENGLISH_LABEL if w.get("first_english") else "",
+        ]
+    ).casefold()
+    meta = (
+        f"{escape(w['author'])} · {escape(w.get('period') or '')} · "
+        f"{w['section_count']} sections · {st} · {escape(era)}{mark}"
+    )
+    attrs = ""
+    if catalog:
+        attrs = (
+            f' data-title="{escape(w["title"])}"'
+            f' data-author="{escape(w["author"])}"'
+            f' data-year="{year}"'
+            f' data-era="{escape(era)}"'
+            f' data-oet="{"1" if w.get("first_english") else "0"}"'
+            f' data-blob="{escape(blob)}"'
+        )
     return (
-        f'<li><a href="/works/{escape(w["slug"])}/"><strong>{escape(w["title"])}</strong>'
-        f"<span>{escape(w['author'])} · {w['section_count']} sections · {st}{mark}</span></a></li>"
+        f"<li{attrs}><a href=\"/works/{escape(w['slug'])}/\"><strong>{escape(w['title'])}</strong>"
+        f"<span>{meta}</span></a></li>"
     )
 
 
@@ -1583,7 +1643,6 @@ def layout(
       <a href="/works/"{nav_cls("works")}>Works</a>
       <a href="/explore/"{nav_cls("explore")}>Explore</a>
       <a href="/authors/"{nav_cls("authors")}>Authors</a>
-      <a href="/search/"{nav_cls("search")}>Search</a>
       <a href="/contribute/"{nav_cls("contribute")}>Help</a>
       <a href="/about/"{nav_cls("about")}>About</a>
       <a class="support" href="{SPONSORS}" rel="noopener">Support</a>
@@ -1721,9 +1780,11 @@ def build() -> None:
 
     # --- Topics index ---
     locus_blocks = []
-    for locus in tax.get("loci", []):
+    loci_sorted = sorted(tax.get("loci", []), key=lambda loc: alpha_key(loc.get("title")))
+    for locus in loci_sorted:
         rows = []
-        for t in locus.get("topics", []):
+        topics_sorted = sorted(locus.get("topics", []), key=lambda t: alpha_key(t.get("title")))
+        for t in topics_sorted:
             n = len(by_topic.get(t["id"], []))
             if n == 0 and t["id"] not in topic_to_works:
                 continue
@@ -1744,7 +1805,7 @@ def build() -> None:
 
     topics_body = f"""
 <h1>Topics</h1>
-<p class="intro">Map of teaching from the books in this library. Related whole works appear on each topic page. Later writers are labeled where they enter. English is newly prepared for study — not a complete critical edition. <a href="/explore/">See how positions line up over time →</a></p>
+<p class="intro">Map of teaching from the books in this library, listed alphabetically within each area. Related whole works appear on each topic page. Later writers are labeled where they enter. English is newly prepared for study — not a complete critical edition. <a href="/explore/">See curated paths and positions over time →</a></p>
 {''.join(locus_blocks)}
 """
     write(
@@ -1917,28 +1978,59 @@ def build() -> None:
         )
 
     # --- Works ---
-    first_list = "".join(work_card_html(w) for w in works if w.get("first_english"))
-    other_list = "".join(work_card_html(w) for w in works if not w.get("first_english"))
+    # Default catalog order: author era / floruit, earliest first (see docs/browse-ia.md).
+    works_chrono = sorted(
+        works,
+        key=lambda w: (
+            work_chrono_year(w),
+            alpha_key(w.get("author")),
+            alpha_key(w.get("title")),
+            w.get("slug") or "",
+        ),
+    )
+    works_list = "".join(work_card_html(w, catalog=True) for w in works_chrono)
+    oet_count = sum(1 for w in works if w.get("first_english"))
     write(
         DIST / "works" / "index.html",
         layout(
             "Works",
-            f"""<h1>Works</h1>
-<p class="intro">Whole treatises, section by section. Later writers are labeled on their pages. Each work links to related topics.</p>
-<section id="original-english">
-<span id="no-prior-english" class="anchor-alias" aria-hidden="true"></span>
-<span id="no-earlier-english" class="anchor-alias" aria-hidden="true"></span>
-<h2>Original English Translation</h2>
-<p class="intro">{escape(ORIGINAL_ENGLISH_INTRO)}</p>
-<ul class="card-list">{first_list}</ul>
+            f"""<div class="works-browse" data-works-browse>
+<h1>Works</h1>
+<p class="intro">Whole treatises, read straight through. Find by author, title, topic, or words. Default order is <strong>chronology</strong> — when the author lived and wrote (earliest first). Switch to author name or title when you want a directory.</p>
+<div class="works-chrome">
+  <label class="works-find"><span class="vh">Find in library</span>
+    <input type="search" id="works-q" class="search-input" placeholder="Find author, title, topic, words…" autocomplete="off">
+  </label>
+  <div class="works-sort" role="group" aria-label="Sort works">
+    <button type="button" data-sort="chrono" aria-pressed="true">Chronology</button>
+    <button type="button" data-sort="author" aria-pressed="false">Author</button>
+    <button type="button" data-sort="title" aria-pressed="false">Title</button>
+  </div>
+  <div class="works-filters" role="group" aria-label="Filter works">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-filter="oet" aria-pressed="false">Original English ({oet_count})</button>
+    <button type="button" data-filter="Apostolic" aria-pressed="false">Apostolic</button>
+    <button type="button" data-filter="Ante-Nicene" aria-pressed="false">Ante-Nicene</button>
+    <button type="button" data-filter="Nicene" aria-pressed="false">Nicene</button>
+    <button type="button" data-filter="Post-Nicene" aria-pressed="false">Post-Nicene</button>
+  </div>
+</div>
+<p class="works-hint meta" id="works-status" aria-live="polite">{len(works)} treatises · sorted by author era (earliest first)</p>
+<ul id="works-list" class="card-list works-list">{works_list}</ul>
+<section id="passage-hits" class="passage-hits" hidden>
+  <h2>Passages &amp; topics</h2>
+  <p class="intro fine">Matches beyond the treatise list — excerpts and sections.</p>
+  <ul id="passage-results" class="card-list"></ul>
 </section>
-<section>
-<h2>Also in this library</h2>
-<p class="intro">Some English of this material already exists in older books, often inside another author’s reply. It is here so the arguments can be read in one place.</p>
-<ul class="card-list">{other_list}</ul>
-</section>""",
+<p class="intro fine" id="original-english">
+  <span id="no-prior-english" class="anchor-alias" aria-hidden="true"></span>
+  <span id="no-earlier-english" class="anchor-alias" aria-hidden="true"></span>
+  {escape(ORIGINAL_ENGLISH_INTRO)} Use the <strong>Original English</strong> filter above to list only those treatises.
+</p>
+</div>""",
             crumb=[("Home", "/"), ("Works", "")],
             active="works",
+            description="Browse whole Fathers treatises — find, filter by era, sort by chronology, author, or title",
         ),
     )
 
@@ -2513,8 +2605,7 @@ def build() -> None:
         ),
     )
     hubs_done.add("augustine-of-hippo")
-    author_links.insert(
-        0,
+    author_links.append(
         f'<li><a href="/authors/augustine-of-hippo/"><strong>Augustine of Hippo</strong><span>{len(aug_rows)} topical · contrast cards</span></a></li>',
     )
     # Old slug kept as a redirect so existing links don't break.
@@ -2527,7 +2618,7 @@ def build() -> None:
         '<p><a href="/authors/augustine-of-hippo/">Augustine of Hippo has moved.</a></p>',
     )
 
-    for author in sorted(by_author.keys(), key=lambda a: a.lower()):
+    for author in sorted(by_author.keys(), key=lambda a: alpha_key(a)):
         al = author.lower()
         if "origen" in al or "julian of eclanum" in al or al == "cyril of alexandria":
             continue
@@ -2539,7 +2630,7 @@ def build() -> None:
             f'<li><a href="/authors/{escape(sl)}/"><strong>{escape(author)}</strong><span>{n} topical excerpts</span></a></li>'
         )
         rows = by_author[author]
-        rec = AUTHORS.get(author) or {}
+        rec = author_record(author)
         dates = rec.get("dates_display") or ""
         grouped: dict[str, list] = defaultdict(list)
         for x in rows:
@@ -2549,7 +2640,7 @@ def build() -> None:
             blocks.append(f'<p class="meta">{escape(dates)}</p>')
         for tkey, xs in sorted(
             grouped.items(),
-            key=lambda kv: (topic_meta.get(kv[0], {}) or {}).get("title") or kv[0],
+            key=lambda kv: alpha_key((topic_meta.get(kv[0], {}) or {}).get("title") or kv[0]),
         ):
             ttitle = (topic_meta.get(tkey) or {}).get("title") or tkey
             lis = "".join(
@@ -2572,11 +2663,19 @@ def build() -> None:
             ),
         )
 
+    def _author_link_sort_key(html: str) -> str:
+        m = re.search(r"<strong>(.*?)</strong>", html)
+        return alpha_key(m.group(1) if m else html)
+
+    author_links.sort(key=_author_link_sort_key)
+
     write(
         DIST / "authors" / "index.html",
         layout(
             "Authors",
-            f"<h1>Authors</h1><ul class='card-list'>{''.join(author_links)}</ul>",
+            f"<h1>Authors</h1>"
+            f"<p class=\"intro\">Alphabetical index of writers in this library — whole works and topical excerpts.</p>"
+            f"<ul class='card-list'>{''.join(author_links)}</ul>",
             crumb=[("Home", "/"), ("Authors", "")],
             active="authors",
         ),
@@ -2595,8 +2694,15 @@ def build() -> None:
 
     explore_body = """
 <div class="explore" data-explore>
+  <section class="explore-paths" id="explore-paths" aria-label="Curated paths">
+    <header class="explore-paths-head">
+      <h1>Explore</h1>
+      <p class="intro">Curated paths for the questions people actually ask — doctrine timelines, controversies, scripture trails, era bands, and short reading sequences. Open a path, then use the timeline below for the stance map.</p>
+    </header>
+    <div class="explore-path-grid" id="explore-path-grid"><p class="empty">Loading paths…</p></div>
+  </section>
   <div class="explore-chrome">
-    <h1>Explore</h1>
+    <h2 class="explore-timeline-title">Topic timeline</h2>
     <a class="explore-home" href="/">← Library</a>
     <label class="field field-topic"><span>Topic</span><select id="explore-topic"></select></label>
     <button type="button" class="explore-filters-toggle" id="explore-filters-toggle" aria-expanded="false">Filters</button>
@@ -2630,7 +2736,7 @@ def build() -> None:
             "Explore",
             explore_body,
             active="explore",
-            description="See how Fathers line up on a topic across time",
+            description="Curated doctrinal paths and a timeline of how Fathers line up on a claim across time",
             styles=["/assets/explore.css"],
             scripts=["/assets/explore.js"],
             body_class="explore-mode",
@@ -2639,14 +2745,11 @@ def build() -> None:
 
     write(
         DIST / "search" / "index.html",
-        layout(
-            "Search",
-            """<h1>Search</h1>
-            <input type="search" id="q" class="search-input" placeholder="Author, topic, words…" autofocus>
-            <ul id="results" class="card-list"></ul>""",
-            crumb=[("Home", "/"), ("Search", "")],
-            active="search",
-        ),
+        '<!DOCTYPE html><meta charset="utf-8">'
+        '<meta http-equiv="refresh" content="0; url=/works/">'
+        '<link rel="canonical" href="https://fathers.saneapps.com/works/">'
+        '<title>Find works</title>'
+        '<p>Search now lives on <a href="/works/">Works</a> — find, filter, and sort in one place.</p>',
     )
     write(
         DIST / "contribute" / "index.html",

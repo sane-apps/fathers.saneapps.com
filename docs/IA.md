@@ -10,10 +10,17 @@ build — do not invent a second outline.
 | Door | Question | Source |
 |------|----------|--------|
 | **Topics** | What did the Fathers teach about X? | `ante-nicene-topics` |
-| **Works** | Read a whole treatise, section by section | `origen-prayer-martyrdom`, `julian-of-eclanum`, … |
-| **Explore** | How writers line up on a claim across time | `data/explore/` + library points |
+| **Works** | Read a whole treatise; find / sort / filter the catalog | `origen-prayer-martyrdom`, `julian-of-eclanum`, … |
+| **Explore** | Curated doctrinal paths + how writers line up on a claim across time | `data/explore/` + library points |
 
-Home presents Topics and Works; Explore is a third nav door (topic river with optional compare ≤3 authors).
+Home presents Topics and Works; Explore is a third nav door (path cards + topic river with optional compare ≤3 authors). Authors is the A–Z index. **Search is not a separate tab** — find lives on Works (`/works/?q=`). Old `/search/` redirects to `/works/`.
+
+## Browse rules (2026-09-12)
+
+1. **Alphabetical** for topics (within each locus/area), loci/areas, authors, and Explore topic lists — case-insensitive Latin sort. No load/DB insertion order.
+2. **Works default sort:** chronology by author era / floruit (`author_sort_year`), earliest first. Alternates: author name, work title. Controls are visible on `/works/`.
+3. **Works find** filters the catalog and surfaces passage/topic hits from `search-index.json` so a separate Search tab is unnecessary.
+4. **Explore paths** come from `data/explore/paths.json` (doctrine, controversy, scripture, era, rupture, reading). Stub/partial statuses are honest when the corpus is thin.
 
 ## Cross-references (required)
 
@@ -37,30 +44,31 @@ Update `WORK_TOPICS` when a new treatise lands. Topic ids must match
 | `/` | Brand + enter Topics / Works + donate |
 | `/about/` | Evergreen mission, how to read, badge meaning, Sponsors (no work inventory) |
 | `/methodology/` | How English is made: sources, two passes, OET meaning, apparatus vs reader |
-| `/search/` | Search across topics + works |
-| `/authors/` | Author index (both doors) |
+| `/search/` | **Redirect** → `/works/` (find/filter lives on Works) |
+| `/authors/` | Author index A–Z (both doors) |
 | `/authors/{slug}/` | Author hub → works + topical hits + topics |
 
 ### Explore door
 | Path | Purpose |
 |------|---------|
-| `/explore/` | Topic river timeline (stance lanes × time) |
-| `/explore/?topic=&author=&zoom=` | Deep link filters |
+| `/explore/` | Curated paths + topic river timeline (stance lanes × time) |
+| `/explore/?topic=&author=&zoom=&compare=` | Deep link filters |
 
-Explore data: `data/explore/{claims,stances,contrast,ruptures}.json` → `dist/data/explore-index.json`.
-Primary model: **topic river**. Compare mode: up to 3 authors. Century aggregation by default when crowded; Years on demand. Contrast cards for authors not yet fully in the corpus (e.g. Augustine).
+Explore data: `data/explore/{claims,stances,contrast,ruptures,paths}.json` (+ `*_expansion.json`) → `dist/data/explore-index.json`.
+Primary model: **path cards** then **topic river**. Compare mode: up to 3 authors. Century aggregation by default when crowded; Years on demand. Contrast cards for authors not yet fully in the corpus (e.g. Augustine).
 
 ### Topics door
 | Path | Purpose |
 |------|---------|
-| `/topics/` | Locus → topic index with counts |
+| `/topics/` | Locus → topic index with counts (**A–Z** within each area) |
 | `/topics/{topic-id}/` | Excerpts + related works |
 | `/e/{excerpt-id}/` | Topical excerpt card |
 
 ### Works door
 | Path | Purpose |
 |------|---------|
-| `/works/` | Catalog (status + era labels) |
+| `/works/` | Catalog with find, chronology default, author/title sorts, era + OET filters |
+| `/works/?q=&sort=&filter=` | Deep links into the catalog |
 | `/works/{work-slug}/` | Continuous reader (text-first rail). Multi-book works: short hub |
 | `/works/{work-slug}/book-N/` | One book as a continuous reader |
 | `/works/{work-slug}/{section}/` | Cite page; “Read continuously” jumps to the reader `#s…` |
