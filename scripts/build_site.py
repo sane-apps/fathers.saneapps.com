@@ -45,6 +45,7 @@ ORIGEN_GENESIS_HOMILIES_BOOK = BOOKS / "origen-genesis-homilies"
 ORIGEN_EXODUS_HOMILIES_BOOK = BOOKS / "origen-exodus-homilies"
 ORIGEN_LEVITICUS_HOMILIES_BOOK = BOOKS / "origen-leviticus-homilies"
 ORIGEN_NUMBERS_HOMILIES_BOOK = BOOKS / "origen-numbers-homilies"
+ORIGEN_JOSHUA_HOMILIES_BOOK = BOOKS / "origen-joshua-homilies"
 JULIAN_BOOK = BOOKS / "julian-of-eclanum"
 EXPLORE_DATA = ROOT / "data" / "explore"
 SPONSORS = "https://github.com/sponsors/MrSaneApps"
@@ -955,6 +956,10 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
     "origen-numbers-homily-28": (
         "No previous public-domain English translation of Origen’s Homilia XXVIII "
         "on Numbers (ANF lacks these; Scheck FOTC is copyrighted)."
+    ),
+    "origen-joshua-homily-1": (
+        "No previous public-domain English translation of Origen’s Homilia I "
+        "on Joshua (ANF lacks these; Bruce FOTC is copyrighted)."
     ),
 }
 
@@ -1883,6 +1888,59 @@ def load_origen_numbers_homilies() -> list[dict]:
     return works
 
 
+def load_origen_joshua_homilies() -> list[dict]:
+    """Origen Homilies on Joshua — true OET (Rufinus Latin; Baehrens GCS 30)."""
+    works: list[dict] = []
+    trans = ORIGEN_JOSHUA_HOMILIES_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+    for en_path in sorted(trans.glob("*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("_"):
+            continue
+        # Ship whole-homily files only (skip tip slice files if any appear later).
+        if not re.fullmatch(r"josh_hom\d+", stem):
+            continue
+        rows = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(rows, list) or not rows:
+            continue
+        src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("latin") and mapped.get("text"):
+                mapped["latin"] = mapped.get("text")
+            src_map[sec] = mapped
+        meta = _json_load(trans / f"{stem}_meta.json", {})
+        first_english = bool(meta.get("first_english", True))
+        slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
+        title = meta.get("title") or stem.replace("_", " ").title()
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=title,
+                author="Origen of Alexandria",
+                author_slug="origen",
+                period=meta.get("period") or "c. 240–245",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition")
+                or "Baehrens, Origenes Werke VII = GCS 30 (1921)",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Origen’s Homilies on Joshua (Rufinus Latin). "
+                    "Original English Translation — ANF does not cover these works."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
 def load_julian_works() -> list[dict]:
     """Early fifth-century Julian — disclosed as not ante-Nicene."""
     era = (
@@ -2350,6 +2408,7 @@ def build() -> None:
         + load_origen_exodus_homilies()
         + load_origen_leviticus_homilies()
         + load_origen_numbers_homilies()
+        + load_origen_joshua_homilies()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
