@@ -36,6 +36,7 @@ TOPICS_BOOK = BOOKS / "ante-nicene-topics"
 ORIGEN_BOOK = BOOKS / "origen-prayer-martyrdom"
 ORIGEN_CONTRA_CELSUM_BOOK = BOOKS / "origen-contra-celsum"
 ORIGEN_PRINCIPIIS_BOOK = BOOKS / "origen-principiis"
+ORIGEN_PHILOCALIA_BOOK = BOOKS / "origen-philocalia"
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
@@ -2766,6 +2767,86 @@ def load_origen_principiis() -> list[dict]:
             src_map[sec] = mapped
         return src_map
 
+    # Group: Book I = pref_i1 + b1_*; Book N = princ_bN*
+    by_book: dict[str, list] = {"1": [], "2": [], "3": [], "4": []}
+    for en_path in sorted(trans.glob("princ_*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("princ_pref") or stem.startswith("princ_b1"):
+            by_book["1"].append(en_path)
+        else:
+            m = re.fullmatch(r"princ_b([2-4])(?:_.*)?", stem)
+            if m:
+                by_book[m.group(1)].append(en_path)
+
+    roman = {"1": "I", "2": "II", "3": "III", "4": "IV"}
+    for book_no, paths in by_book.items():
+        if not paths:
+            continue
+        rows: list = []
+        src_map: dict[str, dict] = {}
+        for en_path in paths:
+            chunk = json.loads(en_path.read_text(encoding="utf-8"))
+            if not isinstance(chunk, list) or not chunk:
+                continue
+            rows.extend(chunk)
+            stem = en_path.name[: -len("_english.json")]
+            src_map.update(
+                _latin_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
+            )
+        if not rows:
+            continue
+        seen = set()
+        deduped = []
+        for r in rows:
+            sec = str(r.get("section"))
+            if sec in seen:
+                continue
+            seen.add(sec)
+            deduped.append(r)
+        rows = deduped
+        meta = _json_load(trans / f"princ_b{book_no}_meta.json", {})
+        if not meta and book_no == "1":
+            meta = _json_load(trans / "princ_pref_i1_meta.json", {})
+        first_english = bool(meta.get("first_english", True))
+        if book_no == "1":
+            slug = meta.get("slug") or "origen-de-principiis"
+        else:
+            slug = meta.get("slug") or f"origen-de-principiis-book-{book_no}"
+        title = meta.get("title") or f"De Principiis, Book {roman[book_no]}"
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=title,
+                author="Origen of Alexandria",
+                author_slug="origen",
+                period=meta.get("period") or "c. 220–230",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition") or "Koetschau GCS 22 (1913) — Rufinus Latin",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Origen’s De Principiis (Rufinus Latin). "
+                    "Original English Translation — new OET from Koetschau GCS."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
+    def _latin_src_map(src_rows: list) -> dict[str, dict]:
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("latin") and mapped.get("text"):
+                mapped["latin"] = mapped.get("text")
+            src_map[sec] = mapped
+        return src_map
+
     for en_path in sorted(trans.glob("princ_*_english.json")):
         stem = en_path.name[: -len("_english.json")]
         if stem.startswith("_"):
@@ -2792,6 +2873,63 @@ def load_origen_principiis() -> list[dict]:
                 or (
                     "Origen’s De Principiis (Rufinus Latin). "
                     "Original English Translation — new OET from Koetschau GCS."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
+
+def load_origen_philocalia() -> list[dict]:
+    """Origen Philocalia (Robinson 1893 Greek) — true OET tip slices."""
+    works: list[dict] = []
+    trans = ORIGEN_PHILOCALIA_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+
+    def _greek_src_map(src_rows: list) -> dict[str, dict]:
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("greek") and mapped.get("text"):
+                mapped["greek"] = mapped.get("text")
+            src_map[sec] = mapped
+        return src_map
+
+    for en_path in sorted(trans.glob("philoc_*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("_"):
+            continue
+        rows = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(rows, list) or not rows:
+            continue
+        src_map = _greek_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
+        meta = _json_load(trans / f"{stem}_meta.json", {})
+        first_english = bool(meta.get("first_english", True))
+        # philoc_01 → chapter 1
+        m = re.fullmatch(r"philoc_0*(\d+)", stem)
+        chap = m.group(1) if m else stem.replace("philoc_", "")
+        slug = meta.get("slug") or f"origen-philocalia-{chap}"
+        title = meta.get("title") or f"Philocalia {chap}"
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=title,
+                author="Origen of Alexandria",
+                author_slug="origen",
+                period=meta.get("period") or "c. 360 anthology",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition") or "J. A. Robinson, Cambridge 1893 — Greek",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Origen’s Philocalia (Greek anthology). "
+                    "Original English Translation — new OET from Robinson 1893."
                 ),
                 first_english=first_english,
                 first_english_note=meta.get("first_english_note") or "",
