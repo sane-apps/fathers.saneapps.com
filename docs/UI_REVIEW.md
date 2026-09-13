@@ -84,3 +84,22 @@ Screenshots record the inspected states throughout this review; catalog counts i
 
 ### 9. Methodology
 ![Mobile Methodology](review/fathers-15-mobile-methodology.jpg)
+
+## Follow-up: iPhone night-mode screenshots
+
+The supplied screenshots also exposed gradients on the homepage and Explore
+canvas that the original reader-only fix missed. All remaining page-surface
+gradients are now solid backgrounds, so automatic darkening can transform ink
+and paper together. The 390px reader, homepage, and Free Will timeline were
+visually checked with the development-only DarkReader simulation; all remain
+readable. This is not a claim of testing Brave on a physical iPhone.
+
+Timeline tooltips now clamp their measured width and height inside the canvas
+and remain hidden for touch pointers. Point packing searches all available
+vertical offsets, and the break label stays inside the chart's right edge.
+A regression test covers measured tooltip bounds and touch behavior.
+
+The production ship command rebuilt 13,689 pages, checked 338,452 local links
+with zero failures, and passed all seven route smoke checks. Upload was blocked
+by the missing CLOUDFLARE_API_TOKEN. Asset version: 0a77e77abe. Production has
+not been verified with this version.
