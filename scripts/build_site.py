@@ -39,6 +39,7 @@ ORIGEN_PRINCIPIIS_BOOK = BOOKS / "origen-principiis"
 ORIGEN_PHILOCALIA_BOOK = BOOKS / "origen-philocalia"
 ORIGEN_LUKE_HOMILIES_BOOK = BOOKS / "origen-luke-homilies"
 ORIGEN_LETTERS_BOOK = BOOKS / "origen-letters"
+ORIGEN_NT_FRAGMENTS_BOOK = BOOKS / "origen-nt-fragments"
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
@@ -3091,6 +3092,96 @@ def load_origen_letters() -> list[dict]:
     return works
 
 
+def load_origen_nt_fragments() -> list[dict]:
+    """Origen NT catena/scholia fragments — true OET tip slices as one SERIES hub."""
+    works: list[dict] = []
+    trans = ORIGEN_NT_FRAGMENTS_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+
+    def _greek_src_map(src_rows: list) -> dict[str, dict]:
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("greek") and mapped.get("text"):
+                mapped["greek"] = mapped.get("text")
+            src_map[sec] = mapped
+        return src_map
+
+    rows: list = []
+    src_map: dict[str, dict] = {}
+    for en_path in sorted(trans.glob("ntfrag_*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("_"):
+            continue
+        chunk = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(chunk, list) or not chunk:
+            continue
+        rows.extend(chunk)
+        src_map.update(
+            _greek_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
+        )
+    if not rows:
+        return works
+    seen: set[str] = set()
+    deduped = []
+    for r in rows:
+        sec = str(r.get("section"))
+        if sec in seen:
+            continue
+        seen.add(sec)
+        deduped.append(r)
+
+    order = {
+        "john-catena-1": 10,
+        "john-catena-2": 20,
+        "john-catena-mid": 30,
+        "john-catena-close": 40,
+        "luke-catena-1": 50,
+        "luke-catena-2": 60,
+        "matt-scholia": 70,
+        "luke-scholia-series": 80,
+    }
+
+    def _sec_key(r: dict):
+        sec = str(r.get("section"))
+        if sec in order:
+            return (0, order[sec])
+        return (1, sec)
+
+    deduped.sort(key=_sec_key)
+    meta = _json_load(trans / "ntfrag_series_meta.json", {})
+    if not meta:
+        meta = _json_load(trans / "ntfrag_john_open_meta.json", {})
+    first_english = bool(meta.get("first_english", True))
+    slug = meta.get("slug") or "origen-nt-fragments"
+    title = meta.get("title") or "NT Catena / Scholia Fragments"
+    works.append(
+        _pack_work(
+            slug=slug,
+            title=title,
+            author="Origen of Alexandria",
+            author_slug="origen",
+            period=meta.get("period") or "c. 230–250",
+            status=meta.get("status") or "available",
+            edition=meta.get("edition")
+            or "First1KGreek TEI — John/Luke catena; Matt/Luke scholia",
+            sections=_origen_rows(deduped, src_map),
+            blurb=meta.get("blurb")
+            or (
+                "Origen Gospel catena and scholia fragments (Greek). "
+                "Original English Translation — new OET from First1K Greek."
+            ),
+            first_english=first_english,
+            first_english_note=meta.get("first_english_note") or "",
+            text_history=_text_history_from_meta(meta),
+        )
+    )
+    if slug not in WORK_TOPICS and meta.get("topics"):
+        WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
 def load_julian_works() -> list[dict]:
     """Early fifth-century Julian — disclosed as not ante-Nicene."""
     era = (
@@ -3569,6 +3660,7 @@ def build() -> None:
         + load_origen_philocalia()
         + load_origen_luke_homilies()
         + load_origen_letters()
+        + load_origen_nt_fragments()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
