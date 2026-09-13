@@ -734,6 +734,54 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Homilia I "
         "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
     ),
+    "origen-exodus-homily-2": (
+        "No previous public-domain English translation of Origen’s Homilia II "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-3": (
+        "No previous public-domain English translation of Origen’s Homilia III "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-4": (
+        "No previous public-domain English translation of Origen’s Homilia IV "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-5": (
+        "No previous public-domain English translation of Origen’s Homilia V "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-6": (
+        "No previous public-domain English translation of Origen’s Homilia VI "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-7": (
+        "No previous public-domain English translation of Origen’s Homilia VII "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-8": (
+        "No previous public-domain English translation of Origen’s Homilia VIII "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-9": (
+        "No previous public-domain English translation of Origen’s Homilia IX "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-10": (
+        "No previous public-domain English translation of Origen’s Homilia X "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-11": (
+        "No previous public-domain English translation of Origen’s Homilia XI "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-12": (
+        "No previous public-domain English translation of Origen’s Homilia XII "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
+    "origen-exodus-homily-13": (
+        "No previous public-domain English translation of Origen’s Homilia XIII "
+        "on Exodus (ANF lacks these; Heine FOTC is copyrighted)."
+    ),
 }
 
 
@@ -1510,6 +1558,9 @@ def load_origen_exodus_homilies() -> list[dict]:
     for en_path in sorted(trans.glob("*_english.json")):
         stem = en_path.name[: -len("_english.json")]
         if stem.startswith("_"):
+            continue
+        # Ship whole homilies only (skip tip slice files like exod_hom6_1_7).
+        if not re.fullmatch(r"exod_hom\d+", stem):
             continue
         rows = json.loads(en_path.read_text(encoding="utf-8"))
         if not isinstance(rows, list) or not rows:
