@@ -1498,22 +1498,42 @@ def load_origen_works() -> list[dict]:
         str(s.get("section")): s
         for s in json.loads((ORIGEN_BOOK / "translations/gebet_source.json").read_text())
     }
-    # Optional OET overlay for opening sections (orat_01_02_* tips).
-    orat_en_path = ORIGEN_BOOK / "translations/orat_01_02_english.json"
-    if orat_en_path.is_file():
-        orat_en = {str(r.get("section")): r for r in json.loads(orat_en_path.read_text())}
+    # Optional OET overlays from orat_*_* tip slices (ordered by section).
+    orat_en: dict[str, dict] = {}
+    orat_src: dict[str, dict] = {}
+    for orat_path in sorted((ORIGEN_BOOK / "translations").glob("orat_*_english.json")):
+        try:
+            chunk = json.loads(orat_path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(chunk, list):
+            continue
+        for row in chunk:
+            sec = str(row.get("section"))
+            if sec:
+                orat_en[sec] = row
+        src_path = orat_path.with_name(orat_path.name.replace("_english.json", "_source.json"))
+        if src_path.is_file():
+            try:
+                for s in json.loads(src_path.read_text(encoding="utf-8")):
+                    orat_src[str(s.get("section"))] = s
+            except Exception:
+                pass
+    if orat_en:
         gebet_en = [
-            {**row, **({k: orat_en[str(row.get("section"))][k]
-                       for k in ("title", "english")
-                       if k in orat_en[str(row.get("section"))]})}
+            {
+                **row,
+                **{
+                    k: orat_en[str(row.get("section"))][k]
+                    for k in ("title", "english")
+                    if k in orat_en[str(row.get("section"))]
+                },
+            }
             if str(row.get("section")) in orat_en
             else row
             for row in gebet_en
         ]
-        orat_src_path = ORIGEN_BOOK / "translations/orat_01_02_source.json"
-        if orat_src_path.is_file():
-            for s in json.loads(orat_src_path.read_text()):
-                gebet_src[str(s.get("section"))] = s
+        gebet_src.update(orat_src)
     mart_en = json.loads((ORIGEN_BOOK / "translations/martyrium_english.json").read_text())
     mart_src = {
         str(s.get("section")): s
@@ -1570,7 +1590,7 @@ def load_origen_works() -> list[dict]:
             text_history={
                 "method": (
                     "English follows Paul Koetschau, Origenes Werke II (GCS, 1899). "
-                    "Where orat_01_02 OET tips are present, §§1–2 use that new English "
+                    "Where orat_* OET tip slices are present, those sections use that new English "
                     "from the Greek (Pass A≠B). Archive OCR of GCS was checked elsewhere."
                 ),
                 "witnesses": [
