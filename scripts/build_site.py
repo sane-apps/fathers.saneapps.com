@@ -37,6 +37,7 @@ ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
 CYRIL_BOOKS = sorted(BOOKS.glob("cyril-alexandria*"))
+IRENAEUS_DEMO_BOOK = BOOKS / "irenaeus-demonstration"
 JULIAN_BOOK = BOOKS / "julian-of-eclanum"
 EXPLORE_DATA = ROOT / "data" / "explore"
 SPONSORS = "https://github.com/sponsors/MrSaneApps"
@@ -989,6 +990,58 @@ def load_cyril_works() -> list[dict]:
     return works
 
 
+def load_irenaeus_demonstration() -> list[dict]:
+    """Irenaeus Epideixis — prior English exists (Robinson/Wilson); never OET."""
+    works: list[dict] = []
+    trans = IRENAEUS_DEMO_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+    for en_path in sorted(trans.glob("*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("_"):
+            continue
+        rows = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(rows, list) or not rows:
+            continue
+        src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
+        # Armenian witness lives in `text`; map into greek slot for side-by-side display.
+        src_map: dict[str, dict] = {}
+        for s in src_rows:
+            sec = str(s.get("section"))
+            mapped = dict(s)
+            if not mapped.get("greek") and mapped.get("text"):
+                mapped["greek"] = mapped.get("text")
+            src_map[sec] = mapped
+        meta = _json_load(trans / f"{stem}_meta.json", {})
+        # Hard rule: prior English exists — never default this work to OET.
+        first_english = bool(meta.get("first_english", False))
+        slug = meta.get("slug") or "irenaeus-demonstration"
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=meta.get("title") or "Demonstration of the Apostolic Preaching",
+                author="Irenaeus of Lyons",
+                author_slug="irenaeus",
+                period=meta.get("period") or "c. 175–185",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition")
+                or "Patrologia Orientalis XII.5 (Armenian)",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Irenaeus’s short handbook of the apostolic preaching (Epideixis). "
+                    "Densified English for study — prior English exists (Robinson / Wilson)."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
 def load_julian_works() -> list[dict]:
     """Early fifth-century Julian — disclosed as not ante-Nicene."""
     era = (
@@ -1452,6 +1505,7 @@ def build() -> None:
         + load_origen_book2()
         + load_origen_book3()
         + load_cyril_works()
+        + load_irenaeus_demonstration()
         + load_julian_works()
     )
     works_by_slug = {w["slug"]: w for w in works}
@@ -2314,6 +2368,8 @@ def build() -> None:
     write_author_hub("julian-of-eclanum", "Julian of Eclanum", "julian-of-eclanum")
     if any(w.get("author_slug") == "cyril-of-alexandria" for w in works):
         write_author_hub("cyril-of-alexandria", "Cyril of Alexandria", "cyril-of-alexandria")
+    if any(w.get("author_slug") == "irenaeus" for w in works):
+        write_author_hub("irenaeus", "Irenaeus of Lyons", "irenaeus")
 
     # Augustine hub (topical excerpts + contrast cards; full works forthcoming)
     aug_rows = by_author.get("Augustine of Hippo", [])
