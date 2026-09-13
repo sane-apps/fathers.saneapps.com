@@ -40,6 +40,12 @@ ORIGEN_PHILOCALIA_BOOK = BOOKS / "origen-philocalia"
 ORIGEN_LUKE_HOMILIES_BOOK = BOOKS / "origen-luke-homilies"
 ORIGEN_LETTERS_BOOK = BOOKS / "origen-letters"
 ORIGEN_NT_FRAGMENTS_BOOK = BOOKS / "origen-nt-fragments"
+ORIGEN_PAULINE_FRAGMENT_BOOKS = [
+    BOOKS / "origen-ephesians-fragments",
+    BOOKS / "origen-1-corinthians-fragments",
+    BOOKS / "origen-hebrews-homily-scrap",
+    BOOKS / "origen-romans-catena",
+]
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
@@ -3200,6 +3206,78 @@ def load_origen_nt_fragments() -> list[dict]:
     return works
 
 
+def load_origen_pauline_fragments() -> list[dict]:
+    """Origen Pauline Khazarzar fragments — tip SERIES CLOSEOUT hubs (true OET)."""
+    works: list[dict] = []
+    era = (
+        "Origen died around 253 — within the first three centuries of the church."
+    )
+    for folder in ORIGEN_PAULINE_FRAGMENT_BOOKS:
+        trans = folder / "translations"
+        if not trans.is_dir():
+            continue
+        for en_path in sorted(trans.glob("*_english.json")):
+            stem = en_path.name[: -len("_english.json")]
+            if stem.startswith("_"):
+                continue
+            rows = json.loads(en_path.read_text(encoding="utf-8"))
+            if not isinstance(rows, list) or not rows:
+                continue
+            src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
+            src_map = {str(s.get("section")): s for s in src_rows}
+            # Greek often lives in `text` on these tip rows.
+            for sec, s in list(src_map.items()):
+                mapped = dict(s)
+                if not mapped.get("greek") and mapped.get("text"):
+                    mapped["greek"] = mapped.get("text")
+                src_map[sec] = mapped
+            meta = _json_load(trans / f"{stem}_meta.json", {})
+            slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
+            title = meta.get("title") or stem.replace("_", " ").title()
+            sections = _origen_rows(rows, src_map)
+            existing = next((w for w in works if w["slug"] == slug), None)
+            if existing is not None:
+                seen = {str(s.get("section")) for s in existing["sections"]}
+                for sec in sections:
+                    if str(sec.get("section")) not in seen:
+                        existing["sections"].append(sec)
+                        seen.add(str(sec.get("section")))
+                existing["section_count"] = len(existing["sections"])
+                if meta.get("blurb"):
+                    existing["blurb"] = meta["blurb"]
+                if meta.get("first_english_note"):
+                    existing["first_english_note"] = meta["first_english_note"]
+                    note = (meta.get("first_english_note") or "").strip()
+                    if existing.get("first_english") and note:
+                        existing["first_english_note"] = (
+                            oet_banner_gloss(note)
+                            if "oet_banner_gloss" in globals()
+                            else note
+                        )
+                continue
+            works.append(
+                _pack_work(
+                    slug=slug,
+                    title=title,
+                    author="Origen of Alexandria",
+                    author_slug="origen",
+                    period=meta.get("period") or "c. 230–250",
+                    status=meta.get("status") or "available",
+                    edition=meta.get("edition") or "PG 14 (Khazarzar)",
+                    sections=sections,
+                    blurb=meta.get("blurb")
+                    or "Origen Pauline fragments (Greek). SERIES CLOSEOUT.",
+                    era_note=era,
+                    first_english=bool(meta.get("first_english", True)),
+                    first_english_note=meta.get("first_english_note") or "",
+                    text_history=_text_history_from_meta(meta),
+                )
+            )
+            if slug not in WORK_TOPICS and meta.get("topics"):
+                WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
 def load_julian_works() -> list[dict]:
     """Early fifth-century Julian — disclosed as not ante-Nicene."""
     era = (
@@ -3679,6 +3757,7 @@ def build() -> None:
         + load_origen_luke_homilies()
         + load_origen_letters()
         + load_origen_nt_fragments()
+        + load_origen_pauline_fragments()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
