@@ -45,6 +45,8 @@ ORIGEN_PAULINE_FRAGMENT_BOOKS = [
     BOOKS / "origen-1-corinthians-fragments",
     BOOKS / "origen-hebrews-homily-scrap",
     BOOKS / "origen-romans-catena",
+    BOOKS / "origen-regnorum-fragments",
+    BOOKS / "origen-lamentationes-fragments",
 ]
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
