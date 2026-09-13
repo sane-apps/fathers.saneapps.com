@@ -2660,6 +2660,7 @@ def build() -> None:
         + load_origen_numbers_homilies()
         + load_origen_joshua_homilies()
         + load_origen_judges_homilies()
+        + load_origen_isaiah_ezekiel_homilies()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
