@@ -1,0 +1,7 @@
+{
+  "name": "fathers-site",
+  "private": true,
+  "type": "module",
+  "scripts": {"dev": "vite", "test": "node --test scripts/ui.test.mjs"},
+  "devDependencies": {"vite": "^7.0.0", "jsdom": "^26.0.0"}
+}

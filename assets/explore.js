@@ -71,7 +71,7 @@
   }
 
   fetch("/data/explore-index.json")
-    .then((r) => r.json())
+    .then((r) => { if (!r.ok) throw new Error("Explore unavailable"); return r.json(); })
     .then((json) => {
       data = json;
       // Prefer short labels from source claims if rebuild hasn't landed yet
@@ -81,12 +81,13 @@
       if (params.get("topic") && [...els.topic.options].some((o) => o.value === params.get("topic"))) {
         els.topic.value = params.get("topic");
       }
-      if (params.get("author") && params.get("author") !== "all") {
+      if ([...els.author.options].some(o => o.value === params.get("author"))) {
         els.author.value = params.get("author");
       }
+      if ([...els.era.options].some(o => o.value === params.get("era"))) els.era.value = params.get("era");
       if (params.get("zoom") === "century") zoom = "century";
       const cmp = (params.get("compare") || "").split(",").filter(Boolean);
-      compare = cmp.slice(0, 3);
+      compare = [...new Set(cmp)].filter(slug => data.authors.some(a => a.slug === slug)).slice(0, 3);
       syncZoom();
       fillCompareAdd();
       renderChips();
@@ -154,7 +155,7 @@
           animateNextDraw = true;
           render();
           showEmptyDrawer();
-          els.chrome?.scrollIntoView({ behavior: "smooth", block: "start" });
+          els.chrome?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
         } else {
           const first = card.querySelector(".path-links a");
           if (first) first.click();
@@ -162,6 +163,7 @@
       };
       card.addEventListener("click", activate);
       card.addEventListener("keydown", (ev) => {
+        if (ev.target !== card) return;
         if (ev.key === "Enter" || ev.key === " ") {
           ev.preventDefault();
           activate(ev);
@@ -208,7 +210,7 @@
         const a = data.authors.find((x) => x.slug === slug);
         const name = a ? a.name : slug;
         const c = aColors[slug] || "#1f5c45";
-        return `<span class="explore-chip" style="color:${c};border-color:color-mix(in srgb, ${c} 45%, transparent);background:color-mix(in srgb, ${c} 10%, #fff)">${esc(name)} <button type="button" data-remove="${escAttr(slug)}" aria-label="Remove">×</button></span>`;
+        return `<span class="explore-chip" style="color:${c};border-color:color-mix(in srgb, ${c} 45%, transparent);background:color-mix(in srgb, ${c} 10%, #fff)">${esc(name)} <button type="button" data-remove="${escAttr(slug)}" aria-label="Remove ${escAttr(name)}">×</button></span>`;
       })
       .join("");
   }
@@ -235,6 +237,8 @@
   }
 
   function syncZoom() {
+    els.zoomCentury.setAttribute("aria-pressed", String(zoom === "century"));
+    els.zoomYear.setAttribute("aria-pressed", String(zoom === "year"));
     els.zoomCentury.classList.toggle("is-active", zoom === "century");
     els.zoomYear.classList.toggle("is-active", zoom === "year");
   }
@@ -287,6 +291,7 @@
     const mode = zoom === "century" ? "century" : "year";
     const display = mode === "century" && points.length > 14 ? aggregateByCentury(points) : mode === "century" ? aggregateByCentury(points) : points;
     displayCache = display;
+    if (activeId && !display.some(p => p.id === activeId)) { activeId = null; showEmptyDrawer(); }
 
     if (updateTip) {
       const rupture = (data.ruptures || []).find((r) => r.topic === topic.id);
@@ -437,23 +442,23 @@
       const cls = `explore-point${active ? " is-active" : ""}${dim ? " is-dim" : ""}${isContrast ? " is-pulse" : ""}`;
       const label = isBucket ? `${p.author} (${p.count})` : `${p.author}`;
       const delay = Math.min(idx * 0.03, 0.6);
-      const animStyle = animateNextDraw ? `animation: fadeUp 0.5s ease ${delay}s both` : "";
+      const animStyle = animateNextDraw && !window.matchMedia("(prefers-reduced-motion: reduce)").matches ? `animation: fadeUp 0.5s ease ${delay}s both` : "";
       const hit = `<circle cx="${x}" cy="${y}" r="${placed.rad + (compact ? 9 : 6)}" fill="transparent" stroke="none"/>`;
       if (isContrast) {
         const s = placed.rad;
-        html += `<g class="${cls}" tabindex="0" data-id="${escAttr(p.id)}" data-label="${escAttr(label)}" data-sub="${escAttr(p.title || "Contrast")}" role="button" style="${animStyle}">
+        html += `<g class="${cls}" tabindex="0" data-id="${escAttr(p.id)}" data-label="${escAttr(label)}" data-sub="${escAttr(p.title || "Contrast")}" role="button" aria-label="${escAttr(label + ": " + (p.title || p.stance || "passages"))}" style="${animStyle}">
           ${hit}
           <rect class="diamond" x="${x - s}" y="${y - s}" width="${s * 2}" height="${s * 2}" transform="rotate(45 ${x} ${y})" fill="${color}" stroke="#fff" stroke-width="${dotStroke}" filter="url(#soft)"/>
         </g>`;
       } else if (isBucket) {
         const r = placed.rad;
-        html += `<g class="${cls}" tabindex="0" data-id="${escAttr(p.id)}" data-label="${escAttr(label)}" data-sub="${escAttr(p.count + " texts")}" role="button" style="${animStyle}">
+        html += `<g class="${cls}" tabindex="0" data-id="${escAttr(p.id)}" data-label="${escAttr(label)}" data-sub="${escAttr(p.count + " texts")}" role="button" aria-label="${escAttr(label + ": " + (p.title || p.stance || "passages"))}" style="${animStyle}">
           ${hit}
           <circle cx="${x}" cy="${y}" r="${r}" fill="${color}" stroke="#fff" stroke-width="2" filter="url(#soft)"/>
           <text x="${x}" y="${y + 4}" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">${p.count}</text>
         </g>`;
       } else {
-        html += `<g class="${cls}" tabindex="0" data-id="${escAttr(p.id)}" data-label="${escAttr(label)}" data-sub="${escAttr((p.year || "") + " · " + (p.stance || ""))}" role="button" style="${animStyle}">
+        html += `<g class="${cls}" tabindex="0" data-id="${escAttr(p.id)}" data-label="${escAttr(label)}" data-sub="${escAttr((p.year || "") + " · " + (p.stance || ""))}" role="button" aria-label="${escAttr(label + ": " + (p.title || p.stance || "passages"))}" style="${animStyle}">
           ${hit}
           <circle cx="${x}" cy="${y}" r="${placed.rad}" fill="${color}" stroke="#fff" stroke-width="${dotStroke}" filter="url(#soft)"/>
         </g>`;
@@ -617,6 +622,8 @@
     syncFiltersToggle();
     const url = new URL(location.href);
     url.searchParams.set("topic", els.topic.value);
+    if (els.era.value !== "all") url.searchParams.set("era", els.era.value);
+    else url.searchParams.delete("era");
     if (els.author.value !== "all") url.searchParams.set("author", els.author.value);
     else url.searchParams.delete("author");
     url.searchParams.set("zoom", zoom);

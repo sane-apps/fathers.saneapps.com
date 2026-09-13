@@ -580,3 +580,20 @@ body.explore-mode .site-footer {
 .explore-legend-inline {
   display: none;
 }
+
+/* Compact controls remain operable with touch, keyboard, and reduced motion. */
+.explore-path-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr)); }
+.explore-chrome { scroll-margin-top: var(--header-offset); }
+.explore-chrome select, .explore-seg button, .explore-filters-toggle,
+.explore-tip button, .explore-chip button { min-height: 44px; }
+.explore-chip button { min-width: 32px; }
+.explore-path-card:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .explore-chrome select { font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .explore *, .explore *::before, .explore *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
