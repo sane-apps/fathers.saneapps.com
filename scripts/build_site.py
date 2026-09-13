@@ -65,7 +65,20 @@ ORIGEN_PAULINE_FRAGMENT_BOOKS = [
 ]
 # Eustathius Rank-1 tip SERIES hubs (engastrimytho, hexaemeron, PG18 leftovers, …)
 EUSTATHIUS_TIP_BOOKS = sorted(BOOKS.glob("eustathius-*"))
-TIP_FRAGMENT_BOOKS = ORIGEN_PAULINE_FRAGMENT_BOOKS + EUSTATHIUS_TIP_BOOKS
+EVAGRIUS_TIP_BOOKS = sorted(BOOKS.glob("evagrius-*"))
+GREGORY_THAUM_TIP_BOOKS = sorted(BOOKS.glob("gregory-thaumaturgus-*"))
+OTHER_RANK1_TIP_BOOKS = sorted(
+    set(BOOKS.glob("marcellus-*"))
+    | set(BOOKS.glob("theodorus-heracleensis-*"))
+    | set(BOOKS.glob("africanus-*"))
+)
+TIP_FRAGMENT_BOOKS = (
+    ORIGEN_PAULINE_FRAGMENT_BOOKS
+    + EUSTATHIUS_TIP_BOOKS
+    + EVAGRIUS_TIP_BOOKS
+    + GREGORY_THAUM_TIP_BOOKS
+    + sorted(OTHER_RANK1_TIP_BOOKS)
+)
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
