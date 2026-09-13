@@ -106,6 +106,7 @@ OTHER_RANK1_TIP_BOOKS = sorted(
     | set(BOOKS.glob("maximus-*"))
     | set(BOOKS.glob("nicephorus-*"))
     | set(BOOKS.glob("symeon-magister-*"))
+    | set(BOOKS.glob("theophanes-*"))
 )
 TIP_FRAGMENT_BOOKS = (
     ORIGEN_PAULINE_FRAGMENT_BOOKS
