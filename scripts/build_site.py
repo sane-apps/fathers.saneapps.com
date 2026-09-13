@@ -50,6 +50,7 @@ ORIGEN_JUDGES_HOMILIES_BOOK = BOOKS / "origen-judges-homilies"
 ORIGEN_ISAIAH_EZEKIEL_BOOK = BOOKS / "origen-isaiah-ezekiel"
 ORIGEN_PSALMS_RUFINUS_BOOK = BOOKS / "origen-psalms-rufinus"
 ORIGEN_ROMANS_BOOK = BOOKS / "origen-romans"
+ORIGEN_MATTHEW_LATER_BOOK = BOOKS / "origen-matthew-later"
 JULIAN_BOOK = BOOKS / "julian-of-eclanum"
 EXPLORE_DATA = ROOT / "data" / "explore"
 SPONSORS = "https://github.com/sponsors/MrSaneApps"
@@ -1236,6 +1237,46 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Commentary "
         "on Romans Book I (ANF lacks this; Scheck FOTC is copyrighted)."
     ),
+    "origen-romans-book-2": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book II (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-3": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book III (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-4": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book IV (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-5": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book V (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-6": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book VI (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-7": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book VII (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-8": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book VIII (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-9": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book IX (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-romans-book-10": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Romans Book X (ANF lacks this; Scheck FOTC is copyrighted)."
+    ),
+    "origen-matthew-tomus-15": (
+        "No previous public-domain English translation of Origen’s Commentary "
+        "on Matthew Tomus XV (ANF lacks these later books; Heine is copyrighted)."
+    ),
 }
 
 
@@ -2380,6 +2421,16 @@ def load_origen_romans() -> list[dict]:
     trans = ORIGEN_ROMANS_BOOK / "translations"
     if not trans.is_dir():
         return works
+
+    def _latin_src_map(src_rows: list) -> dict[str, dict]:
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("latin") and mapped.get("text"):
+                mapped["latin"] = mapped.get("text")
+            src_map[sec] = mapped
+        return src_map
+
     for en_path in sorted(trans.glob("*_english.json")):
         stem = en_path.name[: -len("_english.json")]
         if stem.startswith("_"):
@@ -2389,13 +2440,17 @@ def load_origen_romans() -> list[dict]:
         rows = json.loads(en_path.read_text(encoding="utf-8"))
         if not isinstance(rows, list) or not rows:
             continue
-        src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
-        src_map = {str(s.get("section")): s for s in src_rows}
-        for sec, s in list(src_map.items()):
-            mapped = dict(s)
-            if not mapped.get("latin") and mapped.get("text"):
-                mapped["latin"] = mapped.get("text")
-            src_map[sec] = mapped
+        src_map = _latin_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
+        # Optional remainder slice (e.g. rom_b1_rem → Book I §§3–6).
+        rem_en = trans / f"{stem}_rem_english.json"
+        if rem_en.is_file():
+            rem_rows = json.loads(rem_en.read_text(encoding="utf-8"))
+            if isinstance(rem_rows, list) and rem_rows:
+                rows = list(rows) + rem_rows
+                rem_src = _latin_src_map(
+                    _source_rows(_json_load(trans / f"{stem}_rem_source.json", []))
+                )
+                src_map.update(rem_src)
         meta = _json_load(trans / f"{stem}_meta.json", {})
         first_english = bool(meta.get("first_english", True))
         slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
@@ -2414,6 +2469,57 @@ def load_origen_romans() -> list[dict]:
                 or (
                     "Origen’s Commentary on Romans (Rufinus Latin). "
                     "Original English Translation — ANF does not cover this work."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
+def load_origen_matthew_later() -> list[dict]:
+    """Origen Commentary on Matthew later tomoi (PG 13 Greek) — true OET."""
+    works: list[dict] = []
+    trans = ORIGEN_MATTHEW_LATER_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+    for en_path in sorted(trans.glob("*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("_"):
+            continue
+        if not re.fullmatch(r"mt_[xiv]+", stem):
+            continue
+        rows = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(rows, list) or not rows:
+            continue
+        src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("greek") and mapped.get("text"):
+                mapped["greek"] = mapped.get("text")
+            src_map[sec] = mapped
+        meta = _json_load(trans / f"{stem}_meta.json", {})
+        first_english = bool(meta.get("first_english", True))
+        slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
+        title = meta.get("title") or stem.replace("_", " ").title()
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=title,
+                author="Origen of Alexandria",
+                author_slug="origen",
+                period=meta.get("period") or "c. 244–249",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition") or "PG 13 (Migne) — Greek",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Origen’s Commentary on Matthew (later Greek tomoi). "
+                    "Original English Translation — ANF does not cover these books."
                 ),
                 first_english=first_english,
                 first_english_note=meta.get("first_english_note") or "",
@@ -2897,6 +3003,7 @@ def build() -> None:
         + load_origen_isaiah_ezekiel_homilies()
         + load_origen_psalms_rufinus()
         + load_origen_romans()
+        + load_origen_matthew_later()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
