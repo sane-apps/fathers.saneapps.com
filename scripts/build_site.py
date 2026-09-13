@@ -34,6 +34,7 @@ ASSET_VER = _asset_version()
 BOOKS = Path.home() / "SaneApps/clients/translations/books"
 TOPICS_BOOK = BOOKS / "ante-nicene-topics"
 ORIGEN_BOOK = BOOKS / "origen-prayer-martyrdom"
+ORIGEN_CONTRA_CELSUM_BOOK = BOOKS / "origen-contra-celsum"
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
@@ -613,6 +614,9 @@ NEVER_OET_SLUGS = frozenset(
 FIRST_ENGLISH_NOTES: dict[str, str] = {
     "origen-on-prayer": "No previous English translation.",
     "origen-exhortation-to-martyrdom": "No previous English translation.",
+    "origen-contra-celsum-book-1": (
+        "Original English Translation of Origen’s Contra Celsum Book I — new OET from Koetschau GCS (ANF Crombie and Chadwick not used as wording)."
+    ),
     "origen-dialogue-heraclides": (
         "No previous English translation. The Greek was recovered in the 1940s."
     ),
@@ -1539,6 +1543,42 @@ def load_origen_works() -> list[dict]:
         str(s.get("section")): s
         for s in json.loads((ORIGEN_BOOK / "translations/martyrium_source.json").read_text())
     }
+    # Optional OET overlays from mart_* tip slices.
+    mart_tip_en: dict[str, dict] = {}
+    mart_tip_src: dict[str, dict] = {}
+    for mart_path in sorted((ORIGEN_BOOK / "translations").glob("mart_*_english.json")):
+        try:
+            chunk = json.loads(mart_path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(chunk, list):
+            continue
+        for row in chunk:
+            sec = str(row.get("section"))
+            if sec:
+                mart_tip_en[sec] = row
+        src_path = mart_path.with_name(mart_path.name.replace("_english.json", "_source.json"))
+        if src_path.is_file():
+            try:
+                for s in json.loads(src_path.read_text(encoding="utf-8")):
+                    mart_tip_src[str(s.get("section"))] = s
+            except Exception:
+                pass
+    if mart_tip_en:
+        mart_en = [
+            {
+                **row,
+                **{
+                    k: mart_tip_en[str(row.get("section"))][k]
+                    for k in ("title", "english")
+                    if k in mart_tip_en[str(row.get("section"))]
+                },
+            }
+            if str(row.get("section")) in mart_tip_en
+            else row
+            for row in mart_en
+        ]
+        mart_src.update(mart_tip_src)
 
     def _nav_title(row: dict, src: dict, sec: str) -> str:
         """Prefer editorial title; never show OCR apparatus as the TOC label."""
@@ -2614,6 +2654,87 @@ def load_origen_matthew_later() -> list[dict]:
     return works
 
 
+
+
+def load_origen_contra_celsum() -> list[dict]:
+    """Origen Contra Celsum (Koetschau GCS) — true OET tip slices."""
+    works: list[dict] = []
+    trans = ORIGEN_CONTRA_CELSUM_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+
+    def _greek_src_map(src_rows: list) -> dict[str, dict]:
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("greek") and mapped.get("text"):
+                mapped["greek"] = mapped.get("text")
+            src_map[sec] = mapped
+        return src_map
+
+    # Group tip slices by book: cels_b1_01_02 → book stem cels_b1
+    by_book: dict[str, list] = {}
+    for en_path in sorted(trans.glob("cels_b*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        m = re.fullmatch(r"(cels_b\d+)(?:_.*)?", stem)
+        if not m:
+            continue
+        by_book.setdefault(m.group(1), []).append(en_path)
+
+    for book_stem, paths in by_book.items():
+        rows: list = []
+        src_map: dict[str, dict] = {}
+        for en_path in paths:
+            chunk = json.loads(en_path.read_text(encoding="utf-8"))
+            if not isinstance(chunk, list) or not chunk:
+                continue
+            rows.extend(chunk)
+            stem = en_path.name[: -len("_english.json")]
+            src_map.update(
+                _greek_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
+            )
+        if not rows:
+            continue
+        # de-dupe sections keeping first
+        seen = set()
+        deduped = []
+        for r in rows:
+            sec = str(r.get("section"))
+            if sec in seen:
+                continue
+            seen.add(sec)
+            deduped.append(r)
+        rows = deduped
+        meta = _json_load(trans / f"{book_stem}_meta.json", {})
+        first_english = bool(meta.get("first_english", True))
+        book_no = book_stem.replace("cels_b", "")
+        slug = meta.get("slug") or f"origen-contra-celsum-book-{book_no}"
+        title = meta.get("title") or f"Contra Celsum, Book {book_no}"
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=title,
+                author="Origen of Alexandria",
+                author_slug="origen",
+                period=meta.get("period") or "c. 248",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition") or "Koetschau GCS 2–3 (1899) — Greek",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Origen’s Contra Celsum (Greek). "
+                    "Original English Translation — new OET from Koetschau GCS."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
 def load_julian_works() -> list[dict]:
     """Early fifth-century Julian — disclosed as not ante-Nicene."""
     era = (
@@ -3087,6 +3208,7 @@ def build() -> None:
         + load_origen_psalms_rufinus()
         + load_origen_romans()
         + load_origen_matthew_later()
+        + load_origen_contra_celsum()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
