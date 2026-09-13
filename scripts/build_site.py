@@ -1903,6 +1903,24 @@ def load_cyril_works() -> list[dict]:
             meta = _json_load(trans / f"{stem}_meta.json", {})
             slug = meta.get("slug") or f"cyril-{stem.replace('_', '-')}"
             title = meta.get("title") or stem.replace("_", " ").title()
+            sections = _origen_rows(rows, src_map)
+            # Merge tip slices that share a work slug (e.g. Trinity Dial.1 open+rem).
+            existing = next((w for w in works if w["slug"] == slug), None)
+            if existing is not None:
+                seen = {str(s.get("section")) for s in existing["sections"]}
+                for sec in sections:
+                    if str(sec.get("section")) not in seen:
+                        existing["sections"].append(sec)
+                        seen.add(str(sec.get("section")))
+                existing["section_count"] = len(existing["sections"])
+                if meta.get("blurb"):
+                    existing["blurb"] = meta["blurb"]
+                if meta.get("first_english_note"):
+                    existing["first_english_note"] = meta["first_english_note"]
+                    note = (meta.get("first_english_note") or "").strip()
+                    if existing.get("first_english") and note:
+                        existing["first_english_note"] = oet_banner_gloss(note) if "oet_banner_gloss" in globals() else note
+                continue
             works.append(
                 _pack_work(
                     slug=slug,
@@ -1912,7 +1930,7 @@ def load_cyril_works() -> list[dict]:
                     period=meta.get("period") or "c. 412–423",
                     status=meta.get("status") or "available",
                     edition=meta.get("edition") or "Migne PG 68",
-                    sections=_origen_rows(rows, src_map),
+                    sections=sections,
                     blurb=meta.get("blurb") or "English from the Greek, for study.",
                     era_note=era,
                     first_english=bool(meta.get("first_english", True)),
