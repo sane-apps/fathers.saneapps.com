@@ -619,6 +619,14 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous English translation of Origen’s Commentary on John Book 13 "
         "(later tomoi; ANF covers only earlier books)."
     ),
+    "origen-john-19": (
+        "No previous English translation of Origen’s Commentary on John Book 19 "
+        "(later tomoi; ANF covers only earlier books)."
+    ),
+    "origen-john-20": (
+        "No previous English translation of Origen’s Commentary on John Book 20 "
+        "(later tomoi; ANF covers only earlier books)."
+    ),
 }
 
 
