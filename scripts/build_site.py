@@ -1067,6 +1067,39 @@ FIRST_ENGLISH_NOTES: dict[str, str] = {
         "No previous public-domain English translation of Origen’s Homilia I "
         "on Judges (ANF lacks these; modern FOTC is copyrighted)."
     ),
+
+    "origen-judges-homily-2": (
+        "No previous public-domain English translation of Origen’s Homilia II "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
+    "origen-judges-homily-3": (
+        "No previous public-domain English translation of Origen’s Homilia III "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
+    "origen-judges-homily-4": (
+        "No previous public-domain English translation of Origen’s Homilia IV "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
+    "origen-judges-homily-5": (
+        "No previous public-domain English translation of Origen’s Homilia V "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
+    "origen-judges-homily-6": (
+        "No previous public-domain English translation of Origen’s Homilia VI "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
+    "origen-judges-homily-7": (
+        "No previous public-domain English translation of Origen’s Homilia VII "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
+    "origen-judges-homily-8": (
+        "No previous public-domain English translation of Origen’s Homilia VIII "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
+    "origen-judges-homily-9": (
+        "No previous public-domain English translation of Origen’s Homilia IX "
+        "on Judges (ANF lacks these; modern FOTC is copyrighted)."
+    ),
 }
 
 
