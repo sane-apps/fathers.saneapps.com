@@ -6,7 +6,7 @@ Updated 2026-09-13. The owner authorized the audit, repairs, source checks and d
 
 Deployed successfully through scripts/ship.sh:
 - Production: https://fathers.saneapps.com
-- Deployment: https://3d01a09b.fathers-site.pages.dev
+- Deployment: https://805826ea.fathers-site.pages.dev
 - Site implementation commit: e5e5b18
 - Corpus implementation commit: c07955e79
 - CSS version: 898957519c
