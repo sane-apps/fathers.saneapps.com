@@ -1498,6 +1498,22 @@ def load_origen_works() -> list[dict]:
         str(s.get("section")): s
         for s in json.loads((ORIGEN_BOOK / "translations/gebet_source.json").read_text())
     }
+    # Optional OET overlay for opening sections (orat_01_02_* tips).
+    orat_en_path = ORIGEN_BOOK / "translations/orat_01_02_english.json"
+    if orat_en_path.is_file():
+        orat_en = {str(r.get("section")): r for r in json.loads(orat_en_path.read_text())}
+        gebet_en = [
+            {**row, **({k: orat_en[str(row.get("section"))][k]
+                       for k in ("title", "english")
+                       if k in orat_en[str(row.get("section"))]})}
+            if str(row.get("section")) in orat_en
+            else row
+            for row in gebet_en
+        ]
+        orat_src_path = ORIGEN_BOOK / "translations/orat_01_02_source.json"
+        if orat_src_path.is_file():
+            for s in json.loads(orat_src_path.read_text()):
+                gebet_src[str(s.get("section"))] = s
     mart_en = json.loads((ORIGEN_BOOK / "translations/martyrium_english.json").read_text())
     mart_src = {
         str(s.get("section")): s
@@ -1554,8 +1570,8 @@ def load_origen_works() -> list[dict]:
             text_history={
                 "method": (
                     "English follows Paul Koetschau, Origenes Werke II (GCS, 1899). "
-                    "The Archive OCR of that same print was checked. This is a reading "
-                    "translation for study, not a new critical edition."
+                    "Where orat_01_02 OET tips are present, §§1–2 use that new English "
+                    "from the Greek (Pass A≠B). Archive OCR of GCS was checked elsewhere."
                 ),
                 "witnesses": [
                     {
@@ -2520,15 +2536,31 @@ def load_origen_matthew_later() -> list[dict]:
         if not isinstance(rows, list) or not rows:
             continue
         src_map = _greek_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
-        # Fold companion slices: _rem, then lettered continuations (_g, _h, …).
-        for suffix in ("rem", *[chr(c) for c in range(ord("g"), ord("z") + 1)]):
-            slice_en = trans / f"{stem}_{suffix}_english.json"
-            if not slice_en.is_file():
-                continue
+        # Fold companion slices: _rem, lettered (_g…), and named (_close, …).
+        companion_files = [
+            path
+            for path in trans.glob(f"{stem}_*_english.json")
+            if re.fullmatch(rf"{re.escape(stem)}_[a-z]+_english\.json", path.name)
+        ]
+
+        def _slice_key(path: Path) -> tuple:
+            try:
+                slice_rows = json.loads(path.read_text(encoding="utf-8"))
+                secs = [
+                    int(r.get("section"))
+                    for r in slice_rows
+                    if str(r.get("section", "")).isdigit()
+                ]
+                return (min(secs) if secs else 10**9, path.name)
+            except Exception:
+                return (10**9, path.name)
+
+        for slice_en in sorted(companion_files, key=_slice_key):
             slice_rows = json.loads(slice_en.read_text(encoding="utf-8"))
             if not isinstance(slice_rows, list) or not slice_rows:
                 continue
             rows = list(rows) + slice_rows
+            suffix = slice_en.name[len(stem) + 1 : -len("_english.json")]
             slice_src = _greek_src_map(
                 _source_rows(_json_load(trans / f"{stem}_{suffix}_source.json", []))
             )
