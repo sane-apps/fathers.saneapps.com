@@ -35,6 +35,7 @@ BOOKS = Path.home() / "SaneApps/clients/translations/books"
 TOPICS_BOOK = BOOKS / "ante-nicene-topics"
 ORIGEN_BOOK = BOOKS / "origen-prayer-martyrdom"
 ORIGEN_CONTRA_CELSUM_BOOK = BOOKS / "origen-contra-celsum"
+ORIGEN_PRINCIPIIS_BOOK = BOOKS / "origen-principiis"
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
@@ -2672,15 +2673,25 @@ def load_origen_contra_celsum() -> list[dict]:
             src_map[sec] = mapped
         return src_map
 
-    # Group tip slices by book: cels_b1_01_02 → book stem cels_b1
+    # Group tip slices: cels_b1_01_02 → cels_b1; cels_pref_02_06 → cels_pref
     by_book: dict[str, list] = {}
-    for en_path in sorted(trans.glob("cels_b*_english.json")):
+    for en_path in sorted(trans.glob("cels_*_english.json")):
         stem = en_path.name[: -len("_english.json")]
-        m = re.fullmatch(r"(cels_b\d+)(?:_.*)?", stem)
+        m = re.fullmatch(r"(cels_b\d+|cels_pref)(?:_.*)?", stem)
         if not m:
             continue
         by_book.setdefault(m.group(1), []).append(en_path)
 
+    roman = {
+        "1": "I",
+        "2": "II",
+        "3": "III",
+        "4": "IV",
+        "5": "V",
+        "6": "VI",
+        "7": "VII",
+        "8": "VIII",
+    }
     for book_stem, paths in by_book.items():
         rows: list = []
         src_map: dict[str, dict] = {}
@@ -2707,9 +2718,13 @@ def load_origen_contra_celsum() -> list[dict]:
         rows = deduped
         meta = _json_load(trans / f"{book_stem}_meta.json", {})
         first_english = bool(meta.get("first_english", True))
-        book_no = book_stem.replace("cels_b", "")
-        slug = meta.get("slug") or f"origen-contra-celsum-book-{book_no}"
-        title = meta.get("title") or f"Contra Celsum, Book {book_no}"
+        if book_stem == "cels_pref":
+            slug = meta.get("slug") or "origen-contra-celsum-preface"
+            title = meta.get("title") or "Contra Celsum, Preface"
+        else:
+            book_no = book_stem.replace("cels_b", "")
+            slug = meta.get("slug") or f"origen-contra-celsum-book-{book_no}"
+            title = meta.get("title") or f"Contra Celsum, Book {roman.get(book_no, book_no)}"
         works.append(
             _pack_work(
                 slug=slug,
@@ -2723,6 +2738,59 @@ def load_origen_contra_celsum() -> list[dict]:
                 blurb=meta.get("blurb")
                 or (
                     "Origen’s Contra Celsum (Greek). "
+                    "Original English Translation — new OET from Koetschau GCS."
+                ),
+                first_english=first_english,
+                first_english_note=meta.get("first_english_note") or "",
+                text_history=_text_history_from_meta(meta),
+            )
+        )
+        if slug not in WORK_TOPICS and meta.get("topics"):
+            WORK_TOPICS[slug] = list(meta["topics"])
+    return works
+
+
+def load_origen_principiis() -> list[dict]:
+    """Origen De Principiis (Koetschau GCS Rufinus Latin) — true OET tip slices."""
+    works: list[dict] = []
+    trans = ORIGEN_PRINCIPIIS_BOOK / "translations"
+    if not trans.is_dir():
+        return works
+
+    def _latin_src_map(src_rows: list) -> dict[str, dict]:
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("latin") and mapped.get("text"):
+                mapped["latin"] = mapped.get("text")
+            src_map[sec] = mapped
+        return src_map
+
+    for en_path in sorted(trans.glob("princ_*_english.json")):
+        stem = en_path.name[: -len("_english.json")]
+        if stem.startswith("_"):
+            continue
+        rows = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(rows, list) or not rows:
+            continue
+        src_map = _latin_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
+        meta = _json_load(trans / f"{stem}_meta.json", {})
+        first_english = bool(meta.get("first_english", True))
+        slug = meta.get("slug") or "origen-de-principiis"
+        title = meta.get("title") or "De Principiis"
+        works.append(
+            _pack_work(
+                slug=slug,
+                title=title,
+                author="Origen of Alexandria",
+                author_slug="origen",
+                period=meta.get("period") or "c. 220–230",
+                status=meta.get("status") or "available",
+                edition=meta.get("edition") or "Koetschau GCS 22 (1913) — Rufinus Latin",
+                sections=_origen_rows(rows, src_map),
+                blurb=meta.get("blurb")
+                or (
+                    "Origen’s De Principiis (Rufinus Latin). "
                     "Original English Translation — new OET from Koetschau GCS."
                 ),
                 first_english=first_english,
@@ -3209,6 +3277,7 @@ def build() -> None:
         + load_origen_romans()
         + load_origen_matthew_later()
         + load_origen_contra_celsum()
+        + load_origen_principiis()
         + load_cyril_works()
         + load_irenaeus_demonstration()
         + load_julian_works()
