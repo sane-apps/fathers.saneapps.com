@@ -2486,6 +2486,16 @@ def load_origen_matthew_later() -> list[dict]:
     trans = ORIGEN_MATTHEW_LATER_BOOK / "translations"
     if not trans.is_dir():
         return works
+
+    def _greek_src_map(src_rows: list) -> dict[str, dict]:
+        src_map = {str(s.get("section")): s for s in src_rows}
+        for sec, s in list(src_map.items()):
+            mapped = dict(s)
+            if not mapped.get("greek") and mapped.get("text"):
+                mapped["greek"] = mapped.get("text")
+            src_map[sec] = mapped
+        return src_map
+
     for en_path in sorted(trans.glob("*_english.json")):
         stem = en_path.name[: -len("_english.json")]
         if stem.startswith("_"):
@@ -2495,13 +2505,16 @@ def load_origen_matthew_later() -> list[dict]:
         rows = json.loads(en_path.read_text(encoding="utf-8"))
         if not isinstance(rows, list) or not rows:
             continue
-        src_rows = _source_rows(_json_load(trans / f"{stem}_source.json", []))
-        src_map = {str(s.get("section")): s for s in src_rows}
-        for sec, s in list(src_map.items()):
-            mapped = dict(s)
-            if not mapped.get("greek") and mapped.get("text"):
-                mapped["greek"] = mapped.get("text")
-            src_map[sec] = mapped
+        src_map = _greek_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
+        rem_en = trans / f"{stem}_rem_english.json"
+        if rem_en.is_file():
+            rem_rows = json.loads(rem_en.read_text(encoding="utf-8"))
+            if isinstance(rem_rows, list) and rem_rows:
+                rows = list(rows) + rem_rows
+                rem_src = _greek_src_map(
+                    _source_rows(_json_load(trans / f"{stem}_rem_source.json", []))
+                )
+                src_map.update(rem_src)
         meta = _json_load(trans / f"{stem}_meta.json", {})
         first_english = bool(meta.get("first_english", True))
         slug = meta.get("slug") or f"origen-{stem.replace('_', '-')}"
