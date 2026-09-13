@@ -62,9 +62,10 @@ ORIGEN_PAULINE_FRAGMENT_BOOKS = [
     BOOKS / "africanus-cesti",
     BOOKS / "gregory-thaumaturgus-jeremiah-fragments",
     BOOKS / "gregory-thaumaturgus-matthew-fragment",
-    BOOKS / "eustathius-engastrimytho",
-    BOOKS / "eustathius-hexaemeron",
 ]
+# Eustathius Rank-1 tip SERIES hubs (engastrimytho, hexaemeron, PG18 leftovers, …)
+EUSTATHIUS_TIP_BOOKS = sorted(BOOKS.glob("eustathius-*"))
+TIP_FRAGMENT_BOOKS = ORIGEN_PAULINE_FRAGMENT_BOOKS + EUSTATHIUS_TIP_BOOKS
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
 CYRIL_BOOK = BOOKS / "cyril-alexandria"
@@ -3232,7 +3233,7 @@ def load_origen_pauline_fragments() -> list[dict]:
         "These Greek scraps belong to the first three centuries of the church "
         "(or the early fourth, disclosed in the work note when later)."
     )
-    for folder in ORIGEN_PAULINE_FRAGMENT_BOOKS:
+    for folder in TIP_FRAGMENT_BOOKS:
         trans = folder / "translations"
         if not trans.is_dir():
             continue
