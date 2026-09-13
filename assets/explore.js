@@ -19,6 +19,7 @@
     tipToggle: root.querySelector("#explore-tip-toggle"),
     drawer: root.querySelector("#explore-drawer"),
     tooltip: root.querySelector("#explore-tooltip"),
+    pathGrid: root.querySelector("#explore-path-grid"),
   };
 
   let data = null;
@@ -75,6 +76,7 @@
       data = json;
       // Prefer short labels from source claims if rebuild hasn't landed yet
       fillFilters();
+      renderPaths();
       const params = new URLSearchParams(location.search);
       if (params.get("topic") && [...els.topic.options].some((o) => o.value === params.get("topic"))) {
         els.topic.value = params.get("topic");
@@ -93,7 +95,80 @@
     })
     .catch(() => {
       els.drawer.innerHTML = "<p class='empty'>Explore index unavailable.</p>";
+      if (els.pathGrid) els.pathGrid.innerHTML = "<p class='empty'>Paths unavailable.</p>";
     });
+
+  const PATH_KIND = {
+    doctrine: "Doctrine",
+    controversy: "Controversy",
+    scripture: "Scripture",
+    era: "Era bands",
+    rupture: "First appearance",
+    reading: "Reading path",
+  };
+
+  function renderPaths() {
+    if (!els.pathGrid) return;
+    const paths = Array.isArray(data.paths) ? data.paths : [];
+    if (!paths.length) {
+      els.pathGrid.innerHTML = "<p class='empty'>No curated paths yet.</p>";
+      return;
+    }
+    const order = ["doctrine", "controversy", "scripture", "era", "rupture", "reading"];
+    const sorted = [...paths].sort((a, b) => {
+      const ka = order.indexOf(a.kind);
+      const kb = order.indexOf(b.kind);
+      return (ka < 0 ? 99 : ka) - (kb < 0 ? 99 : kb) || String(a.title || "").localeCompare(String(b.title || ""), undefined, { sensitivity: "base" });
+    });
+    els.pathGrid.innerHTML = sorted
+      .map((p) => {
+        const status = p.status || "live";
+        const statusLabel =
+          status === "live" ? "In corpus" : status === "partial" ? "Partial — corpus thin" : "Stub — backlog";
+        const links = (p.links || [])
+          .slice(0, 3)
+          .map((l) => `<li><a href="${escAttr(l.href)}">${esc(l.label)}</a></li>`)
+          .join("");
+        const backlog = p.backlog_note
+          ? `<p class="path-summary">${esc(p.backlog_note)}</p>`
+          : "";
+        return `<article class="explore-path-card" data-status="${escAttr(status)}" data-path="${escAttr(p.id)}" data-topic="${escAttr(p.explore_topic || "")}" tabindex="0" role="button">
+          <span class="path-kind">${esc(PATH_KIND[p.kind] || p.kind || "Path")}</span>
+          <h3 class="path-title">${esc(p.title)}</h3>
+          <p class="path-summary">${esc(p.summary || "")}</p>
+          ${backlog}
+          <span class="path-status">${esc(statusLabel)}</span>
+          <ul class="path-links">${links}</ul>
+        </article>`;
+      })
+      .join("");
+
+    els.pathGrid.querySelectorAll(".explore-path-card").forEach((card) => {
+      const activate = (ev) => {
+        if (ev.target.closest("a")) return;
+        const topic = card.getAttribute("data-topic");
+        if (topic && els.topic && [...els.topic.options].some((o) => o.value === topic)) {
+          els.topic.value = topic;
+          fillCompareAdd();
+          renderChips();
+          animateNextDraw = true;
+          render();
+          showEmptyDrawer();
+          els.chrome?.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          const first = card.querySelector(".path-links a");
+          if (first) first.click();
+        }
+      };
+      card.addEventListener("click", activate);
+      card.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          activate(ev);
+        }
+      });
+    });
+  }
 
   const ro = new ResizeObserver(() => {
     if (data) render(false);

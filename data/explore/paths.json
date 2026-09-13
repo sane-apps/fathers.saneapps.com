@@ -1,0 +1,242 @@
+[
+  {
+    "id": "tulip-augustine-grace",
+    "kind": "doctrine",
+    "title": "Grace, will, and later TULIP framing",
+    "status": "live",
+    "summary": "What the Fathers actually say about human will, sin, and grace — and where Augustine’s late teaching breaks from earlier patterns. Read as background to later Reformed TULIP slogans, not as those slogans themselves.",
+    "explore_topic": "free-will",
+    "also_topics": ["sin-and-death", "grace-and-assistance", "faith-and-obedience", "image-likeness"],
+    "links": [
+      {"label": "Free will over time", "href": "/explore/?topic=free-will"},
+      {"label": "Sin and death", "href": "/explore/?topic=sin-and-death"},
+      {"label": "Grace and assistance", "href": "/explore/?topic=grace-and-assistance"},
+      {"label": "Augustine hub", "href": "/authors/augustine-of-hippo/"},
+      {"label": "Julian of Eclanum", "href": "/authors/julian-of-eclanum/"}
+    ]
+  },
+  {
+    "id": "trinity",
+    "kind": "doctrine",
+    "title": "Father, Son, and Spirit",
+    "status": "live",
+    "summary": "How early writers speak of the one God and the Son and Spirit — before later creed shorthand. Prefer the timeline and topical excerpts over slogans.",
+    "explore_topic": "father-son-spirit",
+    "also_topics": ["one-god-creator", "attributes-providence"],
+    "links": [
+      {"label": "Father, Son, Spirit", "href": "/explore/?topic=father-son-spirit"},
+      {"label": "One God, Creator", "href": "/explore/?topic=one-god-creator"},
+      {"label": "Topics: Theology & Trinity", "href": "/topics/#theology"}
+    ]
+  },
+  {
+    "id": "christology",
+    "kind": "doctrine",
+    "title": "Christology: Word, flesh, two natures",
+    "status": "live",
+    "summary": "Incarnation, against docetism, passion and resurrection, and early two-natures language — the road toward later definitions without pretending Nicaea/Chalcedon are already in Ignatius.",
+    "explore_topic": "incarnation-word-flesh",
+    "also_topics": ["against-docetism", "two-natures-seed", "passion-resurrection", "virgin-birth"],
+    "links": [
+      {"label": "Word made flesh", "href": "/explore/?topic=incarnation-word-flesh"},
+      {"label": "Against docetism", "href": "/explore/?topic=against-docetism"},
+      {"label": "Passion & resurrection", "href": "/explore/?topic=passion-resurrection"}
+    ]
+  },
+  {
+    "id": "baptism",
+    "kind": "doctrine",
+    "title": "Baptism and new birth",
+    "status": "live",
+    "summary": "Washing, regeneration, Spirit and baptism — what writers actually tie to the water before later slogan wars.",
+    "explore_topic": "baptism-and-new-birth",
+    "also_topics": ["spirit-and-baptism"],
+    "links": [
+      {"label": "Baptism timeline", "href": "/explore/?topic=baptism-and-new-birth"},
+      {"label": "Spirit and baptism", "href": "/explore/?topic=spirit-and-baptism"},
+      {"label": "Topic map", "href": "/topics/baptism-and-new-birth/"}
+    ]
+  },
+  {
+    "id": "eucharist",
+    "kind": "doctrine",
+    "title": "Eucharist and thanksgiving",
+    "status": "live",
+    "summary": "Thanksgiving, presence language, and assembly practice in the loaded excerpts — honest about how thin some stretches still are.",
+    "explore_topic": "eucharist-thanksgiving",
+    "also_topics": ["liturgy-prayer"],
+    "links": [
+      {"label": "Eucharist timeline", "href": "/explore/?topic=eucharist-thanksgiving"},
+      {"label": "Liturgy and prayer", "href": "/explore/?topic=liturgy-prayer"}
+    ]
+  },
+  {
+    "id": "mary-virgin-birth",
+    "kind": "doctrine",
+    "title": "Mary and the virgin birth",
+    "status": "partial",
+    "summary": "Ante-Nicene witness centers on the virgin birth and the Word’s birth. Later Marian titles and dogmas are mostly outside this corpus for now.",
+    "explore_topic": "virgin-birth",
+    "also_topics": [],
+    "links": [
+      {"label": "Virgin birth timeline", "href": "/explore/?topic=virgin-birth"}
+    ],
+    "backlog_note": "Broader Mariology (perpetual virginity debates, Theotokos controversy depth) awaits denser Nicene excerpts."
+  },
+  {
+    "id": "primacy-succession",
+    "kind": "doctrine",
+    "title": "Primacy, bishops, and succession",
+    "status": "partial",
+    "summary": "Apostolic succession, bishops and presbyters, and one-church language. Explicit later papal-primacy debates are thin here — do not invent Rome-vs-East excerpts we do not have.",
+    "explore_topic": "apostolic-succession",
+    "also_topics": ["bishops-presbyters", "one-church"],
+    "links": [
+      {"label": "Apostolic succession", "href": "/explore/?topic=apostolic-succession"},
+      {"label": "Bishops and presbyters", "href": "/explore/?topic=bishops-presbyters"},
+      {"label": "One church", "href": "/explore/?topic=one-church"}
+    ],
+    "backlog_note": "Papal primacy as a dedicated path needs stronger Roman / Petrine controversy coverage."
+  },
+  {
+    "id": "iconoclasm-idols",
+    "kind": "doctrine",
+    "title": "Idols, images, and iconoclasm",
+    "status": "stub",
+    "summary": "Ante-Nicene polemic against idols is live. Eighth-century iconoclasm proper is not yet in this library — stubbed so the question is not forgotten.",
+    "explore_topic": "against-idols",
+    "also_topics": [],
+    "links": [
+      {"label": "Against idols (related)", "href": "/explore/?topic=against-idols"}
+    ],
+    "backlog_note": "True iconoclasm path needs 7th–9th c. witnesses; do not equate Justin’s idol critique with Byzantine icon debates."
+  },
+  {
+    "id": "controversy-pelagian",
+    "kind": "controversy",
+    "title": "Pelagian controversy map",
+    "status": "live",
+    "summary": "Guided path through opposing voices on will, guilt, and grace — Julian’s surviving arguments beside Augustine contrast cards and earlier ante-Nicene patterns.",
+    "explore_topic": "free-will",
+    "also_topics": ["sin-and-death", "grace-and-assistance"],
+    "links": [
+      {"label": "Compare free will", "href": "/explore/?topic=free-will&compare=julian-of-eclanum,augustine-of-hippo"},
+      {"label": "Julian works", "href": "/authors/julian-of-eclanum/"},
+      {"label": "Augustine (contrast)", "href": "/authors/augustine-of-hippo/"}
+    ]
+  },
+  {
+    "id": "controversy-docetic-gnostic",
+    "kind": "controversy",
+    "title": "Docetic / phantasm Christ",
+    "status": "live",
+    "summary": "Writers who refuse a phantasm Christ and insist on real flesh — the early fight that later christological controversies still presuppose.",
+    "explore_topic": "against-docetism",
+    "also_topics": ["incarnation-word-flesh", "heresy-schism"],
+    "links": [
+      {"label": "Against docetism", "href": "/explore/?topic=against-docetism"},
+      {"label": "Heresy and schism", "href": "/explore/?topic=heresy-schism"}
+    ]
+  },
+  {
+    "id": "controversy-arian",
+    "kind": "controversy",
+    "title": "Arian controversy",
+    "status": "stub",
+    "summary": "Father–Son language and one-God claims are present; a full Arian path (Arius, Alexander, Athanasius treatises) is not yet loaded as guided opposing stances.",
+    "explore_topic": "father-son-spirit",
+    "also_topics": ["one-god-creator"],
+    "links": [
+      {"label": "Father, Son, Spirit (seed)", "href": "/explore/?topic=father-son-spirit"}
+    ],
+    "backlog_note": "Add Athanasius / Arius stance pairs when English treatises land."
+  },
+  {
+    "id": "controversy-nestorian",
+    "kind": "controversy",
+    "title": "Nestorian / two-natures fights",
+    "status": "partial",
+    "summary": "Cyril’s true-faith works and incarnation/two-natures seeds are in the library. A full opposing-path map (Nestorius vs Cyril with stance tags) is still thin.",
+    "explore_topic": "two-natures-seed",
+    "also_topics": ["incarnation-word-flesh"],
+    "links": [
+      {"label": "Two natures (seed)", "href": "/explore/?topic=two-natures-seed"},
+      {"label": "Cyril works", "href": "/authors/cyril-of-alexandria/"}
+    ],
+    "backlog_note": "Stance-tag Nestorius contrast cards and denser Cyril christology excerpts."
+  },
+  {
+    "id": "scripture-to-fathers",
+    "kind": "scripture",
+    "title": "Scripture → Fathers",
+    "status": "partial",
+    "summary": "Find who cites a passage across centuries. Use Works find for a verse or book name; Explore hermeneutics and canon topics for how they read Scripture.",
+    "explore_topic": "hermeneutics-types",
+    "also_topics": ["scripture-inspiration", "canon-rule-of-truth", "lxx-and-form"],
+    "links": [
+      {"label": "Find in Works (try Matthew)", "href": "/works/?q=Matthew"},
+      {"label": "Hermeneutics & types", "href": "/explore/?topic=hermeneutics-types"},
+      {"label": "Canon / rule of truth", "href": "/explore/?topic=canon-rule-of-truth"},
+      {"label": "Scripture & inspiration", "href": "/explore/?topic=scripture-inspiration"}
+    ],
+    "backlog_note": "Dedicated verse index once scripture tags are uniform across the corpus."
+  },
+  {
+    "id": "era-bands",
+    "kind": "era",
+    "title": "Author era bands",
+    "status": "live",
+    "summary": "Apostolic → ante-Nicene → Nicene → post-Nicene. Same bands drive Works chronology and Explore era filters.",
+    "explore_topic": "free-will",
+    "also_topics": [],
+    "links": [
+      {"label": "Works by chronology", "href": "/works/?sort=chrono"},
+      {"label": "Authors A–Z", "href": "/authors/"},
+      {"label": "Explore with era filter", "href": "/explore/?topic=free-will"}
+    ]
+  },
+  {
+    "id": "first-appearance",
+    "kind": "rupture",
+    "title": "First appearance / rupture moments",
+    "status": "live",
+    "summary": "Where a claim shows up suddenly against long continuity — especially Augustine on will, guilt, and grace beside earlier capable-will patterns.",
+    "explore_topic": "free-will",
+    "also_topics": ["sin-and-death", "grace-and-assistance", "gifts-and-order"],
+    "links": [
+      {"label": "Free will rupture", "href": "/explore/?topic=free-will"},
+      {"label": "Sin & death rupture", "href": "/explore/?topic=sin-and-death"},
+      {"label": "Gifts arc (continuity)", "href": "/explore/?topic=gifts-and-order"}
+    ]
+  },
+  {
+    "id": "reading-newcomers",
+    "kind": "reading",
+    "title": "Short reading path for newcomers",
+    "status": "live",
+    "summary": "A short sequence: one early topic map stop, one whole treatise, one Explore timeline, one later contrast.",
+    "explore_topic": "baptism-and-new-birth",
+    "also_topics": [],
+    "links": [
+      {"label": "1. Topics map", "href": "/topics/"},
+      {"label": "2. Irenaeus, Demonstration", "href": "/works/irenaeus-demonstration/"},
+      {"label": "3. Baptism over time", "href": "/explore/?topic=baptism-and-new-birth"},
+      {"label": "4. Origen, On Prayer", "href": "/works/origen-on-prayer/"},
+      {"label": "5. Free will + Augustine contrast", "href": "/explore/?topic=free-will&author=augustine-of-hippo"}
+    ]
+  },
+  {
+    "id": "reading-oet",
+    "kind": "reading",
+    "title": "Original English Translation sampler",
+    "status": "live",
+    "summary": "Treatises with no previous English translation — filter Works to that set and start with a short Origen text.",
+    "explore_topic": null,
+    "also_topics": [],
+    "links": [
+      {"label": "Works · Original English", "href": "/works/?filter=oet"},
+      {"label": "On Prayer", "href": "/works/origen-on-prayer/"},
+      {"label": "Methodology", "href": "/methodology/"}
+    ]
+  }
+]
