@@ -2919,7 +2919,7 @@ def load_origen_philocalia() -> list[dict]:
 
 
 def load_origen_luke_homilies() -> list[dict]:
-    """Origen Homilies on Luke (Rauer GCS 35 Jerome Latin) — true OET tip slices."""
+    """Origen Homilies on Luke (Rauer GCS 35 Jerome Latin) — true OET tip slices as one SERIES hub."""
     works: list[dict] = []
     trans = ORIGEN_LUKE_HOMILIES_BOOK / "translations"
     if not trans.is_dir():
@@ -2934,45 +2934,67 @@ def load_origen_luke_homilies() -> list[dict]:
             src_map[sec] = mapped
         return src_map
 
+    rows: list = []
+    src_map: dict[str, dict] = {}
     for en_path in sorted(trans.glob("luke_hom*_english.json")):
         stem = en_path.name[: -len("_english.json")]
-        if stem.startswith("_"):
+        if stem.startswith("_") or "series" in stem:
             continue
-        if not re.fullmatch(r"luke_hom\d+", stem):
+        chunk = json.loads(en_path.read_text(encoding="utf-8"))
+        if not isinstance(chunk, list) or not chunk:
             continue
-        rows = json.loads(en_path.read_text(encoding="utf-8"))
-        if not isinstance(rows, list) or not rows:
-            continue
-        src_map = _latin_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
-        meta = _json_load(trans / f"{stem}_meta.json", {})
-        first_english = bool(meta.get("first_english", True))
-        m = re.fullmatch(r"luke_hom0*(\d+)", stem)
-        n = m.group(1) if m else stem.replace("luke_hom", "")
-        slug = meta.get("slug") or f"origen-luke-homily-{n}"
-        title = meta.get("title") or f"Homilies on Luke, Homily {n}"
-        works.append(
-            _pack_work(
-                slug=slug,
-                title=title,
-                author="Origen of Alexandria",
-                author_slug="origen",
-                period=meta.get("period") or "c. 233–244",
-                status=meta.get("status") or "available",
-                edition=meta.get("edition")
-                or "Rauer, Origenes Werke IX = GCS 35 (1930) — Jerome Latin",
-                sections=_origen_rows(rows, src_map),
-                blurb=meta.get("blurb")
-                or (
-                    "Origen’s Homilies on Luke (Jerome Latin). "
-                    "Original English Translation — new OET from Rauer GCS 35."
-                ),
-                first_english=first_english,
-                first_english_note=meta.get("first_english_note") or "",
-                text_history=_text_history_from_meta(meta),
-            )
+        rows.extend(chunk)
+        src_map.update(
+            _latin_src_map(_source_rows(_json_load(trans / f"{stem}_source.json", [])))
         )
-        if slug not in WORK_TOPICS and meta.get("topics"):
-            WORK_TOPICS[slug] = list(meta["topics"])
+    if not rows:
+        return works
+    seen: set[str] = set()
+    deduped = []
+    for r in rows:
+        sec = str(r.get("section"))
+        if sec in seen:
+            continue
+        seen.add(sec)
+        deduped.append(r)
+
+    def _sec_key(r: dict):
+        sec = r.get("section")
+        try:
+            return (0, int(sec))
+        except (TypeError, ValueError):
+            return (1, str(sec))
+
+    deduped.sort(key=_sec_key)
+    meta = _json_load(trans / "luke_hom_series_meta.json", {})
+    if not meta:
+        meta = _json_load(trans / "luke_hom01_meta.json", {})
+    first_english = bool(meta.get("first_english", True))
+    slug = meta.get("slug") or "origen-luke-homilies"
+    title = meta.get("title") or "Homilies on Luke"
+    works.append(
+        _pack_work(
+            slug=slug,
+            title=title,
+            author="Origen of Alexandria",
+            author_slug="origen",
+            period=meta.get("period") or "c. 233–244",
+            status=meta.get("status") or "available",
+            edition=meta.get("edition")
+            or "Rauer, Origenes Werke IX = GCS 35 (1930) — Jerome Latin",
+            sections=_origen_rows(deduped, src_map),
+            blurb=meta.get("blurb")
+            or (
+                "Origen’s Homilies on Luke (Jerome Latin). "
+                "Original English Translation — new OET from Rauer GCS 35."
+            ),
+            first_english=first_english,
+            first_english_note=meta.get("first_english_note") or "",
+            text_history=_text_history_from_meta(meta),
+        )
+    )
+    if slug not in WORK_TOPICS and meta.get("topics"):
+        WORK_TOPICS[slug] = list(meta["topics"])
     return works
 
 
