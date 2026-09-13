@@ -94,6 +94,7 @@ OTHER_RANK1_TIP_BOOKS = sorted(
     | set(BOOKS.glob("nonnos-*"))
     | set(BOOKS.glob("theodorus-pg86a-*"))
     | set(BOOKS.glob("procopius-gaza-*"))
+    | set(BOOKS.glob("oecumenius-*"))
 )
 TIP_FRAGMENT_BOOKS = (
     ORIGEN_PAULINE_FRAGMENT_BOOKS
