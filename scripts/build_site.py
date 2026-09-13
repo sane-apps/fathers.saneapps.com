@@ -63,6 +63,7 @@ ORIGEN_PAULINE_FRAGMENT_BOOKS = [
     BOOKS / "gregory-thaumaturgus-jeremiah-fragments",
     BOOKS / "gregory-thaumaturgus-matthew-fragment",
     BOOKS / "eustathius-engastrimytho",
+    BOOKS / "eustathius-hexaemeron",
 ]
 ORIGEN_BOOK2 = BOOKS / "origen-heraclides-pascha"
 ORIGEN_BOOK3 = BOOKS / "origen-jeremiah-samuel"
