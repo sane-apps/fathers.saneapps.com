@@ -1,18 +1,54 @@
 # Fathers — session handoff
 
-Updated 2026-09-13. The owner authorized the audit, repairs, source checks and deployment.
+## Epistula Canonica live ship (2026-09-15 ~2:41 PM ET)
+
+- tip-ready OK; verify_docx OK; Canones GR Canon I locked; scaffold discarded; Pass A≠B OK
+- Deploy: https://5590190c.fathers-site.pages.dev
+- Live: https://fathers.saneapps.com/works/gregory-thaumaturgus-epistula-canonica/
+- Also live: https://fathers.saneapps.com/works/gregory-thaumaturgus-ecclesiastes-metaphrase/
+- live_works=43; held=577
+- Claims remain prepped
+- Next densify: serapion, epiphanius-* (still scaffold English — need real-lock)
+
+
+## Ecclesiastes metaphrase live ship (2026-09-15 ~2:36 PM ET)
+
+- tip-ready OK; verify_docx OK; MGR Greek Cap. I tip locked (TLG 2063.006); scaffold English discarded; Pass A≠B OK
+- Publication review registered (scope + section 1); catalogue kept
+- Deploy: https://1b34f63e.fathers-site.pages.dev
+- Live: https://fathers.saneapps.com/works/gregory-thaumaturgus-ecclesiastes-metaphrase/ → HTTP 200
+- live_works=42; held=578
+- Claim greg-thaum-eccl-metaphrase-densify remains prepped
+- Next densify: epistula-canonica, serapion, epiphanius-* (real-lock standard)
+
+
+Updated 2026-09-15 12:38 PM ET. Nemesius tip shipped live (see below).
+
+## Nemesius live ship (2026-09-15 12:38 PM ET)
+
+Stephan approved live ship. CoS spot-check: tip-ready OK, verify_docx OK, English 1.1–1.3 real Pass B, OCR Greek damaged but disclosed.
+
+- tip-ready: `nature_hominis_english.json` + `nature_hominis_source.json` → ok
+- Dry-run / LIVE allowlist includes `/works/nemesius-de-natura-hominis/`
+- Deployed via `scripts/ship.sh --skip-build` after artifact-bound visual review (32 screenshots inspected)
+- Pages deployment: https://58e0f435.fathers-site.pages.dev
+- Live work: https://fathers.saneapps.com/works/nemesius-de-natura-hominis/ → HTTP 200; title **De natura hominis**; Nemesius of Emesa; sections 1.1–3.1 visible
+- Live gate: first post-deploy check had 2 SHA mismatches on `/` and `/data/search-index.json` (edge cutover lag); recheck → 588 checks, 0 failures
+- CSS ?v=898957519c; live works count 34 (includes Nemesius tip)
+- CLAIMS: left `nemesius-de-natura-hominis-densify` **prepped** (full-work densify row; tip ship is not full densify done; no established non-ai_promote densify-tip stamp)
+
+Do not stop/pause OpenCode or unrelated Mini jobs.
 
 ## Current state
 
-Deployed successfully through scripts/ship.sh:
+Deployed successfully through scripts/ship.sh (Nemesius tip live 2026-09-15 12:38 PM ET):
 - Production: https://fathers.saneapps.com
-- Deployment: https://edaf2b75.fathers-site.pages.dev
-- Site implementation commit: e5e5b18
-- Corpus implementation commit: c07955e79
+- Deployment: https://58e0f435.fathers-site.pages.dev
+- Live work: https://fathers.saneapps.com/works/nemesius-de-natura-hominis/
 - CSS version: 898957519c
-- Built artifact: 4a7a9381ed0f51a58cec9910ce944c9e507a5d34ccb52af186dadf111b871bd7
+- Built artifact (this ship): e20cd96166986b9b69c88c6f7510aef057e68682bed81c84ed24dfdeab2dfba2
 
-The screened build has 606 candidate works: 573 withheld and 33 retained provisionally. It publishes 1,925 topic excerpts and 2,698 work sections. These counts are not a whole-corpus fidelity certificate.
+Current screened build publishes 34 live works (583 held), 1923 topic excerpts and 2706 work sections. These counts are not a whole-corpus fidelity certificate.
 
 ## Repairs
 
@@ -70,4 +106,22 @@ Shared work guards remain active because other Mini work continues. Do not stop 
 **Verified live 2026-09-13:** deployment `https://edaf2b75.fathers-site.pages.dev`. `check_links.py --live https://fathers.saneapps.com` → 578 checks, 573 held → 404 with `Page unavailable`, 0 failures. A live work (`/works/cyril-adoration-1/`) and `/works/` remain 200. First ship after the Function upload failed the live gate only because of edge cutover lag; ship.sh now probes one held URL for 404 before the full gate.
 
 **Ops note:** Pages Functions on the Workers free plan can "fail open" to static assets when the daily Functions allowance is exhausted — prefer fail-closed for this project in the dashboard if available.
+
+
+## Gregory Thaumaturgus In annuntiationem tip live (2026-09-15 ~1:45 PM ET)
+
+- Live: https://fathers.saneapps.com/works/gregory-thaumaturgus-in-annuntiationem/ → HTTP 200
+- Section: `/1/` → HTTP 200
+- Deploy: https://a6ca72bd.fathers-site.pages.dev
+- live_works=39; claim left **prepped**
+- OpenCode left alone
+
+
+## Gregory Thaumaturgus Sermo in omnes sanctos tip live (2026-09-15 ~1:55 PM ET)
+
+- Live: https://fathers.saneapps.com/works/gregory-thaumaturgus-sermo-in-omnes-sanctos/ → HTTP 200
+- Section: `/1/` → HTTP 200
+- Deploy: https://6dba211d.fathers-site.pages.dev
+- live_works=40; claim left **prepped**
+- OpenCode left alone
 
