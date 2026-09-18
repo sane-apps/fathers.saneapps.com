@@ -1,5 +1,47 @@
 # Fathers — session handoff
 
+## SITE wave closeout-2 ship (2026-09-17 ~10:05 PM ET) — SHIPPED 54/54, zero regressions
+
+- Unblocked the 13: root causes were (a) import-scrub garbling in 11 tip
+  meta.json (blurb/edition/method; e.g. `;. II`, `.12)` — never live),
+  reverted verbatim to reviewed packet publication_scope strings (which
+  production already serves); (b) 11 stale tip packets rebound via the
+  pipeline's own make_audit_packet (regen==stored except digests; reviewed
+  source+English byte-identical every section); (c) nemesius register
+  payload_sha256 x8 refresh for the dedicated-loader row envelope
+  (shared keys identical, render-neutral; macarius precedent).
+- Review integrity: receipts' scripture notes match current allusions all
+  11 books; Jev 24/25 agree, 1 mismatch (mensuris Jer 31:31) adjudicated
+  keep-clear on locked Greek kaines diathekes; assert_tip_ready 13/13;
+  pipeline suite 28 green. No hashes refreshed to bypass: every restored
+  string is review-bound and production-identical.
+- Corpus commit `aefef79dd` (33 files: 11 meta + 11 packet + 11 receipt);
+  site commit `1b4f916` (nemesius SHAs). No pushes (owner gate).
+- Dry-run green: 54 works / 1923 excerpts / 2735 sections; 4842 pages,
+  126732 links, 0 failures; UI 12/12; visual-gate 2/2; smoke 7/7;
+  browser checks passed; 32/32 screenshots inspected with concrete
+  findings (review passed, artifact-bound e3e8b3f0).
+- Diff vs production BEFORE ship: works sets identical 54/54; 52 readers
+  byte-identical modulo favicon+asset-hash lines; baron +Art. III
+  (registered staged tip) and philostorgius rewrite (reviewed 09-15) the
+  only content diffs; home 54/2735 + feed dedup; excerpts 1923=1923.
+- SHIP OK: https://5686a0fc.fathers-site.pages.dev (first attempt
+  dfda89ab deployed fine; live gate caught 2-byte edge cutover lag,
+  recheck green, reshipped for a clean receipt). CSS ?v=f0f1afd6e7.
+  Live gate: 579 checked / 574 held / 0 failed.
+- Live probes: 54/54 works 200; /works/photius-bibliotheca/ 404 with
+  marker (baseline preserved); held spots (origen prayer/john-13/
+  song-IV) 404 with marker. Restored blurbs verified live (serapion,
+  epistula-canonica). Home: 54 treatises, 2735 sections.
+- Re-audit (wave-1 script): 54 dist works, zero stubs, zero scaffold
+  markers, all reachable from /works/ + author hubs (51), zero dangling
+  cite links, zero live-but-held.
+- Flags for other lanes (not ship-blockers): annuntiationem TN has a
+  scrub-truncated sentence ("Earlier as not matching...") — Logos-visible,
+  needs content-lane wording; cyril-matthew EN+source uncommitted edits
+  in tree (CONTENT lane) will affect the NEXT build's gate; /contribute/
+  publishes internal SOP/commands (pre-existing, byte-identical to prod).
+
 ## SITE wave closeout audit (2026-09-17 ~9:25 PM ET) — NO SHIP (would withdraw 13 live works)
 
 - Full gate green via `scripts/ship.sh --dry-run` (exit 0): build 41 works /
