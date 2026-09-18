@@ -1,5 +1,46 @@
 # Fathers — session handoff
 
+## SITE wave closeout audit (2026-09-17 ~9:25 PM ET) — NO SHIP (would withdraw 13 live works)
+
+- Full gate green via `scripts/ship.sh --dry-run` (exit 0): build 41 works /
+  1923 excerpts / 2714 sections; catalogue+UI regressions passed (41 live,
+  587 held); UI tests 12/12; visual-gate+lock tests 2/2; 4805 pages,
+  125,793 local links, 0 failures; smoke 7/7 paths 200, CSS ?v=f0f1afd6e7;
+  browser behavior checks passed (visual image review remains pending).
+  The 2026-09-15 blocker (`/works/julian-to-florus/1.27/` 404 in browser gate)
+  is gone — page builds (841 cite pages under julian-to-florus/).
+- Independent audit (`/tmp/site_audit.py`): zero stub/empty work pages, zero
+  scaffold markers in published pages, 41/41 reachable from `/works/` and from
+  author hubs (48 hubs), zero dangling cite-section links.
+- NO SHIP: production serves 54 works (probed live 2026-09-17, all 200);
+  local dist publishes 41. Deploying would 404 thirteen live reader pages via
+  the works-gate Function. Staged-but-unshipped improvements held back with it:
+  baron section 3 (art3 tip, registered + gate-passing), Explore progress
+  strip, favicon, home-feed dedup, link-hover CSS.
+- The 13 (all fail publication review on corpus-side staleness, NOT site bugs):
+  epiphanius anacephalaeosis/ancoratus/de-mensuris/panarion (stale packets +
+  identity/scope mismatch), 7 gregory-thaumaturgus tips (stale snapshots after
+  the 2026-09-16 Jev certainty migration), nemesius (stale packet), serapion
+  (identity/scope mismatch). Unblock = corpus lane rebinds review packets
+  (`rebind_packet.py`) + scope reviews in books/, then site rebuilds and ships.
+  Site lane did not touch book files and did not refresh hashes to bypass.
+- Register state: payload_sha256 refreshes + baron:3 already in
+  `data/publication-review.json` (uncommitted); they keep the 41 live, they do
+  not restore the 13. Nothing further registerable site-side.
+- Re-audit round: re-ran audit post-decision — same 41/41 clean, 13 still held
+  for the corpus reasons above. No misses fixable in-lane.
+
+## Explore corpus progress strip (2026-09-16, uncommitted)
+
+- Builder change only: Explore header gains one static line below the intro:
+  N works live / X of Y sections translated / Z held for review (#explore-progress,
+  same p-intro pattern as the home Works line, no new styling, no JS).
+- Counts from loader data before the gates: live = post-gate works,
+  held = held_works, sections = pre-gate merged totals with translated =
+  non-blank non-scaffold English (gate SCAFFOLD rule). Totals also recorded in
+  outputs/catalogue-quality.json; jsdom test cross-checks the strip against it.
+- No deploy, no commits; dist/ rebuilds locally for verification.
+
 ## Epistula Canonica live ship (2026-09-15 ~2:41 PM ET)
 
 - tip-ready OK; verify_docx OK; Canones GR Canon I locked; scaffold discarded; Pass A≠B OK
