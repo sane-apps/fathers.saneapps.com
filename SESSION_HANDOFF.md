@@ -1,5 +1,48 @@
 # Fathers — session handoff
 
+## SITE wave closeout-3 (2026-09-18) — NO SHIP (49 local vs 54 live; would withdraw 5)
+
+- CONTENT landed E1 rotation + KZ triage + Celsus/Photius adjudications
+  (translations 2e10c8f97, 2de4ec08a, 1ad52e70c). Rebuild first showed 48
+  works; philostorgius restored via legitimate rebind (below) → 49.
+- Philostorgius rebind (corpus ca17a3b28, site lane, lane-scoped, no push):
+  KZ changed only Daniel 8 certainty clear→possible; packet regen==stored
+  except file+section digests; reviewed source+English byte-identical;
+  validate_audit_receipt clean. (rebind_packet.py needs an untouched
+  section probe; single-section tip rebound by the same digest method with
+  a full-regen proof instead.) No manifest change needed — original
+  payload_sha256 still binds.
+- NO SHIP: production serves 54 (all 49 local readers byte-identical to
+  live modulo favicon+asset lines; home still 54 treatises/2735 sections).
+  Deploying would 404 five live readers via the works-gate Function:
+  cyril-adoration-1 (33 changed passages), cyril-matthew-fragments (291),
+  cyril-recta-fide-arcadia (41), cyril-recta-fide-pulcheria (41) — all E1
+  label-move text changes, legacy bindings broken — plus
+  origen-dialogue-heraclides (1: s5 stray Lev paran removed). All five need
+  NEW corpus-lane source reviews (scope + passages, checker families);
+  legacy never refreshes to clear a gate. Same precedent as the 09-17
+  closeout audit (41 vs 54 → no ship).
+- Photius stays 404 WITH reason (baseline preserved, marker intact): needs
+  (a) full review chain that does not exist (reviews/audit/ holds only
+  logos_description.md; CONTENT delivered codices 1-17 tracked +
+  Acts 17:34 keep-clear verdict, but no scope/packet reviews), AND
+  (b) a photius-aware loader — rows key on `codex`, not `section`, so the
+  tip-fragment merge path yields one section "None" under author
+  "Origen of Alexandria". Corpus lane + site loader work, not a register.
+- Gates on the 49-build are otherwise green: ship.sh --dry-run exit 0;
+  check_catalogue passed (49/579); UI 12/12; visual-gate 2/2; 4332 pages,
+  112844 links, 0 failures; smoke 7/7; CSS ?v=f0f1afd6e7 unchanged;
+  browser checks passed, visual review pending (dry-run only, not approval).
+- Re-audit (/tmp/closeout3_site_reaudit.py): 49 dist works, zero stubs,
+  zero scaffold markers, all reachable from /works/ + 50 author hubs,
+  zero live-but-held.
+- Build inputs note: UPLOAD lane has uncommitted corpus edits (book.yml x2,
+  docx/build_receipts); they do not affect the gate outcomes above
+  (excerpts 1923=1923, no new excerpt failures).
+- Flags for other lanes: julian Ad Florum 2§69 cite fix (Phase 1a) has no
+  CONTENT commit — still open. Five cyril/heraclides reviews + photius
+  chain are the next-ship critical path.
+
 ## SITE wave closeout-2 ship (2026-09-17 ~10:05 PM ET) — SHIPPED 54/54, zero regressions
 
 - Unblocked the 13: root causes were (a) import-scrub garbling in 11 tip
