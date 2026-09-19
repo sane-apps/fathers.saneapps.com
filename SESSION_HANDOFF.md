@@ -1,5 +1,9 @@
 # Fathers — session handoff
 
+## 2026-09-19 night — Africanus Cesti 7.19 opening SHIP (farming 32–34)
+
+Live 56 treatises / 2786 sections. Cesti tip through 7.19 wine/vinegar/oil/garum (34 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `50e0c630.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected (artifact `08183e9f`) plus extra Cesti reader/farming shots in `outputs/visual-audit-africanus/`. Remaining 7.19 split 35–37 then missile seal.
+
 ## 2026-09-19 — Africanus Cesti 7.4–7.14 SHIP
 
 Live 56 treatises / 2776 sections. Cesti tip through 7.14 (24 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `ea39159c.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected plus extra Cesti reader shots in `outputs/visual-audit-africanus/`. Next overnight: Cesti 7.15+.
