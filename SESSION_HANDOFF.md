@@ -1,5 +1,9 @@
 # Fathers — session handoff
 
+## 2026-09-19 — Origen Greek Psalms 1–5.10 SHIP
+
+Live 57 treatises / 2871 sections. Origen Fragmenta in Psalmos (Greek) 21 thought titles through Psalm 5:10 opened tomb / dead works. H1 Fragments on the Psalms (Greek). Authors earliest-first with BC/AD. Photius 18–22 still held. Cesti still 98. Deploy `b7247acb.fathers-site.pages.dev`, CSS `?v=795fb67ec6`. Visual: 32/32 ui-review PNGs inspected (artifact `bd76092a`). Next overnight: lock header **5.11**.
+
 ## 2026-09-19 — Africanus Cesti 3.33–3.36 SHIP (book 3 of this lock closed)
 
 Live 56 treatises / 2838 sections. Cesti tip through book 7 colophon, book 2.1–2.12, and book 3.1–3.36 (toad-fire, date plaster, swan amulet, brand erasure; 86 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `c270d536.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected (artifact `f27dc151`) plus extra Cesti reader/s83/s86 shots in `outputs/visual-audit-africanus/`. This lock's book 3 is closed. Do not invent a book-4 split.
