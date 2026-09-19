@@ -1,5 +1,9 @@
 # Fathers — session handoff
 
+## 2026-09-19 — Africanus Cesti 3.33–3.36 SHIP (book 3 of this lock closed)
+
+Live 56 treatises / 2838 sections. Cesti tip through book 7 colophon, book 2.1–2.12, and book 3.1–3.36 (toad-fire, date plaster, swan amulet, brand erasure; 86 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `c270d536.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected (artifact `f27dc151`) plus extra Cesti reader/s83/s86 shots in `outputs/visual-audit-africanus/`. This lock's book 3 is closed. Do not invent a book-4 split.
+
 ## 2026-09-19 night — Africanus Cesti 3.1–3.3 SHIP
 
 Live 56 treatises / 2805 sections. Cesti tip through book 7 colophon, book 2.1–2.12, and book 3.1–3.3 (horse elephantiasis, eye-drugs, generation of horses; 53 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `15ab99cf.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected (artifact `9815fa19`) plus extra Cesti reader/s50/s53 shots in `outputs/visual-audit-africanus/`. Next overnight: Cesti 3.4 from the same lock (`--start 54`).
