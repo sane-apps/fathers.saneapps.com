@@ -1,5 +1,9 @@
 # Fathers — session handoff
 
+## 2026-09-19 night — Africanus Cesti 3.1–3.3 SHIP
+
+Live 56 treatises / 2805 sections. Cesti tip through book 7 colophon, book 2.1–2.12, and book 3.1–3.3 (horse elephantiasis, eye-drugs, generation of horses; 53 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `15ab99cf.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected (artifact `9815fa19`) plus extra Cesti reader/s50/s53 shots in `outputs/visual-audit-africanus/`. Next overnight: Cesti 3.4 from the same lock (`--start 54`).
+
 ## 2026-09-19 night — Africanus Cesti 2.9–2.12 SHIP (book 2 remainder)
 
 Live 56 treatises / 2801 sections. Cesti tip through book 7 colophon plus book 2.1–2.12 hunt of hearing (49 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `a22e912f.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected (artifact `0969eea2`) plus extra Cesti reader/s46/s49 shots in `outputs/visual-audit-africanus/`. Next overnight: Cesti book 3 from the same lock.
