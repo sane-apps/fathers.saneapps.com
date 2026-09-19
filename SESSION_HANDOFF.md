@@ -1,5 +1,9 @@
 # Fathers — session handoff
 
+## 2026-09-19 — Africanus Cesti 7.4–7.14 SHIP
+
+Live 56 treatises / 2776 sections. Cesti tip through 7.14 (24 thought titles). H1 The Cesti. Photius 18–22 still held. Deploy `ea39159c.fathers-site.pages.dev`, CSS `?v=f0f1afd6e7`. Visual: 32/32 ui-review PNGs inspected plus extra Cesti reader shots in `outputs/visual-audit-africanus/`. Next overnight: Cesti 7.15+.
+
 ## SITE wave closeout-3 (2026-09-18) — NO SHIP (49 local vs 54 live; would withdraw 5)
 
 - CONTENT landed E1 rotation + KZ triage + Celsus/Photius adjudications
