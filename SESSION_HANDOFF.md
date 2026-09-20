@@ -1,5 +1,9 @@
 # Fathers — session handoff
 
+## 2026-09-20 — Origen Greek Psalms 1–19.3,4 SHIP
+
+Live 57 treatises / 2936 sections. Origen Fragmenta in Psalmos (Greek) 86 thought titles through Psalm 19:3-4 whole-burnt-offering fattened by the Spirit. H1 Fragments on the Psalms (Greek). Authors earliest-first with BC/AD. Photius 18–22 still held. Cesti still 98. Deploy `30e168cb.fathers-site.pages.dev`, CSS `?v=795fb67ec6`. Visual: 32/32 ui-review PNGs inspected (artifact `216f7528`). Next overnight: lock header **19.8**.
+
 ## 2026-09-19 — Origen Greek Psalms 1–16.3 SHIP
 
 Live 57 treatises / 2920 sections. Origen Fragmenta in Psalmos (Greek) 70 thought titles through Psalm 16:3 night is the affliction. H1 Fragments on the Psalms (Greek). Authors earliest-first with BC/AD. Photius 18–22 still held. Cesti still 98. Deploy `ad737377.fathers-site.pages.dev`, CSS `?v=795fb67ec6`. Visual: 32/32 ui-review PNGs inspected (artifact `0a1a817b`). Next overnight: lock header **16.7**.
