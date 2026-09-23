@@ -1,5 +1,10 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-23 23:46 UTC — SHIP OK De Resurrectione (f42aba12)
+- origen-de-resurrectione-scrap live: On the Resurrection; 66 works / 562 held.
+- Pages https://f42aba12.fathers-site.pages.dev
+- Next catalog held: origen-romans-catena (#5) still tipping; then job-enarrationes (#7).
+
 ## 2026-09-23 23:43 UTC — shipping origen-de-resurrectione-scrap
 - Tip Pass A/B; English H1 On the Resurrection; visual 893dc57f; ship --skip-build.
 - Romans catena still translating (catalog #5 ahead).
