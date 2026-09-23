@@ -1,3 +1,55 @@
+# SESSION HANDOFF — ship 61cf721f (2026-09-23)
+
+## 2026-09-23 23:23 UTC — regnorum unheld (packet wired)
+- origen-regnorum-fragments tip-ready Pass A/B; publication-review wired; awaiting ship.
+- Cap/reformed parked; earliest→latest held scaffolds.
+- Next: origen-romans-catena tip then ship; continue scaffolds.
+
+- Deploy: `61cf721f` → https://fathers.saneapps.com (Pages https://61cf721f.fathers-site.pages.dev)
+- Live: **64 works** / held **564** (Hebrews, Hosea, Acts, Ruth scraps unheld; English-first H1s)
+- Visual artifact `7358af85e0…`; CSS `?v=768d2a0a94`; Punch X=NO
+- Cap/reformed densify: **parked**
+- Next earliest draft_scaffold: `origen-romans-catena` (24 secs); `origen-regnorum-fragments` mid-flight
+- Work session Mini ~expires 2026-09-24T10:02Z
+
+---
+
+# SESSION HANDOFF — ship 3ccb7172 (2026-09-23)
+
+- Deploy: `3ccb7172` → https://fathers.saneapps.com (Pages https://3ccb7172.fathers-site.pages.dev)
+- Live: **60 works** / held **568** (Origen Fragments on 1 Corinthians unheld); Punch X=NO
+- Rank1: `origen-1-corinthians-fragments` tip-ready OET u01–u10; packet `o1c_u01_u10_tip`; visual artifact `b0c055a013…`; ship `--skip-build` OK
+- CSS `?v=768d2a0a94`
+- Next earliest draft_scaffold held: see catalogue (after o1c)
+- Cap/reformed densify: **parked**
+- Work session Mini active ~expires 2026-09-24T10:02Z
+
+---
+
+# SESSION HANDOFF — ship d8f2986a (2026-09-23)
+
+- Deploy: `d8f2986a` → https://fathers.saneapps.com (Pages https://d8f2986a.fathers-site.pages.dev)
+- Live: **59 works** / held **569** (Origen Fragments on Ephesians unheld); Punch X=NO
+- Rank1: `origen-ephesians-fragments` tip-ready OET u01–u07; packet `eph_u01_u07_tip`; visual artifact `944f7f997f…`; ship `--skip-build` OK
+- CSS `?v=768d2a0a94`
+- Next earliest draft_scaffold held: `origen-1-corinthians-fragments` (40 secs)
+- Cap/reformed densify: **parked**
+- Work session Mini active ~expires 2026-09-24T10:02Z
+
+---
+
+# SESSION HANDOFF — ship 29a0b595 (2026-09-23)
+
+- Deploy: `29a0b595` → https://fathers.saneapps.com (Pages https://29a0b595.fathers-site.pages.dev)
+- Live: **58 works** / held **570** (Ammonius Fragmenta in Joannem unheld); Punch X=NO
+- Rank1 unhold: `ammonius-fragmenta-joannem` tip-ready OET u01–u10; packet + visual artifact `f1d8f939…`; ship `--skip-build` OK
+- CSS `?v=d55394cc4d`
+- Next (earliest draft_scaffold held): `origen-ephesians-fragments` (28 secs) → then `origen-1-corinthians-fragments`
+- Cap/reformed densify: **parked** (owner: earliest→latest translation, not Cap sidetrack)
+- Work session Mini active ~expires 2026-09-24T10:02Z
+
+---
+
 # SESSION HANDOFF — ship 2fefb7ec (2026-09-23)
 
 - Deploy: \`2fefb7ec\` → https://fathers.saneapps.com (Pages https://2fefb7ec.fathers-site.pages.dev)
