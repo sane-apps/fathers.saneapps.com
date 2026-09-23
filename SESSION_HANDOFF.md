@@ -1,5 +1,9 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-23 23:43 UTC — shipping origen-de-resurrectione-scrap
+- Tip Pass A/B; English H1 On the Resurrection; visual 893dc57f; ship --skip-build.
+- Romans catena still translating (catalog #5 ahead).
+
 ## 2026-09-23 23:28 UTC — SHIP OK regnorum (d52bef74)
 - origen-regnorum-fragments live: Fragments on 1 Kingdoms (1 Samuel); 65 works / 563 held.
 - Pages https://d52bef74.fathers-site.pages.dev ; Public https://fathers.saneapps.com
