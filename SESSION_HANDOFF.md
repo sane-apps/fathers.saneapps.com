@@ -1,5 +1,10 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-23 23:28 UTC — SHIP OK regnorum (d52bef74)
+- origen-regnorum-fragments live: Fragments on 1 Kingdoms (1 Samuel); 65 works / 563 held.
+- Pages https://d52bef74.fathers-site.pages.dev ; Public https://fathers.saneapps.com
+- Cap/reformed parked. Next: origen-romans-catena tip→ship, then next earliest scaffolds.
+
 ## 2026-09-23 23:23 UTC — regnorum unheld (packet wired)
 - origen-regnorum-fragments tip-ready Pass A/B; publication-review wired; awaiting ship.
 - Cap/reformed parked; earliest→latest held scaffolds.
