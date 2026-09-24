@@ -1,6 +1,15 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
 ## 2026-09-24 02:33 UTC — SHIP OK Job homilies (aab60baa)
+
+## Ship 2026-09-24 — Apocalypse + Job Selecta + NT fragments
+- Deploy: https://8a476ca1.fathers-site.pages.dev · public https://fathers.saneapps.com
+- Artifact sha256 `58913f27…` · live_works **76** · held 552 · SHIP OK failed:0
+- Live 200 English H1s: Notes on the Apocalypse; Selections on Job; NT Catena / Scholia Fragments
+- Fixes: cleared tip packet `related_topics` to match first-load scope; NT locus stamp; lifted `origen-nt-fragments` EXTENDED_REVIEW_HOLD; restored luke-scholia Greek to packet witness
+- Visual: 32/32 ui-review inspected (artifact match)
+- Punch X: NO · Cap densify still parked · next = earliest held tip per CORPUS_CATALOG
+
 - origen-job-homilies live: Homilies on Job; 73 works / 555 held.
 - Pages https://aab60baa.fathers-site.pages.dev
 - Next tip: apocalypse scrap / job-selecta / nt-fragments finish.
