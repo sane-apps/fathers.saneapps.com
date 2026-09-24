@@ -1,5 +1,10 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 00:44 UTC — SHIP OK Psalms excerpta (fc536728)
+- origen-psalms-excerpta live: Excerpts on the Psalms (Greek); 69 works / 559 held.
+- Pages https://fc536728.fathers-site.pages.dev
+- Next tip: origen-proverbs-expositio (#10).
+
 ## 2026-09-24 00:43 UTC — shipping origen-psalms-excerpta
 - Tip Pass A/B; H1 Excerpts on the Psalms (Greek); visual d45ddbbb; ship --skip-build.
 
