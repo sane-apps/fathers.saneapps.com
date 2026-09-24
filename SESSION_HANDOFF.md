@@ -1,5 +1,10 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 02:33 UTC — SHIP OK Job homilies (aab60baa)
+- origen-job-homilies live: Homilies on Job; 73 works / 555 held.
+- Pages https://aab60baa.fathers-site.pages.dev
+- Next tip: apocalypse scrap / job-selecta / nt-fragments finish.
+
 ## 2026-09-24 02:30 UTC — shipping origen-job-homilies
 - Tip Pass A/B; H1 Homilies on Job; visual 28174d7b; ship --skip-build.
 
