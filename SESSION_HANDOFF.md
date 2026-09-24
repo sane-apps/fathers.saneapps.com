@@ -1,5 +1,8 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 00:08 UTC — shipping origen-job-enarrationes
+- Tip Pass A/B; H1 Enarrations on Job; visual 72c3d4a2; ship --skip-build.
+
 ## 2026-09-23 23:46 UTC — SHIP OK De Resurrectione (f42aba12)
 - origen-de-resurrectione-scrap live: On the Resurrection; 66 works / 562 held.
 - Pages https://f42aba12.fathers-site.pages.dev
