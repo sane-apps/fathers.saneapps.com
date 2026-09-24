@@ -9,6 +9,13 @@
 ## Ship 2026-09-24 — Origen Philocalia
 
 ## Ship 2026-09-24 — Gregory Thaumaturgus ouden-eidolon
+
+## Ship 2026-09-24 — Gregory Jeremiah fragments
+- Deploy: https://337d5ed7.fathers-site.pages.dev · live_works **80** · held 548 · SHIP OK
+- H1: Fragments on Jeremiah · tip unit 1 De Simulatione (open+rem)
+- Next: matthew-fragment #46, sententiae #54; Luke still Rauer-blocked
+- Punch X: NO
+
 - Deploy: https://6e590086.fathers-site.pages.dev · public https://fathers.saneapps.com
 - Artifact sha256 `dff992af…` · live_works **79** · held 549 · SHIP OK failed:0
 - Live 200 English H1: That There Is No Idol in the World (complete one-sentence PG scrap)
