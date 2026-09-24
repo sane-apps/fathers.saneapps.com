@@ -3,6 +3,15 @@
 ## 2026-09-24 02:33 UTC — SHIP OK Job homilies (aab60baa)
 
 ## Ship 2026-09-24 — Apocalypse + Job Selecta + NT fragments
+
+## Ship 2026-09-24 — Origen Letters (Africanus; Gregory)
+- Deploy: https://7c0677da.fathers-site.pages.dev · public https://fathers.saneapps.com
+- Artifact sha256 `3e485ec2…` · live_works **77** · held 551 · SHIP OK failed:0
+- Live 200 English H1: Letters (Africanus; Gregory)
+- Luke (#26) still blocked: Rauer Latin not locked (working-note sources only) — do not publish scaffolds
+- Next earliest shippable after Letters: tip-ready Rank-1 with real Greek (Gregory scraps still lemma scaffolds) or lock Luke Rauer
+- Punch X: NO
+
 - Deploy: https://8a476ca1.fathers-site.pages.dev · public https://fathers.saneapps.com
 - Artifact sha256 `58913f27…` · live_works **76** · held 552 · SHIP OK failed:0
 - Live 200 English H1s: Notes on the Apocalypse; Selections on Job; NT Catena / Scholia Fragments
