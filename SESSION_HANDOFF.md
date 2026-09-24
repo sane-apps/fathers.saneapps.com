@@ -1,3 +1,10 @@
+# SESSION HANDOFF — 2026-09-24 04:32 UTC
+
+## Shipped
+- Eleven Eustathius PG 18 tip scraps after Hexaemeron.
+- Pages `https://e345be41.fathers-site.pages.dev`; **SHIP OK** live **95** / held 533; visual 32/32; Punch X **NO**.
+- **NEXT** (earliest held in catalog): `eustathius-engastrimytho` (~166k Greek / 12 secs) — skipped in small-batch; resume earliest-first here.
+
 # SESSION HANDOFF — 2026-09-24 04:18 UTC
 
 ## Shipped
