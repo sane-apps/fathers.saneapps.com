@@ -1,5 +1,8 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 01:58 UTC — shipping origen-lamentationes-fragments
+- Tip Pass A/B; H1 Fragments on Lamentations; visual 7d473d66; ship --skip-build.
+
 ## 2026-09-24 01:40 UTC — SHIP OK Proverbs fragments (64f8658a)
 - origen-proverbs-fragments live: Fragments on Proverbs; 71 works / 557 held.
 - Pages https://64f8658a.fathers-site.pages.dev
