@@ -1,3 +1,12 @@
+# SESSION HANDOFF — 2026-09-24 03:40 UTC
+
+## Shipped this session (earliest→latest tip closeouts)
+- Matthew fragment → Sententiae → Eustathius Allocutio.
+- Latest: `eustathius-allocutio-constantinum` H1 Address to Emperor Constantine; Pages `https://c72dab54.fathers-site.pages.dev`; **SHIP OK** live **83** / held 545; visual 32/32; Punch X **NO**.
+- Reformed 6/6 already live — back on catalog series-closeout tips.
+- Rank1 still paused; this arc is tip publication of held scaffolds.
+- **NEXT**: `eustathius-hexaemeron` (earliest after Allocutio; 16 scaffold secs — larger). Then psalmum tips. Luke still Rauer-blocked; Cap parked.
+
 # SESSION HANDOFF — 2026-09-24 03:35 UTC
 
 ## Shipped this session
