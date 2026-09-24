@@ -1,5 +1,8 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 00:43 UTC — shipping origen-psalms-excerpta
+- Tip Pass A/B; H1 Excerpts on the Psalms (Greek); visual d45ddbbb; ship --skip-build.
+
 ## 2026-09-24 00:26 UTC — Romans rem-mid refresh ship (d314d52a)
 - u04/u05 rem-mid coverage fix from late tip agent; digests rebound; still 68/560.
 
