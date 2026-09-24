@@ -1,5 +1,8 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 00:26 UTC — Romans rem-mid refresh ship (d314d52a)
+- u04/u05 rem-mid coverage fix from late tip agent; digests rebound; still 68/560.
+
 ## 2026-09-24 00:17 UTC — SHIP OK Romans catena (bf32fdb8)
 - origen-romans-catena live: Commentary on Romans (Greek Catena); 68 works / 560 held.
 - Pages https://bf32fdb8.fathers-site.pages.dev
