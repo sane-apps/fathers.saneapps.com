@@ -7,6 +7,14 @@
 ## Ship 2026-09-24 — Origen Letters (Africanus; Gregory)
 
 ## Ship 2026-09-24 — Origen Philocalia
+
+## Ship 2026-09-24 — Gregory Thaumaturgus ouden-eidolon
+- Deploy: https://6e590086.fathers-site.pages.dev · public https://fathers.saneapps.com
+- Artifact sha256 `dff992af…` · live_works **79** · held 549 · SHIP OK failed:0
+- Live 200 English H1: That There Is No Idol in the World (complete one-sentence PG scrap)
+- Luke still blocked on Rauer; next Gregory tips #45+ still lemma scaffolds
+- Punch X: NO
+
 - Deploy: https://c935f575.fathers-site.pages.dev · public https://fathers.saneapps.com
 - Artifact sha256 `0dc39fc4…` · live_works **78** · held 550 · SHIP OK failed:0
 - Live 200 English H1: Philocalia (tip 1–27); ch.27 Pharaoh-hardening OET
