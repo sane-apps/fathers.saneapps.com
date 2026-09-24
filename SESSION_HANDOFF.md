@@ -1,5 +1,10 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 01:30 UTC — SHIP OK Proverbs expositio (2b5a4a01)
+- origen-proverbs-expositio live: Exposition on Proverbs; 70 works / 558 held.
+- Pages https://2b5a4a01.fathers-site.pages.dev
+- Next tip: origen-proverbs-fragments (#13).
+
 ## 2026-09-24 01:27 UTC — shipping origen-proverbs-expositio
 - Tip Pass A/B; H1 Exposition on Proverbs; visual 9c88fa62; ship --skip-build.
 
