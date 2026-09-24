@@ -1,3 +1,12 @@
+# SESSION HANDOFF — 2026-09-24 03:35 UTC
+
+## Shipped this session
+- `gregory-thaumaturgus-matthew-fragment` tip Pass A/B; H1 Fragment on Matthew; Pages `ccc877dc`; live 81 then superseded.
+- `gregory-thaumaturgus-sententiae` tip Pass A/B; H1 Sentences; Pages `https://f66290d9.fathers-site.pages.dev`; **SHIP OK** live **82** / held 546; visual 32/32; Punch X **NO**.
+- Reformed lane 6 books already live (not held) — back on catalog earliest→latest tip closeouts.
+- Rank1 lane still **paused** in `docs/work-lanes.json`; this arc is series-closeout tip publication, not new Rank1 claims.
+- Next: earliest held tip after sententiae (catalog order); Luke still blocked on Rauer; Cap parked.
+
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
 ## 2026-09-24 02:33 UTC — SHIP OK Job homilies (aab60baa)
