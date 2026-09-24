@@ -1,3 +1,10 @@
+# SESSION HANDOFF — 2026-09-24 04:18 UTC
+
+## Shipped
+- `eustathius-hexaemeron` tip Pass A/B u01–u08 (32 secs); H1 Commentary on the Hexaemeron; Pages `https://55d22029.fathers-site.pages.dev`; **live 84** / held 544; visual 32/32; Punch X **NO**.
+- Next earliest held tip after Hexaemeron (catalog): Eustathius psalmum scraps, then remaining Eustathius series-closeouts.
+- Rank1 still paused; tip closeouts continue catalog earliest→latest.
+
 # SESSION HANDOFF — 2026-09-24 03:40 UTC
 
 ## Shipped this session (earliest→latest tip closeouts)
