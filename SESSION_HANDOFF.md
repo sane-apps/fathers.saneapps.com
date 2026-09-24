@@ -5,6 +5,15 @@
 ## Ship 2026-09-24 — Apocalypse + Job Selecta + NT fragments
 
 ## Ship 2026-09-24 — Origen Letters (Africanus; Gregory)
+
+## Ship 2026-09-24 — Origen Philocalia
+- Deploy: https://c935f575.fathers-site.pages.dev · public https://fathers.saneapps.com
+- Artifact sha256 `0dc39fc4…` · live_works **78** · held 550 · SHIP OK failed:0
+- Live 200 English H1: Philocalia (tip 1–27); ch.27 Pharaoh-hardening OET
+- Luke (#26) still blocked on Rauer Latin lock
+- Next earliest held with real Greek: Gregory Thaumaturgus tip scraps (#44+) — still lemma scaffolds, need Pass A/B
+- Punch X: NO
+
 - Deploy: https://7c0677da.fathers-site.pages.dev · public https://fathers.saneapps.com
 - Artifact sha256 `3e485ec2…` · live_works **77** · held 551 · SHIP OK failed:0
 - Live 200 English H1: Letters (Africanus; Gregory)
