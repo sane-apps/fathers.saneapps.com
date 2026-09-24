@@ -1,5 +1,8 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 02:30 UTC — shipping origen-job-homilies
+- Tip Pass A/B; H1 Homilies on Job; visual 28174d7b; ship --skip-build.
+
 ## 2026-09-24 02:01 UTC — SHIP OK Lamentations fragments (416ce1f2)
 - origen-lamentationes-fragments live: Fragments on Lamentations; 72 works / 556 held.
 - Pages https://416ce1f2.fathers-site.pages.dev
