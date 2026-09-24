@@ -1,5 +1,10 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 00:09 UTC — SHIP OK Job enarrations (e6c0bd98)
+- origen-job-enarrationes live: Enarrations on Job; 67 works / 561 held.
+- Pages https://e6c0bd98.fathers-site.pages.dev
+- Romans catena (#5) still needs u05 tip.
+
 ## 2026-09-24 00:08 UTC — shipping origen-job-enarrationes
 - Tip Pass A/B; H1 Enarrations on Job; visual 72c3d4a2; ship --skip-build.
 
