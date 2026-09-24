@@ -1,5 +1,10 @@
 # SESSION HANDOFF — ship 61cf721f (2026-09-23)
 
+## 2026-09-24 00:17 UTC — SHIP OK Romans catena (bf32fdb8)
+- origen-romans-catena live: Commentary on Romans (Greek Catena); 68 works / 560 held.
+- Pages https://bf32fdb8.fathers-site.pages.dev
+- Hebrews scrap already live; next tip: origen-psalms-excerpta (#9).
+
 ## 2026-09-24 00:15 UTC — shipping origen-romans-catena
 - Tip Pass A/B 24 secs; visual 7317867c; ship --skip-build.
 
