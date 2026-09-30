@@ -951,3 +951,24 @@ Shared work guards remain active because other Mini work continues. Do not stop 
 - live_works=40; claim left **prepped**
 - OpenCode left alone
 
+
+## Explore redesign: timeline/table/consensus + search (2026-09-25, muse)
+
+- Builder change (shell only): replaced explore-path card grid with compact header + search + view seg + stance legend (build_site.py explore_body). No catalogue/gate logic touched.
+- assets/explore.js: 3 views (timeline/table/consensus), search box, stance shapes (filled/half/X), per-claim render keys (fixed same-excerpt cross-lane misplacement), Yes/No/Partly/Mixed verdicts.
+- NOTE 2026-09-25 ~13:45 Mini time: a parallel severian dry-run stashed this work ("hold explore redesign during severian ship") without a handoff note, then dry-ran. Restored via stash pop (cc8f147); md5-verified all 4 files. If you need a clean tree, coordinate here first.
+
+## 2026-09-28 (Mini — explore stance review: 53 fence-sits resolved)
+- Owner: timeline partials misrepresent authors. Reviewed all 53 qualified rows with full excerpt + author context.
+- Verdicts: 50 -> affirms, 1 -> denies (tertullian_de_anima_9 vs paraclete-monopoly: in-church tested prophecy contradicts monopoly), 2 rows removed as redundant (eph_13 lords-day and celsus_8_72 call-and-refusal duplicated existing correct rows), 1 re-pointed (julian collective 2-1-1 said nothing on grace -> julian-to-florus/1.53), 1 dead ref repaired (perpetua __2 never built -> __4 Saturus vision). Zero qualified quote ratings remain (2 contrast cards keep the label; different feature).
+- Every touched row carries a public Editorial note with the reasoning; time-development noted where real (augustine retraction 427, tertullian monogamy 217 vs ad-uxorem 203, paenitentia vs later montanist rigor). Solidifying quotes for justin_1apol_61 faith-then-water and didache_14 church-oblation already existed as rows; no new excerpts needed.
+- Regression: scripts/explore_stance_review_test.py (9 tests) + data/explore/stance_legacy_ids.json freeze (306). All rows need reviewer; reviewed rows need 25+ char note; legacy list cannot grow; fence-sits must be deliberate; claims/refs resolve.
+- Jev cross-check on gifts-and-order consulted (advisory): disagreements traced to its excerpt-only lens or under-reads (chrysostom explicit criteria rated qualified); none overturned.
+- Verified: stance test 9/9, section_sort 5/5, works-gate 1/1, ship.sh --dry-run green. ui.test.mjs pinned values updated (smyrn_2 now affirms+denies across lanes). Uncommitted, awaiting owner review.
+
+## 2026-09-28 (Mini — full stance audit: Jev sweep + adjudication)
+- Full jev_stance_check sweep: 360 rows, 352 checked, 8 skipped, 90 Jev flags.
+- Adjudication: 2 direct contradictions resolved (dialogue_71 denies UPHELD, Jev misfire; strom_17 apologetic flipped affirms->qualified, genuinely mixed passage). 17 high-conf + 37 further flags each read in full: 1 dead row removed (perpetua_4, redundant), rest confirmed (Jev literalism noise: verbatim matches flagged unclear).
+- Added: anima_41 inherited-guilt affirms (traducian balance), eph_18 born-of-virgin affirms (explicit virginal conception). Soteriology cluster (28 rows) fully hand-audited, 0 changes; opponent-quotation rows (letter-to-rome, turbantius) and augustine-recap row now carry caution notes.
+- Final: 361 rows, 311 affirms / 49 denies / 1 deliberate qualified; 118 human-reviewed with public notes; 243 legacy (all Jev-screened, unflagged-or-noise). Rating rule + audit-tools rule added to SOP and memory.
+- Verified: stance test 9/9, ship.sh --dry-run green. Uncommitted.
