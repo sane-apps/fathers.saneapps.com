@@ -1,3 +1,15 @@
+# SESSION HANDOFF — Bible versions, fonts, bios, duplicate canonicals SHIPPED (2026-10-02, Claude)
+
+- LIVE: https://viapatrum.org, CSS ?v=9c8258b588. Live check: 396 probes, 0 failed (scripts/check_links.py --live https://viapatrum.org).
+- Scripture reader now offers BSB NET WEB KJV (hosted) + ESV NIV CSB NASB, loaded in the browser from bolls.life (never stored), with each publisher notice shown under the pills. Same approach Mere Orthodoxy uses; no permission claimed.
+- Fonts self-hosted: assets/fonts/*.woff2 + assets/fonts.css (scripts/vendor_fonts.py). No Google Fonts request on site pages (og card renderer still uses Google Fonts; fine).
+- Duplicate passages filed under several questions: one main /e/ page; the others carry a canonical to it and are dropped from the sitemap (NONCANONICAL_ROUTES). Noindex pages also leave the sitemap.
+- data/author-bios.json: 67 bios, every author page has one now.
+- ship.sh PUBLIC_ORIGIN is now https://viapatrum.org. check_links.py strips the Cloudflare Web Analytics beacon before hashing (it is injected into some live HTML responses and caused false failures).
+- After a ship, cached /assets/site.css and site.js on the old host can stay stale: purge them if a live check fails on those two files.
+- STILL TO DO BY OWNER: Cloudflare redirect rules (www.viapatrum.org and fathers.saneapps.com -> 301 to https://viapatrum.org, keep path + query). viapatrum.org has no redirect rules yet; saneapps.com has one (www to root). The agent permission system blocked the agent from creating them.
+- Follow-ups: split works over 1 MB into books (IA/URL rule); remove leftover worktree ../fathers.saneapps.com-redesign (owner command).
+
 # SESSION HANDOFF — Over time, Scripture, Listen, SEO SHIPPED (2026-10-02, Claude)
 
 - LIVE: https://viapatrum.org (Pages https://022de3b2.fathers-site.pages.dev), CSS ?v=e724946f9e. SHIP OK, 396 live probes, 0 failed.
