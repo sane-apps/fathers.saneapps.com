@@ -1151,3 +1151,11 @@ CF = translate only, mechanical: purpose-bound receipts, call-site checks, blurb
 ## 08:20 EDT 2026-10-02 - Claude: ANF cleanup batch ready to ship (not shipped by me)
 - translations 3fca9ba14: 536/1214 topic excerpts now source_verified (Ignatius + 466 from the free-model bulk run: Tertullian, Justin, Clement, Lactantius, Novatian, Cyprian, Irenaeus, Origen, and smaller authors). Corrections applied: Tertullian 'Against Praxeas' -> On Baptism, most 'On Baptism' -> Scorpiace, Origen item -> Letter to Africanus, Hermas Sim. fixes.
 - I did NOT ship: a ship.sh was running and the owner is mid-redesign. The next ship from the working tree carries this batch. More batches follow as the lanes finish.
+
+## 2026-10-02 - Claude: repo synced for Codex on the Air (READ FIRST on the Air)
+- main = everything live (14b2e77): rebrand, audio, prose tools, Play section. Mini working tree is clean.
+- Air: `~/SaneApps/websites/fathers.saneapps.com` is now a real git clone of main. The old non-git copy is preserved at `~/SaneApps/websites/fathers.saneapps.com.pre-git-20261002` (do not delete). Air-only items kept there: `scripts/audio_rebalance.sh`, a 2026-10-01 `scripts/build_audio.py` variant, `data/publication-review.json.bak-davenant-obj9`. Everything else there is an older September copy of what is now in git.
+- DO NOT build or ship from the Air: the site build reads `clients/translations`, and the Air holds the narrow 8-book branch, so an Air ship would replace the live library with 8 books. Workflow: edit on the Air -> commit -> push to main -> the Mini pulls, builds and ships (`scripts/ship.sh`).
+- `functions/works/[[path]].js` is gitignored on purpose; `scripts/generate_works_gate.py` regenerates it during ship.
+- Keep the game entry points (nav Play + home Play section): `docs/GAME_LINKS.md`.
+- ANF cleanup is running on the Mini (translations repo); new verified batches land in `clients/translations` and go live with the next Mini ship.
