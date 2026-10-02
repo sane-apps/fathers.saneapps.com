@@ -1,3 +1,15 @@
+# SESSION HANDOFF — references, audio matching, disclosures SHIPPED (2026-10-02, Claude)
+
+- LIVE: https://viapatrum.org. Live check 396 probes, 0 failed.
+- Audio: inject_audio matches recordings by words, ignoring editorial brackets (exact match first, brackets-only as fallback). Unattached passages 2584 -> 1926.
+  build_audio --next (15-min launchd job) now re-records stale passages first: stale_stems(work) finds English files whose current words are on the page but not in the recording. About 624 files across 144 works, one work per run.
+- Cross-references: section pages show "Scripture in this section" (the verses that section cites) and "Questions this work addresses"; excerpt pages list the passage's own verses and the same writer's works.
+  Citations flagged wrong (confidence >= 0.8) in clients/translations/outputs/jev-cite-sweep-20260925.jsonl no longer list a passage under a verse in the Scripture reader (flagged_wrong_citations, work_book()).
+  About 1,978 flagged references are still in the English text. Fixing them at source needs the jev_cite_correct loop (paid TypeSafe + CF) and owner approval.
+- Fixed at source (clients/translations): 13 "Zach. III, 8-9" refs -> "Zechariah 3:8-9" (Didymus on Zechariah); 5 wrong refs in dcz_u06_rem; Africanus Cesti "lock" worksheet notes -> "[…]".
+- check_catalogue.py fails on Roman-numeral Bible refs and "lock" worksheet notes in reader text. check_links --live fetches versioned site.css/js (bare paths sit stale in the edge cache).
+- Layout: licence/AI note at the foot of work pages; translation notice at the foot of Scripture chapters (ESV/NIV/CSB/NASB only; hosted versions are in the note below); section pages get a right rail on wide screens; chapter-nav middle link aligned; read-along player follows the theme everywhere.
+
 # SESSION HANDOFF — Bible versions, fonts, bios, duplicate canonicals SHIPPED (2026-10-02, Claude)
 
 - LIVE: https://viapatrum.org, CSS ?v=9c8258b588. Live check: 396 probes, 0 failed (scripts/check_links.py --live https://viapatrum.org).
