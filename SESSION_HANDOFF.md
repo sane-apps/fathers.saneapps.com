@@ -7,7 +7,7 @@
 - data/author-bios.json: 67 bios, every author page has one now.
 - ship.sh PUBLIC_ORIGIN is now https://viapatrum.org. check_links.py strips the Cloudflare Web Analytics beacon before hashing (it is injected into some live HTML responses and caused false failures).
 - After a ship, cached /assets/site.css and site.js on the old host can stay stale: purge them if a live check fails on those two files.
-- STILL TO DO BY OWNER: Cloudflare redirect rules (www.viapatrum.org and fathers.saneapps.com -> 301 to https://viapatrum.org, keep path + query). viapatrum.org has no redirect rules yet; saneapps.com has one (www to root). The agent permission system blocked the agent from creating them.
+- DONE: Cloudflare 301 redirect rules live (www.viapatrum.org and fathers.saneapps.com -> https://viapatrum.org, path + query kept). Verified with curl.
 - Follow-ups: split works over 1 MB into books (IA/URL rule); remove leftover worktree ../fathers.saneapps.com-redesign (owner command).
 
 # SESSION HANDOFF — Over time, Scripture, Listen, SEO SHIPPED (2026-10-02, Claude)
