@@ -1,11 +1,16 @@
-# SESSION HANDOFF — redesign in progress (2026-10-02, Claude)
+# SESSION HANDOFF — Via Patrum redesign SHIPPED (2026-10-02, Claude)
 
-- Owner-approved Via Patrum redesign (proposal: https://claude.ai/artifact/DLSPmQG3CxFpgTCqm2S8hi).
-- Work happens in a separate worktree so routine ships from this folder are unaffected:
-  ~/SaneApps/websites/fathers.saneapps.com-redesign, branch redesign/via-patrum. Base commit = snapshot of this folder's uncommitted tree (other agents' work) at 2026-10-02.
-- Touches: scripts/build_site.py (layout, home, topic/excerpt/author pages, citation cleaner, jargon scrub), assets/site.css, site.js, explore.css, explore.js, data/author-bios.json (+33 bios), scripts/ui.test.mjs.
-- NOT deployed. Merge back as a patch after owner OK; re-check conflicts with any build_site.py edits made here since the snapshot.
-- Receipt: worktree outputs/visual-audit-redesign-4/RECEIPT.md (17/17 UI tests, 52 viewport shots, no overflow).
+- LIVE: https://fathers.saneapps.com (Pages https://8708e6b9.fathers-site.pages.dev), CSS ?v=478304d83b. SHIP OK, 398 live probes, 0 failed.
+- The live site IS the redesign now. Build on these files; do not restore the old navy header, "The Fathers, readable" home, Topics/Authors nav labels, or the Explore progress strip.
+  - Nav: Questions (/topics/) · Fathers (/authors/) · Works · Over time (/explore/) · Play. Header search goes to /works/?q=. Night mode via data-theme + localStorage "vp-theme".
+  - Home: hero + search, three doors, today's passage (new English only, rotates daily in site.js from #vp-daily-data), start shelf (SHELF_FIRST), road of the Fathers, mission + Play (GAME_LINKS kept).
+  - Father pages: father_head_html (bio from data/author-bios.json, +33 bios), START_HERE map, works grouped by work_kind(), passages folded per question.
+  - Question pages: stance chips from Explore stances; ruptures shown as a turn note.
+  - public_citation() cleans excerpt citations; display_author() unifies names; Diognetus hubs merged (old slug redirects).
+  - Explore progress counts moved to /about/ (#explore-progress, test updated).
+- Browser receipt: outputs/ui-review (32 PNGs inspected, review passed). Live shots: outputs/visual-audit-redesign-live/.
+- Committed whole files including earlier uncommitted live work by other agents (owner chose this, 2026-10-02).
+- Follow-ups: rows on /works/ sit 8px left of the gutter; some About-this-text identifiers still say "tip"/"densify"; Scripture door, Listen page and reader connections panel not built yet.
 
 # SESSION HANDOFF — 2026-09-30
 
