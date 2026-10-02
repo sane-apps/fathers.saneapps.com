@@ -1,3 +1,15 @@
+# SESSION HANDOFF — Over time, Scripture, Listen, SEO SHIPPED (2026-10-02, Claude)
+
+- LIVE: https://viapatrum.org (Pages https://022de3b2.fathers-site.pages.dev), CSS ?v=e724946f9e. SHIP OK, 396 live probes, 0 failed.
+- viapatrum.org is now the canonical host everywhere (canonical, og, sitemap index, robots). SITE_ORIGIN in build_site.py.
+  STILL TO DO BY OWNER: Cloudflare redirect rules (www.viapatrum.org and fathers.saneapps.com → 301 to https://viapatrum.org); the API token lacks ruleset rights.
+- Over time rebuilt: static claim timelines (tl_* helpers) on every /topics/<id>/ (#over-time) + /explore/ overview of all questions. Old explore.js chart retired; /explore/?topic=x redirects in-page to /topics/x/#over-time.
+- Scripture: /scripture/, /scripture/<book>/, /scripture/<book>/<chapter>/ for all 1,189 chapters. Chapter text BSB (default) + NET + WEB + KJV from data/bibles/*.json.gz (scripts/import_bibles.py; NET via scripts/fetch_net.py from labs.bible.org, owner-approved, credit line required). Verse desk lists every Father citing the verse. In-text Bible refs link here (SCRIPTURE_CHAPTERS/VERSES).
+- Listen: /listen/ (works with audio). Nav: Questions · Scripture · Fathers · Works · Listen · Over time · Play.
+- SEO: unique titles (0 dups, final dedupe pass), sentence-cut descriptions, JSON-LD on every page, per-page og cards (scripts/make_og_cards.cjs → assets/og/, index.json; rerun after builds that add pages), real 301s in dist/_redirects (ship.sh now appends holds instead of overwriting), noindex on pages.dev and on empty chapters/topics, manifest + icons, lazy Greek/Latin on readers (/data/src/<slug>.json), daily passages in /data/daily.json.
+- Checks updated: ui.test.mjs (13 tests), check_catalogue_ui.cjs (adds explore overview, scripture, scripture-verse shots; 36 total), check_catalogue.py visible-text check now skips script/style.
+- Follow-ups: self-host fonts; canonicalize duplicate excerpts across topics; split works over 1 MB into books; ESV/NIV/CSB/NASB pending owner decision.
+
 # SESSION HANDOFF — Via Patrum redesign SHIPPED (2026-10-02, Claude)
 
 - LIVE: https://fathers.saneapps.com (Pages https://8708e6b9.fathers-site.pages.dev), CSS ?v=478304d83b. SHIP OK, 398 live probes, 0 failed.
