@@ -1,3 +1,10 @@
+# RESUME HERE (2026-10-06 ~13:45, Claude; usage limit hit)
+- Site NOT deployed yet; live = Monday 20:31 build. Auto ship attempts: 12:29 blocked (English in Latin subtitle; fixed b5b2c50), 12:41 blocked at browser gate (CSB/NASB off screen on phone; fixed bc5ac59 pills wrap).
+- Browser gate (scripts/check_catalogue_ui.cjs) run on an APFS clone of dist + new CSS (scratchpad uicheck): scripture now passes; failed-index search check was stale (fixed: fails shards too). Last rerun ended rc=1 with a playwright TimeoutError, cause NOT yet found: see scratchpad/uicheck/run.log. Likely next: the "index-recovered" waitFor (15 s) or a template page.
+- Next step: diagnose that TimeoutError on the clone, fix, then `launchctl kickstart gui/$(id -u)/com.saneapps.fathers-ship-auto` and watch ~/Library/Logs/SaneApps/fathers-ship-auto.log (a full ship takes ~40 min).
+- Red-team audit workflow wf_9baefe4b-f63 (read-only) was STOPPED to save usage; resume with Workflow({scriptPath: <session workflows/scripts/viapatrum-redteam-audit-wf_9baefe4b-f63.js>, resumeFromRunId: "wf_9baefe4b-f63"}); finished agents return cached.
+- YouTube channel: owner decision pending; audit's youtube area will bring verified facts.
+
 # RESUME LEDGER (2026-10-06 ~10:50, Claude on Mini, after crash)
 
 - 12:29 first auto ship started (launchctl kickstart; plist PATH fixed to include /opt/homebrew/opt/node@24/bin). 12:40 owner asked for a full red-team audit (ultracode): read-only workflow wf_9baefe4b-f63 running (12 areas + verify + gaps + plan incl. YouTube design). Fixes come in a second workflow after owner review. Watchdog: fathers-watch, audio-next, logos-build had been unloaded since the crash; reloaded 12:20. Email campaign plists disabled (owner).
