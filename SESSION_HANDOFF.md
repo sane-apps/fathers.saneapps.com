@@ -1,3 +1,11 @@
+# SESSION HANDOFF — quality revert + audio match (2026-10-05 ~21:00, Claude on Mini)
+
+- LIVE (ship-20261005b, Pages 23456683, all gates passed): reader-fix edits reverted in 101 certified works (934 edits, each section gated by the two-family source check; translations 0c0051170 also committed the full state of all 113 certified works). Audio re-recorded only where text changed (70 Aura works in CF, 11 Kokoro). All certified works' audio matches except Clement Rich Man §2.
+- Pending: (1) inject_audio match_key: page shows gap marker "Text breaks off." vs recorded "text breaks off here" (Clement §2). (2) Theophilus fragmenta Joannem u01-rem re-recorded after the ship; goes live next ship. (3) 49 audio skips are in uncertified works whose text other pipelines changed.
+- Code: inject_audio 9b4ad09 (spacing/leading-period), build_audio 41cdae9 (site-slug->book map, MAX_WORDS 25000), translations edit_judge 682820b5a, revert_reader_edits 7c10c9c38. Lanes running; reader edits + polish stay off (WP_READ_EDITS=0). CF edit judges (Nemotron/Kimi/GLM) all ~coin-flip on the audit bench: no judge gate.
+- Gotcha: `build_audio --stems` exits 0 when it defers (drain lock, site ship, memory heat). Pause com.saneapps.fathers-audio-next (launchctl bootout/bootstrap) and recount stale_stems instead of trusting exit codes.
+- The 10pm Oct 5 work-modes build (memory mini-work-modes-plan) was a session-only cron in the session that just ended: start it by hand.
+
 # SESSION HANDOFF — semantic search + frontier models (2026-10-03 ~01:00, Claude on Air)
 
 - Semantic search (owner: "a must"): Vectorize index `viapatrum-search` (1024-d cosine, @cf/qwen/qwen3-embedding-0.6b), 18,457 chunks of 9,788 live passages. scripts/search_sync.py export|upload (incremental by sha; deletes in batches of 100). functions/api/search.js: GET /api/search?q=&n= -> embed query -> top 60 -> bge-reranker-base top 40 -> max 2 per work. Pages bindings AI + VEC set on fathers-site (production + preview). ship.sh runs export + upload after build_site and copies meta to dist/data/search-meta.json. _routes include /api/*.
