@@ -1,8 +1,8 @@
-# RESUME HERE (2026-10-06, Grok; ship starting)
-- Browser gate fixed and committed: /methodology/ h2 is "How it is checked", not "Review status". Share cards under assets/og/ committed in the same breath so ship_if_changed does not skip.
-- Proof before this ship: outputs/uicheck-review/browser-receipt.json (36 shots, exit 0) on the 12:44 dist plus the pill-wrap CSS. Phone Scripture shows NASB on a second line, on screen.
-- Ship: kickstart com.saneapps.fathers-ship-auto. Pending since 12:29: text, audio, library. Log: ~/Library/Logs/SaneApps/fathers-ship-auto.log. Live stays the Monday 20:31 build until this ship prints SHIP OK.
-- Red-team audit wf_9baefe4b-f63 and the YouTube channel are still owner decisions. The Claude reader skipped 1113 records; this ledger is the source.
+# RESUME HERE (2026-10-06 14:08, Grok; site is live)
+- SHIP OK. Public https://viapatrum.org CSS ?v=1e3ab26209. Pages https://28b09828.fathers-site.pages.dev. Live check: 370 routes, 365 held, 0 failed. Held probe /works/origen-john-13/ is 404. /methodology/ says "How it is checked".
+- Commit c4aca5f: browser gate looks for that heading; share cards included so auto-ship would start. Gate dirs are clean after the ship.
+- Still running after the deploy: shelf refresh, build_ebooks.py 343 books (jobs=2), then audiobooks, Word, assemble, upload. Log ~/Library/Logs/SaneApps/fathers-ship-auto.log. Parent pid 8664.
+- Red-team audit wf_9baefe4b-f63 and the YouTube channel are still owner decisions.
 
 # RESUME LEDGER (2026-10-06 ~10:50, Claude on Mini, after crash)
 
