@@ -1,3 +1,56 @@
+# CRASH NOTE (2026-10-06 10:30, Claude on Mini)
+
+- 04:18: wave 3b (6 UI-sketch agents: S-home-nav, S-fathers, S-timeline-defined, S-scripture, S-downloads, S-search) started at once; parallel site builds filled the disk (0 GB free) and every agent died with ENOSPC. No swap room on the 8 GB Mini, so memory ran out too. Wave 3b made NO repo edits; it must be rerun with concurrency <= 2.
+- Wave 3a results: W3-topics, W3-audio-install (P7 live), W3-p14-text-unify done. Blocked by the permission check, nothing written: W3-p15-reader-bar, W3-p1-data, W3-p16-autoship (ship_if_changed.py). Open review finding: next full ship drops the Play bar on ~270 sections (inject_audio.py) -- fix before shipping.
+- Owner recovery: emptied Trash; ran rm -rf on outputs pkg-*/dist, pkg-*-review/dist, tl-test/dist, dl-test/dist-snapshot, audiobooks-scratch/cache, games-shots/dist (all rebuildable). Disk now 25 GB free.
+- Integrity check: all uncommitted .py compile, all changed .json parse, nothing written during the crash window. Two book.yml files (cyril-alexandria-fragmentum-baruch, -thesaurus) had broken quoting since Oct 5 13:10; fixed.
+- Repos still hold a lot of uncommitted work (fathers ~617 paths, translations ~829) -- commit when the owner approves.
+
+# SESSION HANDOFF — waves 1-2 done, wave 3 running (2026-10-06 ~02:00, Claude on Mini)
+
+- Owner (2026-10-06): LS product 1367367 PUBLISHED (go-live set checkout_url in outputs/downloads/library.json; library renders live in default builds). Test discount [redacted test code] (id 1157157, 1 use, 100%, expires 10-08): delete after the $0 test purchase. Owner approved P14 P15 P16 + all P18 sketches.
+- New: /games/ (scripts/games_page.py, assets/games/*.webp), nav "Play" -> "Games", /play -> /games/ 301, docs/GAME_LINKS.md updated. After the site ship: point play.viapatrum.org "/" at https://viapatrum.org/games/ (game repo deploy via its scripts/ship.sh). 3D village stays retired (owner 2026-10-03).
+- P1 + P9 live in translations (certifier gates, fathers_watch rewrite); lanes.restart touched 00:50 so lanes reload new code.
+- Site waves 1-2 done (impl-site-result.json): P2 Word rebuilt from site text (252 zips, 0 worksheet notes) and UPLOADED; P3 text core; P4 code; P5 search shards; P6 player; P8 ship safety (ship_lock.py, --audio-only, /dl guard probe); P10 css; P11 beliefs; P12 reader; P13 scripture/authors (3 author dates left for owner: Eustathius, Theodore, Le Blanc; Crocius merge bug needs owner).
+- Wave 3 running (wave3a.json, wave3b.json). Then integration: ui.test.mjs fixes (fake fetch vs shards, Play->Games test, CSS scale), full build, all gates, e2e, preview deploy + $0 test purchase, ship, upload 4 big m4b + era audio zips via /api/library/admin, play.viapatrum.org root redirect.
+
+# SESSION HANDOFF — ultracode audit -> implementation running (2026-10-06 ~03:00, Claude on Mini)
+
+- Ship 2026-10-06 (outputs/ship-20261005-timeline.log) FAILED at check_links before deploy: keep blocks rendered while the library was dormant. Fixed (work_block gated; check_links validates /dl/ against dist/data/library-files.json). Both dormant and live-library builds now pass check_links + ui.test 15/15. Not re-shipped: one ship after the audit fixes.
+- Audit: outputs/ultracode-audit-20261006/result.json (45 confirmed, 2 refuted), plan + packages.json (P1..P18).
+- Running: workflow impl-pipeline (P1 certifier gates, P9 monitoring) and impl-site (wave1 P2 P3 P4 P5 P6 P7 P8 P10 P11 P18; wave2 P12 P13). Each package builds into outputs/pkg-<id>/dist.
+- Held for owner: P14 (one text cleaner for audio+page; triggers re-narration spend), P15 (release works stuck on reader-score bar), P16 (unattended auto-ship, retired 2026-10-03), P18 UI sketches in outputs/ultracode-audit-20261006/ux-sketches/.
+- Then: integrate, full rebuild, all gates, e2e (scripts/downloads_e2e.cjs), screenshot sweep, ship.
+
+# SESSION HANDOFF — Library pass built; upload running; ultracode audit running (2026-10-06 ~01:30, Claude on Mini)
+
+- Files: 334 EPUB (epubcheck 0/0 all), 334 PDF, 170 Word zips, 229 M4B (163.7 h, 4.81 GB, all verified), 3 bundles. placeus-de-imputatione held from the shelf (library_sync HOLD: worksheet headings).
+- Owner approved this session: direct uploads to R2, preview deploy, ship.sh. Preview https://library-preview.fathers-site.pages.dev passed locked e2e + real LS claim/validate checks.
+- Content cleanup in build_site.py: public_note()/note_sentences() (About this text), public_head() (section titles: CLOSEOUT, "Unit N rem …", "Cap. X tip"), CLOSEOUT stripped in clean_reader_notation, generic "These Greek scraps" era banner removed, era note "tip of the locked" reworded. app_export now uses clean_reader_notation + public_head (app text = site text).
+- Library goes live only when library.json has checkout_url: run `python3 scripts/library_sync.py go-live` (checks LS product 1367367 is PUBLISHED) then ship. LS dashboard logged out in Brave: owner must publish the product (and may add outputs/downloads/marketing/ls-product.jpg as its image).
+- After the ship, upload the 4 audiobooks > 280 MB: `python3 scripts/library_sync.py upload --base https://viapatrum.org --only audio`, then the next ship links them.
+- Ultracode audit (read-only) workflow running: outputs/ultracode-audit-20261006/.
+
+# SESSION HANDOFF — Library pass ($50 downloads) IN PROGRESS (2026-10-05 ~23:30, Claude on Mini)
+
+- Owner: site + app stay free; one $50 Lemon Squeezy payment unlocks EPUB, PDF, Word for Logos and audiobooks; "make it premium", test e2e.
+- Built (working tree, not deployed): functions/_lib/library.js (signed HttpOnly cookie "vpl" holding the LS licence key, revalidated weekly via public Licence API), functions/api/library/{status,unlock,claim,signout,admin}.js, functions/dl/[[path]].js (R2 LIBRARY, ranges, filenames from dist/data/library-files.json). /dl/* added to generate_works_gate ROUTES_JSON.
+- scripts/library_sync.py: assemble (Word zips from Logos packs, thumbs, bundles, outputs/downloads/library.json; only site-published works) + upload (--direct REST PUT <=280 MB, or --base <site> via /api/library/admin multipart, auth = CF token that can read the Pages project). LIBRARY_STATE env = separate test state.
+- scripts/downloads_page.py renders /downloads/ + "Keep this book" rail block; assets/downloads.{css,js}; .keep styles in site.css. Only uploaded files are linked.
+- Cloudflare: R2 bucket viapatrum-downloads (private) created; Pages fathers-site prod+preview now have R2 LIBRARY, LIBRARY_SECRET (Pages only), LEMONSQUEEZY_API_KEY, LIBRARY_STORE_ID=270691, LIBRARY_PRODUCT_IDS=1367367 (AI/VEC kept).
+- Lemon Squeezy product 1367367 renamed "Via Patrum Library Pass", eBook tax, licence unlimited length+activations, storefront hidden, confirmation + receipt button -> viapatrum.org/downloads/?thanks=1, old 34-book zip switched off. STILL DRAFT.
+- Tests: scripts/downloads_e2e.cjs (16 checks pass on local `wrangler pages dev` with a signed test cookie); ui.test.mjs 15/15. Screens: outputs/visual-audit-downloads-20261005/.
+- Helpers running: scripts/build_ebooks.py (EPUB/PDF/covers -> outputs/downloads/{epub,pdf,covers}) and scripts/build_audiobooks.py (M4B -> outputs/downloads/audio).
+- BLOCKED for Claude (auto-mode classifier): any Pages deploy (incl. preview) and uploads to the production bucket. Owner runs: upload --direct, ship.sh, then upload --base https://viapatrum.org for files >280 MB, then ship again; then publish the LS product.
+
+# SESSION HANDOFF — Beliefs moved into Timeline (2026-10-05 ~22:30, Claude on Mini)
+
+- Owner: "Beliefs was not supposed to be a separate tab. That's supposed to show up in timeline." DONE in working tree, NOT deployed (auto-mode blocked ship.sh as a production deploy; owner to run `./scripts/ship.sh`).
+- scripts/beliefs_page.py rewritten: 19 dividing questions are cards in their Timeline groups (new group "Mary, the Saints and Images"), one lane per position, drawn with build_site tl_* helpers; pages at /explore/<id>/; /beliefs/* 301 to /explore/*. Topic pages link "Where this divides churches today". Church filter chips on Timeline. Nav/footer Beliefs link removed.
+- Shared scale: tl_set_end() ends the axis just past the latest dated passage (now 650); eras add Nicaea to Chalcedon / After Chalcedon.
+- build_site.py: FATHERS_DIST env builds elsewhere (test build: outputs/tl-test/dist). ui.test.mjs has a new beliefs-on-Timeline test (14/14 pass). check_links 0 failures. Visual receipt: outputs/visual-audit-timeline-20261005/VERDICT.md.
+- Next (owner-approved 2026-10-05): $50 one-time unlock for downloads (Logos, EPUB, PDF, audiobook M4B) via Lemon Squeezy; files in a private R2 bucket behind a Pages Function; site + app stay free. LS has an old draft "Fathers Logos Library" (product 1367367, 34 books, SaaS tax category, 3 MB zip): rework it, do not publish as is.
+
 # SESSION HANDOFF — quality revert + audio match (2026-10-05 ~21:00, Claude on Mini)
 
 - LIVE (ship-20261005b, Pages 23456683, all gates passed): reader-fix edits reverted in 101 certified works (934 edits, each section gated by the two-family source check; translations 0c0051170 also committed the full state of all 113 certified works). Audio re-recorded only where text changed (70 Aura works in CF, 11 Kokoro). All certified works' audio matches except Clement Rich Man §2.
@@ -33,7 +86,8 @@
 - First certified: gregory-thaumaturgus-ouden-eidolon (one grammar slip fixed by hand in stage, re-applied), epiphanius-de-trinitate, epiphanius-de-fide.
 - Owner status page (private artifact): https://claude.ai/artifact/YbiSvHrN1uxUrnhD7mvY8E — data from translations scripts/status_data.py -> outputs/status/status.json; page template + builder on the Air scratchpad (republish to keep URL).
 - Site: About progress counts now frozen per build in dist/data/progress.json (ui.test reads it; fixes false ship failure when another build rewrites outputs/catalogue-quality.json). Ship with cite fixes + Timeline running (outputs/ship-20261002-citefix.log).
-- Certified works reach readers only on the next ship (a ship takes ~70 min, mostly inject_audio over 437 works).
+- Certified works reach readers only on the next ship. (Corrected 2026-10-06: the last 8 good ships took 7-23 min, not ~70; the long ones were R2 audio uploads. ship.sh now logs per-step times to outputs/ship-timings.jsonl, and `ship.sh --audio-only` puts new audio live without a rebuild.)
+- ship.sh disk cost (2026-10-06): every deploy keeps outputs/ship-last (clone of what was uploaded, for --audio-only). Free at first, ~600 MB once the next build rewrites dist/. Skipped under 5 GB free; then --audio-only needs a full ship. --audio-only also blocks when scripts/inject_audio.py or assets/readalong.js changed since the last ship. A failed ship leaves its R2 audio upload running (3 h limit); the next ship waits for it, and --skip-build now re-syncs audio and the search index before deploying.
 
 # SESSION HANDOFF — RECERTIFICATION started (2026-10-02 ~20:10, Claude on Air; owns all Fathers work now)
 
