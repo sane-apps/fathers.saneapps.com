@@ -1,3 +1,16 @@
+# RESUME LEDGER (2026-10-06 ~10:50, Claude on Mini, after crash)
+
+- Salvage commits: fathers 94fb86b, translations 1cab4450f (no push).
+- Owner approved this session: P1 data, P15 reader-bar release, P16 auto ship, deleting old pkg build copies.
+- DONE translations 32e568cb0: P1 data (receipt clients/translations/outputs/p1-data-20261006/), P15 bar (min>=3, mean waived while reader edits off; 15 works certified, Ignatius/Hermas skipped), lanes.restart touched 10:36.
+- DONE P16: scripts/ship_if_changed.py + LaunchAgent com.saneapps.fathers-ship-auto (13:30, 05:30), loaded; registry row in SaneProcess 9048ae4. It skips while fathers scripts/assets/functions have uncommitted code -> COMMITTING SITE CODE OPENS THE AUTO-SHIP GATE. Commit only after wave 3b is reviewed.
+- DONE (uncommitted, site): Play-bar fix. inject_audio.section_candidates also yields legacy_read_text offsets; _CODE_FILES + reader_text.py; ship.sh --audio-only hash covers inject_audio+speak_text+reader_text+build_audio. Attach sim: lost 270 -> 4 (2 amphilochius old voice, 2 aura re-read by drain), gained 129. outputs/pkg-playbar/attach-sim.json.
+- Wave 3b DONE (all six: S-timeline-defined, S-search, S-downloads, S-home-nav, S-fathers, S-scripture). Combined build: ui.test 22/22, links 0 failures, catalogue passed; visual verdict outputs/visual-audit-wave3b-final/VERDICT.md. Parent fixes: leftover "Questions" labels, Games nav test + AGENTS.md, games hover scale removed, two stale ui tests updated (has-cap lanes; thin topics listed not carded), ui.test.mjs reads FATHERS_DIST + P5 harness + 5 search tests, Hesychius John 1:0 -> 1:18.
+- Era audiobook zips built (outputs/downloads/bundles/via-patrum-audiobooks-1..5-*.zip, uploaded:false); auto ship uploads them via --base after its next verified ship, then the following run shows them.
+- Owner calls still open: 9 "(?)" definition rows (S-timeline report), later-writers cutoff 1500 (S-fathers chose it over the sketch's 1000), Georgius Peccator undated, 8 newly certified books lack a meta blurb.
+- Owner decided 10:55: Beliefs ACCEPTS the new paragraph ids (no pin; 03:30 run re-embeds ~2,758, re-grades ~257). Old-voice re-voice: NOT NOW (AUDIO_RESTEM_OLD_VOICE stays off). Still open: 9 (?) definition rows.
+- Beliefs job 05:39 failure: log truncated by disk-full; gpt-oss batch submit 400 (shape) falls back direct each call.
+
 # CRASH NOTE (2026-10-06 10:30, Claude on Mini)
 
 - 04:18: wave 3b (6 UI-sketch agents: S-home-nav, S-fathers, S-timeline-defined, S-scripture, S-downloads, S-search) started at once; parallel site builds filled the disk (0 GB free) and every agent died with ENOSPC. No swap room on the 8 GB Mini, so memory ran out too. Wave 3b made NO repo edits; it must be rerun with concurrency <= 2.
