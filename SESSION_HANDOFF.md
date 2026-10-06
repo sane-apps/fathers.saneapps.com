@@ -1,9 +1,8 @@
-# RESUME HERE (2026-10-06 ~13:45, Claude; usage limit hit)
-- Site NOT deployed yet; live = Monday 20:31 build. Auto ship attempts: 12:29 blocked (English in Latin subtitle; fixed b5b2c50), 12:41 blocked at browser gate (CSB/NASB off screen on phone; fixed bc5ac59 pills wrap).
-- Browser gate (scripts/check_catalogue_ui.cjs) run on an APFS clone of dist + new CSS (scratchpad uicheck): scripture now passes; failed-index search check was stale (fixed: fails shards too). Last rerun ended rc=1 with a playwright TimeoutError, cause NOT yet found: see scratchpad/uicheck/run.log. Likely next: the "index-recovered" waitFor (15 s) or a template page.
-- Next step: diagnose that TimeoutError on the clone, fix, then `launchctl kickstart gui/$(id -u)/com.saneapps.fathers-ship-auto` and watch ~/Library/Logs/SaneApps/fathers-ship-auto.log (a full ship takes ~40 min).
-- Red-team audit workflow wf_9baefe4b-f63 (read-only) was STOPPED to save usage; resume with Workflow({scriptPath: <session workflows/scripts/viapatrum-redteam-audit-wf_9baefe4b-f63.js>, resumeFromRunId: "wf_9baefe4b-f63"}); finished agents return cached.
-- YouTube channel: owner decision pending; audit's youtube area will bring verified facts.
+# RESUME HERE (2026-10-06, Grok; ship starting)
+- Browser gate fixed and committed: /methodology/ h2 is "How it is checked", not "Review status". Share cards under assets/og/ committed in the same breath so ship_if_changed does not skip.
+- Proof before this ship: outputs/uicheck-review/browser-receipt.json (36 shots, exit 0) on the 12:44 dist plus the pill-wrap CSS. Phone Scripture shows NASB on a second line, on screen.
+- Ship: kickstart com.saneapps.fathers-ship-auto. Pending since 12:29: text, audio, library. Log: ~/Library/Logs/SaneApps/fathers-ship-auto.log. Live stays the Monday 20:31 build until this ship prints SHIP OK.
+- Red-team audit wf_9baefe4b-f63 and the YouTube channel are still owner decisions. The Claude reader skipped 1113 records; this ledger is the source.
 
 # RESUME LEDGER (2026-10-06 ~10:50, Claude on Mini, after crash)
 
