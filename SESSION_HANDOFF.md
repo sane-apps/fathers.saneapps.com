@@ -1,5 +1,6 @@
 # RESUME LEDGER (2026-10-06 ~10:50, Claude on Mini, after crash)
 
+- 12:29 first auto ship started (launchctl kickstart; plist PATH fixed to include /opt/homebrew/opt/node@24/bin). 12:40 owner asked for a full red-team audit (ultracode): read-only workflow wf_9baefe4b-f63 running (12 areas + verify + gaps + plan incl. YouTube design). Fixes come in a second workflow after owner review. Watchdog: fathers-watch, audio-next, logos-build had been unloaded since the crash; reloaded 12:20. Email campaign plists disabled (owner).
 - Salvage commits: fathers 94fb86b, translations 1cab4450f (no push).
 - Owner approved this session: P1 data, P15 reader-bar release, P16 auto ship, deleting old pkg build copies.
 - DONE translations 32e568cb0: P1 data (receipt clients/translations/outputs/p1-data-20261006/), P15 bar (min>=3, mean waived while reader edits off; 15 works certified, Ignatius/Hermas skipped), lanes.restart touched 10:36.
