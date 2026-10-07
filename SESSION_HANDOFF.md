@@ -1,3 +1,26 @@
+# OWNER APPROVED (2026-10-06 ~22:15): three new builds after the fix waves ship
+1. Ask: /api/ask answer written ONLY from retrieved passages, every sentence cited, refuses when retrieval is weak, cached. Needs LLM_VENDOR_API_SOP receipt before any CF generation call.
+2. Timeline: add pentecostal, methodist, oriental-orthodox, church-of-the-east, anabaptist to all 19 questions + 4 new questions (gifts/tongues, sanctification, Christ's natures, millennium). Research agent writing outputs/beliefs-expansion-20261006/.
+3. "Creeds and churches" page: creeds/confessions timeline + church origin cards. Research agent writing the same folder (creeds.json, churches.json).
+Every quote/date gets a skeptic check against its source before it reaches data/explore/. UI sketches approved as shown in chat (Ask page, chip row with 11 traditions, creeds timeline + origin card).
+
+# RESUME HERE (2026-10-06 ~20:40, Claude)
+- 14 released works: 156 verified errors (15 high) in 99 sections; 152 corrected in place + 4 noted; all 14 books re-held/reopened for lane recert (translations 733c4cd5f, pushed). Signal: blind two-model source check misses ~1.6 real errors/section on this sample, so the wider certified set needs the same check (owner decision: scope and spend).
+- Shelf refresh finished 18:16 (direct + large uploads rc 0; era zips uploaded).
+- Fix workflow rerun wf_43cdaf3a-04d running (wave A P1a P1b P3 P5 P9 P10; gate; wave B P6 P7 P11); agents review earlier partial edits; no commits by agents.
+
+# RESUME HERE (2026-10-06 ~16:45, Claude; usage limit hit)
+- Accuracy check of the 14 released works DONE: results clients/translations/outputs/accuracy-fixes-20261006/released-14-check.json ("kept" = errors that survived a skeptic, each with corrected_english / better_correction). NEXT: apply them like requeue.py did (edit English, re-hold section with notes, reopen book).
+- Fix workflow wf_8b735ad6-d9f was STOPPED mid-wave A to save usage; resume: Workflow({scriptPath: <session workflows/scripts/viapatrum-fix-waves-wf_8b735ad6-d9f.js>, resumeFromRunId: "wf_8b735ad6-d9f"}). Agents edit files but do not commit; check git diff in both repos before resuming. Nothing from it is committed or deployed; auto-ship refuses while site code is uncommitted.
+
+# RESUME HERE (2026-10-06 ~16:30, Claude)
+- Site LIVE since 14:08 (Grok ran the deploy). Shelf refresh (pid 8664) finishing uploads.
+- Grok red-team audit outputs/redteam-20261006/REPORT.md adopted (my wf_9baefe4b-f63 stopped as duplicate). Spot-verified: Severian 'not', Origen 'foreparts', repos unpushed, no Mini backup.
+- Owner decisions 16:00: fix accuracy now + recheck; push repos (public: test code scrubbed from unpushed history, then pushed both); audio backup to R2 (Air full: 5 GB free); refunds recheck daily; YouTube = new Via Patrum Brand channel (owner creates it in Studio).
+- DONE: accuracy fixes translations ebebc29e3 (5 books re-held + reopened; tertullian-on-idolatry and origen-ezekiel-fragments publish only when re-certified); backup_audio.py + LaunchAgent com.saneapps.fathers-audio-backup 00:30 (33a1273); refund daily recheck + honest claim text (98d23ee). All pushed.
+- RUNNING: wf_b2d52963-b59 read-only accuracy check of the other 14 released works; wf_8b735ad6-d9f fix waves (A: P1a P1b P3 P5 P9 P10; gate on shelf; B: P6 P7 P11). Agents do not commit; parent reviews, builds combined, commits (commit opens auto-ship).
+- Not done: Macarius §5 (needs readable Greek witness), Vigilius 'semis' (check source).
+
 # RESUME HERE (2026-10-06 14:08, Grok; site is live)
 - SHIP OK. Public https://viapatrum.org CSS ?v=1e3ab26209. Pages https://28b09828.fathers-site.pages.dev. Live check: 370 routes, 365 held, 0 failed. Held probe /works/origen-john-13/ is 404. /methodology/ says "How it is checked".
 - Commit c4aca5f: browser gate looks for that heading; share cards included so auto-ship would start. Gate dirs are clean after the ship.
