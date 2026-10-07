@@ -1,3 +1,125 @@
+# IN PROGRESS (2026-10-07 ~17:15, Claude 3b3ae5a8): finishing Grok's ship + audit
+Uncommitted, tested:
+- `scripts/library_sync.py`: the direct upload reads the stored size from the PUT reply (as backup_audio.py does). The REST HEAD returns 405, which failed every shelf upload. `library_sync_test` 38 OK, including an unmocked put_direct test. A live bucket write was blocked by the permission classifier, so it has no live proof yet.
+- translations `scripts/ship_if_changed.py`: `site_code_gate` ignores `assets/og` (ship.sh rewrites the cards every ship). `test_ship_if_changed` 16 OK (real git).
+- `scripts/ship.sh`: shrink guard after Catalogue regressions. More than SHIP_MAX_DROP (10) works gone from the live catalogue blocks the ship unless ALLOW_SHRINK=1.
+Four read-only audits are running (site commits, translations tree, live site, jobs). Auto-ship next fires 05:30. Do not open the gate until the build is shown not to publish the uncommitted translations edits (Hesychius/Melchizedek titles).
+
+# SHIPPED (2026-10-07 ~17:00, Grok). Live site is the new build.
+https://viapatrum.org is up. CSS `?v=fbd88d6c99`. Pages `https://e7680ac7.fathers-site.pages.dev`. The works page says 319 works. Live check: 369 routes, 364 held, 0 failed. Log: `outputs/ship-20261007-wave-d3.log`.
+
+Local commits, not pushed: `4254fd7`, `2b24ff3` (an older review no longer takes the library down), `61b6d5e` (the browser check reads the search shards). `assets/og/` is still dirty, so auto-ship stays off. Do not commit those images. The paid shelf was not uploaded.
+
+The public count was 334 and is now 319. Named withholds stay down, including Eustathius on the medium, Evagrius to the monks, and Didymus on Romans. Five works whose receipt does not match the committed English also came down: Amphilochius, Cyril of Jerusalem on the paralytic, Didymus on 1 Corinthians, Eusebius of Emesa on Galatians, and Severian on Ephesians. Eustathius on Melchizedek came down for the same reason. The uncommitted Melchizedek title and the Hesychius title "Fasting as root of piety" were set aside for the build and restored afterward. The live Hesychius page is "Homily on Fasting".
+
+Checked live: Didache and the Passion are texts. Julian's titles are Fragments of the Letter to Rome, Fragments to Turbantius, and To Florus. Second Clement's intro says early second century, and the page says this project has checked the source. That English is still uncommitted in the translations repo. Theodorus (PG 86a) still has no public page. Ante-Nicene excerpts stayed up (1,925). Ask, Timeline, and Creeds returned 200.
+
+The sections below that say the ship stopped, or that the waves were not shipped, are the record of the earlier attempt.
+
+# RE-AUDIT DONE (2026-10-07 ~15:00, Claude 59ef445e): not ready to scale translation
+`outputs/reaudit-20261007/REPORT.md` + `items.json`: all 77 batches finished (none dropped), 700 items, each verified then skeptic-checked. Resolved 250, partial 210, open 134, owner-decision 48, fixed-not-live 29, regressed 12, superseded 12, not-verifiable 5; 139 unresolved scale blockers. Top: `library_sync.py head_direct` HEAD gets 405 from R2 since e30504d, so every shelf upload fails (tests mock it); `assets/og/` share cards re-dirty the auto-ship gate on every ship; the certify check passes ~1.6 errors/section and has side doors; build + audio read the uncommitted translations tree; Logos/game/Beliefs/audio do not follow the certified hash. Fix order is the report's last section. Agents ran while Grok's Waves A-D were landing, so some "open" rows may already be fixed in the tree: recheck an item before working it.
+Same day (Claude): only Via Patrum is live. Removed the other app repos/installs/DerivedData; nightly scoped to ViaPatrum; launch-ops, X scout, SaneCite sweep, SaneLot API off (SaneProcess 751f5bb); sale email in the daily report (c3d6917). `~/.sanemaster/tools/mini-nightly-disk.sh` APP_DIR moved from deleted apps/SaneHosts to apps/ViaPatrum (dry run OK), so tonight's 02:44 clean does not die on a missing folder.
+
+# SHIP STOPPED (2026-10-07 16:22, Grok). Live site unchanged.
+Site code is committed locally as `4254fd7` and is not pushed. The 71 `assets/og/` images are still unstaged, which keeps auto-ship from running. Do not commit them and do not run `ship.sh --skip-build`. The local `dist/` from this attempt has 0 work pages (`published_works` 0, `held_works` 682). Uploading it would take the library offline.
+
+`scripts/ship.sh` ran at 16:20. The research gate passed. The build then held every work: no scope packet, or a packet whose reviewer is not two model families and whose notes do not quote the passage. The catalogue check then exited 1 on the Evagrius sentence because those book files were set aside for the build. Nothing was deployed. Paid shelf was not uploaded.
+
+Live check after the failure: `https://viapatrum.org/` and `/works/` and `/creeds/` are HTTP 200, CSS `?v=3338d8858a`, works page says 334 works. The set-aside book files were restored. Hesychius in the working tree is again "Fasting as root of piety, and its two kinds". The public page was not rebuilt.
+
+# FIX PLAN WAVES A–D RECORDED (2026-10-07, Grok). Not shipped.
+The public site is still the 00:07 ship. The 280-work accuracy sample was not started.
+
+Wave A is in the tree (hold a section with no review, hold a work with no scope packet, two-model quotes, withhold Eustathius, glob receipt plus check_pass_ab, no Qwen fallback certify). Wave B put the Evagrius opening and the Didymus Romans close back in the files and withheld the named works in `FORCED_WITHHOLD`. Those sentences were not recertified and must not publish. Wave C public copy, search shards, the audio-drift count, and bare-build players are in the tree. Earlier in this job those were checked with the publication-only catalogue gate, `search_gate.test.mjs`, `ui.test.mjs`, the audio drain report, the fathers watch test, and the player fixture. This pass did not rerun them. It checked `stale_alert`, the shelf state file, and `library.json`. A bare `build_site.py` and `ship.sh` were not run.
+
+Docs this pass: `docs/SOP.md` says the committed `fathers_watch_notify.py` (`8087fd4b9`) is the notifier and it alerts `watch:stale` after 30 minutes (`stale_alert` checked). `recurring-jobs.md` has the loaded `com.saneapps.disk-clean` row (02:44, `mini-nightly-disk.sh`, last apply 20261007-024420, 0B). The job was not reloaded.
+
+Morning shelf check, still blocked:
+- `outputs/ship-auto/state.json` shelf is pending since 2026-10-06T23:18:36, done through assemble, error `upload-direct rc=1`, `for_ship` 2026-10-06T23:18:19-04:00. Receipt `shipped_at` is 2026-10-07T00:07:52-04:00. They do not match, so the next `refresh_library` clears `done` and rebuilds ebooks, audiobooks, Word, and assemble from `outputs/ship-last/dist/app/v1`, then dies again on the size-check HTTP 405. Do not start that rebuild and do not upload.
+- Auto-ship cannot reach the shelf while `scripts/`, `assets/`, or `functions/` are dirty. `site_code_gate` runs first.
+- Free `/logos/` stays. `library.json` has a Word bundle (`uploaded` false, 252 files) and 241 per-book Word files marked uploaded. `Library.bundles()` returns only uploaded bundles, so `logos_retired()` is still false. Do not force it true. The October 5 free zips still have worksheet notes. Rebuilding them is a pack job and was not run.
+- `library.json` is still written with `write_text`, not an atomic replace. `ship.sh` still has no shelf guard. `downloads_page.py` still lists an uploaded file without comparing its hash to the current build.
+
+Wave D is coded in the tree and was not shipped. No site build, no model call, no lane start. Checked with `check_catalogue.py --publication-only` (passed) and direct calls of the term and intro helpers.
+- Theodorus (PG 86a) shows as "Theodorus, not yet identified". No date was added. He is not Theodore of Heraclea. The authors row stays under Date not known.
+- Didache, the Letter to Diognetus, the Acts of the Martyrs, the Passion of Perpetua, and Chronicon Paschale are `CreativeWork`. They sit in a Texts section on the Fathers index: "These are works, not writers." Origen stays a person.
+- Julian titles are "Fragments of the Letter to Rome" and "Fragments to Turbantius". "To Florus" stays. A work year after the author's last life year is labeled "printed". Julian's 419–430 stays "written" because it is inside c. 386–c. 455. The title-case fragment rule is in `AGENTS.md`.
+- `engastrimythos` is "medium" in the Eustathius English files. The term note no longer asks for an override. The slug stays in `FORCED_WITHHOLD`.
+- A work page says either "passed this project's source check" or "has not yet been re-checked against its source", and still says it is not independently certified. Nothing was hidden.
+- A book with its own `intro.md` now fills About this text. An existing section orientation renders as a reader note. No new notes were written.
+- A 2-of-3 term vote decides the rendering. Decision files are in place for the five stalled terms (life-giving, first-created angels, self-mastery, once-married woman, lack of self-control). The next lane tick can spend on those five books. This session did not start that tick.
+- 2 Clement is certified from the staged English. Its intro already said "early second century", which matches fl. c. 150. `apply` wrote `intro.md` and the receipt. No model was called. The next site build would publish it. That build was not run.
+- Barnabas paragraph 1 now says "around 100". The intro check passes. The reader scores were bound to the previous intro, so `apply` was refused. Barnabas stays parked. The other old-format held rows were not cleared (85 remain, including Barnabas).
+- Old-voice re-narration stays off. Repair drafting stays on DeepSeek Pro. Qwen was not benched. Reading stays free. No Beliefs tab. The Ante-Nicene excerpts stay visible.
+- The older line below that says "39 parked books stay parked" is out of date. Do not unpark that set.
+
+Septuagint psalm numbers on the scripture pages were left as they are.
+
+# SKEPTIC PASS DONE (2026-10-07 11:20, Grok): outputs/reaudit-20261007/FIX_PLAN.md
+The six batches Claude dropped are skeptic-checked. One finding was refuted (the site already maps Septuagint psalm numbers). The plan above is recorded and is not shipped.
+Those six batches were skeptic-checked afterward by Grok. The morning report is still `outputs/reaudit-20261007/REPORT.md`. Disk on this Mini is about 31 GB free.
+
+# RESUME HERE (2026-10-07 05:40, Grok, resumed Claude 67bb9f43)
+
+Read this block first. The older "RESUME HERE" notes below it are history. Several of them still say the deploy is running or that Ask and Creeds are unbuilt.
+
+## Live
+- Feature ship is LIVE. SHIP OK 00:07. Public https://viapatrum.org CSS `?v=3338d8858a`. Pages https://144e8c97.fathers-site.pages.dev. Catalogue 370 checked, 365 held, 0 failed. Log: `outputs/ship-20261006-features.log`.
+- `/creeds/` has 28 creeds and 11 church cards. The Filioque names Lateran IV (1215), Lyon II (1274), and Florence (1439). It sits under Timeline (Home / Timeline / Creeds and churches) and has no nav item. East and West shows only 1054 because the Filioque starts in 589, so it is filed under the councils.
+- `/explore/` chips are All plus Catholic, Orthodox, Oriental Orthodox, Church of the East, Lutheran, Reformed, Anglican, Methodist, Baptist, Anabaptist, and Pentecostal. Four new questions are on the page: spiritual gifts, sanctification, Christ's natures, the millennium. Christ's natures has lanes and says no early passage is placed yet.
+- `/ask/` is extractive. The page says the answer is only the writers' sentences. `GET /api/ask?q=Who%20is%20Melchizedek` returned mode `answer`, 6 cited sentences, 10 passages. No model writes the prose.
+- Screenshots and verdict: `outputs/visual-audit-live-20261007/`. Mobile Creeds intro wraps inside 390px (scroll width 390). Pre-ship shots: `outputs/visual-audit-resume-20261006/`.
+- Site HEAD is `896ae00` (Ten Leopards image). `main` matches `origin/main`. The feature files are live from the working tree and are not committed.
+
+## Do not publish these book edits
+The site build reads the translations working tree. These were stashed for the 00:07 ship and restored after. The stash pop was clean. Live pages use the committed English. Local files are dirty again (35 modified, 58 untracked under these paths):
+
+- `books/eustathius-de-melchisedech` — live page has "did not spring from the earth". Local title is again "Why Scripture calls Melchizedek without father and without mother".
+- `books/hesychius-homilia-jejunio` — live page says "True Fasting". Local title is again "Fasting as root of piety, and its two kinds".
+- `books/origen-matthew-later`, `books/origen-romans`, `books/cyril-alexandria-fragmentum-proverbia`, `docs/BELIEFS_MAP_SPEC.md`.
+
+Hold them until they go through the same recert path as other works.
+
+## Shelf upload is still pending, and one of its files is the uncommitted Hesychius
+- 2026-10-06 23:23 `library_sync` upload-direct failed (36 size-check failures, then it stopped). Log: `~/Library/Logs/SaneApps/fathers-ship-auto.log`. The saved shelf says resume at upload-direct, but that is stale. The 00:07 receipt changed `shipped_at`, so the next refresh starts the shelf over from `outputs/ship-last`. See the top block. Do not upload and do not start the rebuild.
+- 2026-10-07 05:30 auto-ship saw text, audio, and library changes and skipped: "uncommitted site code (88 paths)". The shelf is still pending from 23:18. Dirty site code still skips the run before the shelf step.
+- The Hesychius epub and pdf in `outputs/downloads/` were built 23:20, while the uncommitted English was in the tree. Both contain "Fasting as root of piety" and do not contain "True Fasting". Do not upload them. A later rebuild from the 00:07 shipped export would replace them. A build from the dirty working tree would bake the uncommitted title again. Neither build was run.
+- The Eustathius epub from the same minute has the committed sentence "spring from the earth" and "missing genealogy explained".
+
+## When asked to commit the features
+Commit the feature source only. Leave `assets/og/` out (71 dirty share-card PNGs). A commit of `scripts/`, `assets/`, or `functions/` opens the auto-ship gate, and the next auto-ship will try the pending shelf upload. Rebuild the Hesychius downloads first.
+
+Feature paths (fathers repo):
+
+- Modified: `SESSION_HANDOFF.md`, `assets/beliefs.css`, `data/explore/doctrine_map.json`, `data/explore/doctrine_questions.json`, `functions/api/search.js`, `scripts/beliefs_page.py`, `scripts/build_site.py`, `scripts/search_sync.py`, `scripts/test_beliefs_page.py`, `scripts/ui.test.mjs`
+- New: `assets/ask.css`, `assets/ask.js`, `assets/creeds.css`, `data/explore/churches.json`, `data/explore/creeds.json`, `functions/_lib/ask.js`, `functions/_lib/search.js`, `functions/api/ask.js`, `scripts/ask.test.mjs`, `scripts/ask_page.py`, `scripts/creeds_page.py`, `scripts/test_creeds_page.py`
+
+## Still open, on purpose
+- P11: iOS 27 simulator runtime is installed (the overnight "do not install" line was overridden). The iPhone and 13-inch iPad app test has not been run.
+- The 280-work accuracy sample left no result file.
+- 39 parked books stay parked.
+- Generative Ask summaries, and whether to hide the 934 older Ante-Nicene excerpts, wait for a decision. The excerpts stay visible with the Methodology notice.
+- `georgius-peccator` still has no public date. That warning is older than this ship.
+
+
+
+# OWNER DECISIONS FOR OVERNIGHT (2026-10-06 ~23:00; owner away until morning)
+Done or superseded by the resume block above. Do not re-ship Ask, Timeline, or Creeds from this list. The "no simulator" line was overridden; the runtime is installed and the app test is still unrun.
+- SHIP new features unattended when green: Ask, 5 new traditions + 4 questions, Creeds and churches page. Gate: skeptic review applied, all tests + browser gate pass, screenshots inspected; anything unsettled is left out and listed.
+- 39 parked books: KEEP PARKED until a stronger quality check exists.
+- Accuracy: careful source check (Claude + skeptic) on 1 section per live work (~340), fix + re-queue what it finds. Approved spend.
+- Yes: Logos builds only certified+published works; relabel Hermas Mandate 1 excerpt as not source-verified; recrop the Ten Leopards Games image from a fresh screenshot (no game deploy).
+- No: simulator install tonight (disk).
+
+# RESUME HERE (2026-10-06 ~22:50, Claude)
+Superseded. That deploy finished (SHIP OK 23:18, then the feature ship at 00:07). The skeptic reviews landed and the pages are live. The iOS 27 runtime is installed.
+- Fix waves integrated + committed + pushed: site e30504d, translations 8087fd4b9, fathers-village 9d09dd4 (not deployed; play site deploy is separate), ViaPatrum app 6df7d9a (no simulator runtime on the Mini: P11 untested on device; owner: install a runtime ~8 GB or add Mini to the dev profile). SaneProcess 7c8a0bc registry.
+- Deploy RUNNING (auto ship kickstarted 22:44). Owner approved: 9 corrected works (justin-second-apology, six tertullian-*, origen-ezekiel-fragments, anonymous-antimontanist) go off until lanes re-certify.
+- Parking: P3's unpark of old rows REVERTED pending owner (39 books would spend credit); justin-first-apology already started under it at 22:31 and was left to finish. Lanes restarted to reload.
+- Broker restarted (dead flushers); LaunchAgents ship-auto/e2e(03:00)/logos-build reloaded.
+- Research done (outputs/beliefs-expansion-20261006/): 142/142 belief quotes, 27 creeds, 11 church cards. Skeptic reviews RUNNING -> REVIEW_beliefs.json, REVIEW_creeds.json. Nothing in data/explore yet.
+- Owner questions open: parking release (39 books), P11 simulator, P5 Leopards image recrop, P10 Logos skip held works?, Theodorus PG86a date, Hermas excerpt label.
+
 # OWNER APPROVED (2026-10-06 ~22:15): three new builds after the fix waves ship
 1. Ask: /api/ask answer written ONLY from retrieved passages, every sentence cited, refuses when retrieval is weak, cached. Needs LLM_VENDOR_API_SOP receipt before any CF generation call.
 2. Timeline: add pentecostal, methodist, oriental-orthodox, church-of-the-east, anabaptist to all 19 questions + 4 new questions (gifts/tongues, sanctification, Christ's natures, millennium). Research agent writing outputs/beliefs-expansion-20261006/.
