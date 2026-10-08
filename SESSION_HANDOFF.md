@@ -13,12 +13,12 @@ Fixed:
 
 Not committed: `origen-ezekiel-fragments` (lane recert dropped the §32 synagogue clause; restore and recert), `cyril-alexandria-fragmentum-proverbia/book.yml`, `docs/BELIEFS_MAP_SPEC.md`, `.wrangler/`.
 
-Owner decisions:
-1. Wave A is off in production. `2b24ff3` defers every review-shape error (`catalogue_quality.py:519-535`, `build_site.py:8085`). All 319 works and 1,925 excerpts published by deferral: 155 have no scope packet and 5,590 sections have no review entry. Still enforced: FORCED_WITHHOLD, the receipt-hash check, content errors, and the 250-work floor. Enforcing the rest takes the library to about 0. The 280-work accuracy sample assumed Wave A was live.
-2. The free `/logos/` zips (dated 2026-10-05, 224 books) still contain all 17 works withheld today, including the "belly-dancer" English, plus worksheet notes ("Honest partial", "Do not copy Durand"). Pull them or rebuild them from the shipped export.
-3. Nine live works say "passed this project's source check" while the fallback model gave the verdict on a section: athenagoras-resurrection 12 and 19; one section each in amphilochius-in-sabbati-sancti, epiphanius-panarion, epiphanius-epistula-ad-theodosium-imperatorem, eustathius-in-inscriptione-titulorum, gregory-thaumaturgus-jeremiah-fragments, tertullian-on-fasting, tertullian-on-the-shows, and theophilus-alex-fragmenta-joannem. Recheck those 10 sections with the real pair, or relabel them.
-4. Grok coded two Wave D items that FIX_PLAN marked "decide first": the 2-of-3 term vote (drafter plus one judge counts, and hyphenated renderings can win) and the looser intro date rule (2 Clement depends on it).
-5. The 9d09dd4 village daily game is pushed but not deployed.
+Owner decisions, made by Claude at the owner's request ("make a decision on the 5 questions whichever is best", 2026-10-07 ~18:00). Recorded in `outputs/reaudit-20261007/FIX_PLAN.md`:
+1. The review-shape rules stay warnings in the live build. Live gates: receipt hash, FORCED_WITHHOLD, content errors, the 250-work floor, and the "not yet re-checked" label. The reason is in `catalogue_quality.py`.
+2. The free `/logos/` pack is retired (`logos_retired()` always true; 301 to `/downloads/`). It takes effect on the next ship.
+3. Works where the fallback gave a verdict say "has not yet been re-checked" (`_fallback_ruled`). Nine works; recheck them with the stronger check.
+4. The intro date rule stays. A hyphenated 2-of-3 term needs both judges (translations commit after c10f885ac).
+5. Daily game: fragments rebuilt from the live build (12 withdrawn-work lines replaced; the builder reads search shards). Village `f43d008`, deployed via `scripts/ship.sh`.
 
 Other findings: the Beliefs job rewrote `doctrine_map.json` after its grading failed (gpt-oss broker 400s). The quality receipt is 321 MB and is written three times. Eight FORCED_WITHHOLD slugs match nothing. `explore-index.json` links the withheld `irenaeus-demonstration`. Grok's handoff named 9 of the 17 removals. The other 8 are FORCED_WITHHOLD defects added in 4254fd7: cyril-adoration-10, didymus-dialexis-montanistae, macarius-spiritual-homilies, origen-letters, origen-philocalia, origen-romans-catena, origen-song-homily-1, pseudo-cyprian-to-vigilius.
 
