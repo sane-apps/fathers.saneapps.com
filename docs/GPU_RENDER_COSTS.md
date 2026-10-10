@@ -32,9 +32,12 @@ so 4 workers ≈ 4x wall clock at the same GPU-time cost.
   justify setup. When bulk comes: $5 pilot first (one book, measured,
   voice parity verified).
 
-## Managed TTS APIs (DIFFERENT voice — breaks corpus consistency)
+## Managed TTS APIs (different voice: use for whole works only)
 
-Only for new corpora or a deliberate full re-voice, never incremental.
+Per the Audiobook voice rule (owner 2026-10-09, `clients/translations/docs/SOP.md`),
+works may use different voices; there is no corpus-wide voice to keep. Use one of
+these for a whole work (new, or fully re-voiced), never to patch part of a work
+that is in another voice.
 
 - ElevenLabs (Elliott-class quality): Creator $22/mo 121k chars, Pro $99
   600k, Scale $299 1.8M. Wesley ≈ $190-200. Full ≈ $3,000+. Paid plans own
