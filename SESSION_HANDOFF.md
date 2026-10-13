@@ -7,7 +7,7 @@ Tools built:
 - `scripts/question_dossiers.py check|queue` (this repo): proves each quote's original is in its source (exact, or >=85% of words in an OCR scan), finds live links, writes translations `docs/question-priority.json` (books lanes translate first) and `docs/question-intake.json` (works to intake, and books whose source JSON must be re-locked).
 - `work_pipeline.queue` now sorts `question_priority()` books first (`scripts/test_question_priority.py`, 3 tests pass). lanes.restart touched 2026-10-13 so lanes load it between works.
 
-Dossiers done (data/explore/questions/<id>.json): 33 of 100 pass `check` as of 2026-10-13 ~03:00 (Q1-31 plus Q3 canon, Q40 infant baptism, Q44 eucharist). Next: Q32-39 (Salvation), then 41-43, 45-100. Builder scripts live in the session scratchpad `dq/` (mk.py with Q()/defined()/src(); q_canon, q_bible2, q_god, q_christ, q_salv1); the JSON files are the durable output.
+Dossiers done (data/explore/questions/<id>.json): 73 of 100 pass `check` as of 2026-10-13 (Q1-73). Next: Q74-100 (last things, Spirit, Christian life, the world). Builder scripts live in the session scratchpad `dq/` (mk.py with Q()/defined()/src(); q_canon, q_bible2, q_god, q_christ, q_salv1); the JSON files are the durable output.
 New witnesses (translations outputs/question-dossiers/witnesses/, gitignored): Denzinger Enchiridion 11th ed. 1911 (ia enchiridionsymbo00denz: Orange, Trent, Quierzy, Valence canons; OCR poor, use ocr_poor), Migne PL 44 (Augustine anti-Pelagian works; OCR poor), Latin Library City of God 13 and 21. Julian of Eclanum is quoted from books/julian-of-eclanum/sources/ad_florum_N.json (his own words, the `julian` field) with the library's English. Normalizer now folds ae/oe/long s (both scripts).
 
 Findings to tell the owner:
