@@ -1,3 +1,20 @@
+# TIMELINE LIVE (2026-10-13 15:50, Claude Opus 5.5). Owner: "make via patrum live".
+https://viapatrum.org/explore/ is the 100 reader questions (owner-approved prototype v3), static pages built by
+`scripts/timeline_page.py` from `data/explore/questions/*.json` (via `question_dossiers.export_data`), CSS/JS
+`assets/timeline.{css,js}`. SHIP OK `outputs/ship-20261013-timeline3.log`, Pages https://1eb85c53.fathers-site.pages.dev,
+CSS ?v=90de588d39, live check 367 routes / 362 held / 0 failed. Commits ee8b295, 887f5e0.
+- The church-lane overview moved to /explore/churches/ ("Where the churches stand"); belief pages whose id a question took
+  (eucharist-presence, eucharist-sacrifice, old-testament-canon) live at /explore/churches/<id>/. Other belief pages keep
+  /explore/<id>/. Each question links "Where each church stands on this today". ui.test.mjs updated + new timeline test.
+- Ship 1 failed the link check: dossiers' related.topics named 20 topic pages that do not exist; now only written topics link.
+- Ship 2 BLOCKED on audio: apollinaris-fragmenta-matthaeum was re-voiced 11:10 today (arcas), but the narrator Worker never
+  wrote audiobooks/apollinaris-fragmenta-matthaeum.a34ddba06f.mp3 (404; the older orion file is 404 too). Its manifests were
+  set aside as outputs/audio/apollinaris-fragmenta-matthaeum/manifest*.worker-mp3-missing-20261013.json so the work ships
+  without Play; the audio drain should re-read it as a work without audio. Check it did.
+- This ship also carried another session's uncommitted builder edits (JSON-LD sameAs/isPartOf, Diognetus author shown as
+  "Mathetes", OG cards, llms.txt). Still uncommitted; owner of that work should commit them.
+- Follow-up: Timeline search ranks "baptize babies" to original sin first; add babies/children -> infants synonyms.
+
 # Timeline question dossiers (2026-10-13, Claude Opus 5.5). ALL 100 DONE; awaiting owner review. Read this first after any compaction.
 
 Owner rejected the 2026-10-13 one-axis prototype ("still a visual dump"; Julian shown as rejecting personal guilt was my bug: the prototype put three claims on one lane; "OT canon has zero info" is the belief search's fault: it only counts passages phrased like a Reformation confession). Owner approved: 100 reader questions (`outputs/timeline-redesign-20261012/questions-100.md`), then for each one a quote list read from the Greek/Latin, then an interactive scrolling timeline with a search bar, prototyped on three finished questions. Owner: "if any quoted authors are missing queue those works for translation"; any readable original-language source is fine.
