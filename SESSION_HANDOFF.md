@@ -1,3 +1,18 @@
+# Timeline question dossiers (2026-10-13, Claude Opus 5.5). IN PROGRESS. Read this first after any compaction.
+
+Owner rejected the 2026-10-13 one-axis prototype ("still a visual dump"; Julian shown as rejecting personal guilt was my bug: the prototype put three claims on one lane; "OT canon has zero info" is the belief search's fault: it only counts passages phrased like a Reformation confession). Owner approved: 100 reader questions (`outputs/timeline-redesign-20261012/questions-100.md`), then for each one a quote list read from the Greek/Latin, then an interactive scrolling timeline with a search bar, prototyped on three finished questions. Owner: "if any quoted authors are missing queue those works for translation"; any readable original-language source is fine.
+
+Tools built:
+- `clients/translations/scripts/corpus_search.py` (build [--raw], find, show): searches every locked section and every raw OCR/TEI file, accents and u/v, i/j ignored. Index under translations `outputs/corpus-index/` (gitignored, rebuild in ~25 s).
+- `scripts/question_dossiers.py check|queue` (this repo): proves each quote's original is in its source (exact, or >=85% of words in an OCR scan), finds live links, writes translations `docs/question-priority.json` (books lanes translate first) and `docs/question-intake.json` (works to intake, and books whose source JSON must be re-locked).
+- `work_pipeline.queue` now sorts `question_priority()` books first (`scripts/test_question_priority.py`, 3 tests pass). lanes.restart touched 2026-10-13 so lanes load it between works.
+
+Dossiers done (data/explore/questions/<id>.json): infant-baptism (Q40, 18 quotes, 3 gaps).
+
+Findings to tell the owner:
+- origen-leviticus-homilies, origen-romans, origen-psalms-rufinus carry `certified` work receipts, but their source JSON holds one-line Latin summaries, not the text (Lev hom 8 = eleven ~100-char lines). Not live. origen-luke-homilies/genesis/principiis are needs-source for the same reason. Real Latin witnesses fetched (Lommatzsch 1835-39, Baehrens GCS 29, Rauer GCS 49) into each book's sources/witnesses/ (gitignored *_djvu.txt; archive.org ids are in the dossiers).
+- None of the 9 library works quoted in Q40 is live (Justin First Apology, Tertullian On Baptism, Cyprian Letters, Gregory Oration 40, three Augustine works).
+
 # Timeline redesign prototype (2026-10-13, Claude). Awaiting owner approval. Nothing shipped.
 
 Owner 2026-10-12: the Timeline (/explore/) is "cluttered, complicated to parse"; wants it rethought, complete, and a funnel into the source documents. Prototype built from the live data, outside the site builder: `outputs/timeline-redesign-20261012/` (`template.html` + `data.json` -> `index.html`; data exported by the script in the session, re-run by rebuilding data.json from `beliefs_page.load` + `dist/data/explore-index.json`). Published as a private Claude artifact for the owner to click.
