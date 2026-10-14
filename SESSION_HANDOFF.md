@@ -1,3 +1,17 @@
+# SHIP FIXES + MASTERS BACKUP (2026-10-14 15:50, Claude Opus 5.5). Read first.
+- 13:49 auto-ship failed: check_catalogue_ui.cjs waited for old church lanes (.ot-card .tl-pt) on /explore/ that
+  d51f149 removed; now waits for `.index .qt`. 14:59 auto-ship DEPLOYED (15:43, cleanup + churches redesign live,
+  Privacy link verified) but failed the held probe: since 0eab586 the gate read ship.sh's `/works/<held>/ /404.html 404`
+  lines as moves and answered 301 -> /404.html. generate_works_gate.moved_slugs now skips non-3xx lines (+test). 3730d16.
+- Re-ship: `ship.sh --skip-build` started 15:45, log outputs/ship-logs/skipbuild-20261014-1545.log.
+- 15:47 SHIP OK (--skip-build): held works 404 again; churches page screenshots PASS (outputs/visual-audit-20261014/VERDICT.md).
+- Masters backed up + verified (outputs/backup-masters-receipt.json); local copies (~4 GB) in Trash, owner empties it.
+- Logos: Terminal route works. Book search fixed in translations 976ff2b7d (set scroll value via AX; title needle unique
+  against the whole Logos list). Full batch kicked 16:38, ~5 min/book, holds outputs/build.lock ~2.5 h.
+- Was: scripts/backup_masters.py (new, uncommitted) uploads the Wesley + Origen m4b masters to private backup/ via the
+  library admin route and writes outputs/backup-masters-receipt.json. Delete local copies only after that receipt is OK
+  (infra/SaneProcess/AUDIO_CLEANUP_HANDOFF_2026-10-12.md step 2). Then kick com.saneapps.fathers-logos-build.
+
 # WRAP-UP PLAN + JOB FIXES (2026-10-14, Claude Opus 5.5). Read first.
 Plan: `docs/WRAPUP_PLAN_2026-10-14.md` (audit data, untracked: `outputs/wrapup-audit-20261014/{site,content,jobs}`).
 Done today: paid-shelf assemble fixed (Cyril of Alexandria gets his own audiobook zip, 2ec7077); daily Workers AI
