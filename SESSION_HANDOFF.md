@@ -1,5 +1,5 @@
 # WRAP-UP PLAN + JOB FIXES (2026-10-14, Claude Opus 5.5). Read first.
-Plan: `outputs/wrapup-audit-20261014/PLAN.md` (audits in the same folder: `site/`, `content/`, `jobs/`).
+Plan: `docs/WRAPUP_PLAN_2026-10-14.md` (audit data, untracked: `outputs/wrapup-audit-20261014/{site,content,jobs}`).
 Done today: paid-shelf assemble fixed (Cyril of Alexandria gets his own audiobook zip, 2ec7077); daily Workers AI
 cap `clients/translations/scripts/spend_guard.py` ($150, lanes stop at 80% between sections; narration and beliefs
 wait); crash-park + brief size cap (le Blanc crashed 60x); broker restarted onto the gpt-oss fix and the watch now
