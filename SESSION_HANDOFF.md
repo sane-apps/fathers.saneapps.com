@@ -1,3 +1,14 @@
+# WRAP-UP PLAN + JOB FIXES (2026-10-14, Claude Opus 5.5). Read first.
+Plan: `outputs/wrapup-audit-20261014/PLAN.md` (audits in the same folder: `site/`, `content/`, `jobs/`).
+Done today: paid-shelf assemble fixed (Cyril of Alexandria gets his own audiobook zip, 2ec7077); daily Workers AI
+cap `clients/translations/scripts/spend_guard.py` ($150, lanes stop at 80% between sections; narration and beliefs
+wait); crash-park + brief size cap (le Blanc crashed 60x); broker restarted onto the gpt-oss fix and the watch now
+restarts it on code change; held review retries daily; Logos exits 78 = launchd osascript lacks Accessibility
+(owner grant needed); auto-ship treats a resumable shelf timeout as a pause; open alerts repeat on the Air and a
+daily "Jobs need attention" email goes out while anything is stuck a day (SaneProcess morning-report.sh).
+Cyril On Adoration 11-16 withheld (23fa602): word-for-word Greek was live. Le Blanc parked in queue.json pending
+the owner's call. Owner decisions are listed in the plan.
+
 # TIMELINE LIVE (2026-10-13 15:50, Claude Opus 5.5). Owner: "make via patrum live".
 https://viapatrum.org/explore/ is the 100 reader questions (owner-approved prototype v3), static pages built by
 `scripts/timeline_page.py` from `data/explore/questions/*.json` (via `question_dossiers.export_data`), CSS/JS
