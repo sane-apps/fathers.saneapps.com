@@ -98,3 +98,39 @@ recert path, a few sections each.
 3. Phase 2 batch.
 4. Phase 3 after Spark's certification pass.
 5. Phase 4 runs on its own under the cap; the daily email reports anything stuck.
+
+## Status, 2026-10-14 midday (Claude)
+
+Phase 1 is built on branch `cleanup-20261014` and merged as one ship. Done:
+styled 404 and working author redirects on the gate; editor glosses off 74
+excerpts; one Cyprian page; Privacy in the footer and the app linked; zip
+counts rebuilt when a kept zip lacks books; text authors are not bylines; the
+two fragment titles; AD/BC in intros and on Creeds; Mathetes on Works;
+Timeline gap notes reader-facing, labels 11 px or more; Wesley verse pages
+get Play; builder notes off era banners; reader hint once per page; "early
+Church"; Listen gives the real audiobook count; Nicaea label no longer on the
+300 tick; translator gap notes in source panels show as a lacuna; repeated
+scrap sections dropped. Topic links for 241 works (`data/work-topics.json`),
+summary lines for 103 (`data/work-blurbs.json`), plain headings for 337
+sections (`data/section-titles.json`), all written by reading each work.
+
+Held (FORCED_WITHHOLD): Cyril On Adoration 11-16 (word-for-word Greek);
+origen-lamentationes-fragments (second copy of Lamentations);
+diodorus-fragmenta (Dionysius of Corinth's letters under Diodorus's name);
+origen-apocalypse-scholia-scrap (Origen's letter from Eusebius 6.19, not
+Apocalypse notes); olympiodorus-contra-severum (a heading, no text).
+
+Still open, found on the way:
+- Placeus: section 628 has no translation (only a note); cut-off first words
+  ("Ince", "eny", "nswer") and repeats ("and heart." x3 in 22, "blood" x3 in
+  691); about 14 more shorthand headings (153, 155, 168, 171, 193 ...).
+- hesychius-homilia-i-lazarum: the text (Bethlehem and Zion, James at the
+  council) does not match the title; check the source.
+- origen-lamentations-fragments: "About this text" is the Jeremiah/1 Samuel
+  book's intro (shared book folder).
+- theophilus-alex-fragmenta-joannem cites John 3 for words from John 9.
+- About 1,600 compact semicolon headings remain ("Lift hands by good works;
+  infants faint without the Word"); readable, left as they are.
+- /explore/churches/ restyle needs an owner-approved sketch (UI gate).
+- Audiobook masters: upload to private `backup/` through the admin route after
+  this ship, then free about 4 GB of local copies (AUDIO_CLEANUP_HANDOFF).
