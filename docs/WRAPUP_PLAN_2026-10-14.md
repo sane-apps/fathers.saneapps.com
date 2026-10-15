@@ -146,11 +146,11 @@ Still open, found on the way:
 Owner: "wrap things up as cleanly as possible. I dont want to do new work until we see some sales. Just polish
 and finish anything thats pending that could use it."
 - Logos Accessibility: no longer needed; the job runs through Terminal (logos-build-automation memory).
-- Le Blanc's Theses: HOLD. No re-translation or re-recording.
+- Le Blanc's Theses: HOLD. No re-translation or re-recording. SUPERSEDED same day: finish it (see below).
 - Daily cap: keep $150.
 - 934 (now 914) older excerpts: KEEP as they are. Hiding them would remove 914 public pages and their links;
   that is a site change, not polish. Revisit after sales.
-- Three new works: DEFERRED (new work). The 2026-10-14 plan to translate them from the Greek waits for sales.
+- Three new works: DEFERRED (new work). SUPERSEDED same day: they exist as held books, so finish them.
 - Orphan R2 key bundles/via-patrum-audiobooks-5-after-chalcedon.zip: leave it (no cost to speak of).
 - Still to do as polish: Placeus s628, hesychius-homilia-i-lazarum title/text, origen-lamentations-fragments
   About text, theophilus John 3 vs John 9; Logos queue finishes on its own (9 builds, 24 uploads at 04:00).
@@ -169,5 +169,6 @@ Runs on its own (check results, do not re-queue by hand):
   "confirmed problems after 3 repairs"; the daily held review judges them. Origen De Principiis needs source.
 - Macarius homilies, Origen Ezekiel, pseudo-Cyprian: FORCED_WITHHOLD _RECERT; unpublished lanes C/E re-run them.
 - Logos: 9 builds (incl. the 2 Gregory books that failed on row-finding) and 24 uploads at 04:00 (aa903a7df fix).
-Still open, costs credits (owner said finish, not hold): le Blanc 412 note sections (~$45 audio after translation),
+Owner, later 2026-10-15: "think of via patrum as improve, fill in, polish finish. so what we have is useable and
+complete. nothing wasted", then "good do all in order". So these get finished inside the $150/day cap: le Blanc 412 note sections (~$45 audio after translation),
 Cyril On Adoration 10-16 re-translation, the three new works (held books exist), quote re-voicing (~$27).
