@@ -182,3 +182,7 @@ Later 2026-10-15:
   already carries the fix; commit the snapshot first, then the fix.
 - Targeted held review (owner OK): 742 findings for Placeus, Marcellus, Cyril On Adoration, Evagrius, Didymus,
   Gregory, judged with Claude in outputs/held-review/2026-10-15-finish; apply after judging.
+- 12:49 SHIP OK: Davenant, Strimesius, Hesychius title, Lamentations About, 14 summaries live (checked on viapatrum.org).
+- Targeted held review applied (742 verdicts, Claude): 239 sections released (83 noise, 156 fixed and re-gated), 31 kept
+  (23 unsure, 8 quote not found). Cyril On Adoration 463/512 pass (was 240), Placeus 688/712, Marcellus 14/15;
+  6 books reopened for tonight's lanes. Left for the next weekly review or held/ fixes: the 31 kept + gate holds.
