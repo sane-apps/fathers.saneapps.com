@@ -134,3 +134,23 @@ Still open, found on the way:
 - /explore/churches/ restyle needs an owner-approved sketch (UI gate).
 - Audiobook masters: upload to private `backup/` through the admin route after
   this ship, then free about 4 GB of local copies (AUDIO_CLEANUP_HANDOFF).
+
+
+## Resume note (Claude restart, 2026-10-14 afternoon)
+- The two background waiters (cleanup-live watcher, ship-failure watcher) died with the session. On resume, check by hand:
+  https://viapatrum.org/about/ shows the Privacy footer link (= cleanup + churches redesign live), and the tail of
+  ~/Library/Logs/SaneApps/fathers-ship-auto.log for SHIP OK / failures. Then do the "After the cleanup is live" list.
+- SaneCite marketing work from the same session: outputs/sanecite-phase2-full-20261013/outreach/PLAN.md.
+
+## Owner decisions, 2026-10-15
+Owner: "wrap things up as cleanly as possible. I dont want to do new work until we see some sales. Just polish
+and finish anything thats pending that could use it."
+- Logos Accessibility: no longer needed; the job runs through Terminal (logos-build-automation memory).
+- Le Blanc's Theses: HOLD. No re-translation or re-recording.
+- Daily cap: keep $150.
+- 934 (now 914) older excerpts: KEEP as they are. Hiding them would remove 914 public pages and their links;
+  that is a site change, not polish. Revisit after sales.
+- Three new works: DEFERRED (new work). The 2026-10-14 plan to translate them from the Greek waits for sales.
+- Orphan R2 key bundles/via-patrum-audiobooks-5-after-chalcedon.zip: leave it (no cost to speak of).
+- Still to do as polish: Placeus s628, hesychius-homilia-i-lazarum title/text, origen-lamentations-fragments
+  About text, theophilus John 3 vs John 9; Logos queue finishes on its own (9 builds, 24 uploads at 04:00).
