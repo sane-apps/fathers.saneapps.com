@@ -154,3 +154,20 @@ and finish anything thats pending that could use it."
 - Orphan R2 key bundles/via-patrum-audiobooks-5-after-chalcedon.zip: leave it (no cost to speak of).
 - Still to do as polish: Placeus s628, hesychius-homilia-i-lazarum title/text, origen-lamentations-fragments
   About text, theophilus John 3 vs John 9; Logos queue finishes on its own (9 builds, 24 uploads at 04:00).
+
+## Finish list, worked 2026-10-15 (owner: "improve, fill in, polish, finish ... nothing wasted")
+Done today:
+- Davenant 671/673/709 and Strimesius 622 fixed against the Latin (translations 17def664b): the 4 sections that held
+  both works (about 1,540 sections) now pass check_pass_ab --tip-ready. Verify both live after the next ship.
+- 8 Logos covers painted; the painter now compiles to outputs/bin on demand, catch-up paints missing covers
+  (3ac1c4e74, 58ef470ee; 38 Logos tests pass). The 8 upload in the 04:00 run.
+- 14 summaries (work_blurb) for certified works that had none (73b92a99e).
+- Lamentations About text, Hesychius James/David title (cdc007e), Theophilus John 9:3 note (1af751462).
+- The 2 title-rule works were already fixed in an earlier ship.
+Runs on its own (check results, do not re-queue by hand):
+- Placeus 32 held sections, Marcellus 4, Didymus Romans, Evagrius, Origen Philocalia/Romans/Letters: held for
+  "confirmed problems after 3 repairs"; the daily held review judges them. Origen De Principiis needs source.
+- Macarius homilies, Origen Ezekiel, pseudo-Cyprian: FORCED_WITHHOLD _RECERT; unpublished lanes C/E re-run them.
+- Logos: 9 builds (incl. the 2 Gregory books that failed on row-finding) and 24 uploads at 04:00 (aa903a7df fix).
+Still open, costs credits (owner said finish, not hold): le Blanc 412 note sections (~$45 audio after translation),
+Cyril On Adoration 10-16 re-translation, the three new works (held books exist), quote re-voicing (~$27).
