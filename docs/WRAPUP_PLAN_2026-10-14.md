@@ -172,3 +172,13 @@ Runs on its own (check results, do not re-queue by hand):
 Owner, later 2026-10-15: "think of via patrum as improve, fill in, polish finish. so what we have is useable and
 complete. nothing wasted", then "good do all in order". So these get finished inside the $150/day cap: le Blanc 412 note sections (~$45 audio after translation),
 Cyril On Adoration 10-16 re-translation, the three new works (held books exist), quote re-voicing (~$27).
+Later 2026-10-15:
+- le Blanc queue row reopened (was crash-parked after 60 "no brief" crashes on pre-cap code; BRIEF_SRC_MAX now
+  bounds the brief). Lane D (published, >20k words) takes it when lanes resume at 8 PM ET.
+- Three held new works: Didache 10, 1 Clement 35 (gate near-copy) and On the Incarnation 42 (3 real findings) fixed
+  and released through held/ + held_review.py import (translations 46e22a236). Didache and 1 Clement now pass every
+  section and are reopened for the lane read/certify; On the Incarnation still has 14 (hyphen gloss in Pass A) and
+  51 (checked by an uncertified model) for the lane to redo. Gotcha: import ignores a held/ file whose first commit
+  already carries the fix; commit the snapshot first, then the fix.
+- Targeted held review (owner OK): 742 findings for Placeus, Marcellus, Cyril On Adoration, Evagrius, Didymus,
+  Gregory, judged with Claude in outputs/held-review/2026-10-15-finish; apply after judging.
