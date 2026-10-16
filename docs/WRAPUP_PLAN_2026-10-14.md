@@ -186,3 +186,13 @@ Later 2026-10-15:
 - Targeted held review applied (742 verdicts, Claude): 239 sections released (83 noise, 156 fixed and re-gated), 31 kept
   (23 unsure, 8 quote not found). Cyril On Adoration 463/512 pass (was 240), Placeus 688/712, Marcellus 14/15;
   6 books reopened for tonight's lanes. Left for the next weekly review or held/ fixes: the 31 kept + gate holds.
+
+## 2026-10-16 (Claude, Mini): lanes limited to the finish list
+Owner: "especially important via patrum isnt burning tokens for no reason."
+- Found: ~$120-150/day bought ~4 certified works/day. The unpublished lanes (C1, C2, E1) were translating brand-new
+  works (Confessions, Chrysostom on John, Socrates, Jerome on Jeremiah, Augustine anti-Donatist works), against the
+  15 Oct "nothing new" decision. Yields so far: D1 0 certified in 149 runs, E1 0 in 136, B1 4 in 212.
+- Live re-check re-drafted Didymus on Romans and dropped its reviewed emendation (u01-rem-close, "the good lies
+  beside"); check_catalogue caught it and every auto-ship failed from 15 Oct 20:41 ET. Restored (translations 439e745ff).
+- translations ecc7f8679: while `clients/translations/outputs/work-pipeline/finish_only.json` exists, lanes take only
+  its 24 books (this finish list plus the FORCED_WITHHOLD books) and reopened rows. Delete the file to lift it.
