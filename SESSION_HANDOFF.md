@@ -32,6 +32,30 @@
 - Masters backed up + verified (outputs/backup-masters-receipt.json); local copies (~4 GB) in Trash, owner empties it.
 - Logos: Terminal route works. Book search fixed in translations 976ff2b7d (set scroll value via AX; title needle unique
   against the whole Logos list). Full batch kicked 16:38, ~5 min/book, holds outputs/build.lock ~2.5 h.
+- Logos batch 16:38-21:35: builds=30 uploads=30, 0 real failures (receipt translations outputs/logos_runs/20261014-163843.json).
+  21 wrong-row clicks cost restarts -> settle-before-click fix e33f72eeb (untested live). Catch-up now HOLDs books with no
+  Scripture link instead of failing (c04630bd9), so runs stop exiting 2. 41 books queued; 04:00 run takes 30.
+- Logos buyer guide BUILT (owner approved sketch): 880a015. scripts/logos_guide.py is the one text for /downloads/logos/,
+  HOW TO ADD TO LOGOS.txt + books.csv in the all-Word bundle (library_sync.logos_extras), and each Word README (word_version
+  now hashes the README, so all 240 Word zips rebuild once). Menu path checked in Logos 54: Tools button in the toolbar,
+  searchable panel. Local render screenshots PASS (outputs/visual-audit-20261014/logos-guide-*.png). Ships with the auto-ship
+  after the 21:36 one; then the shelf rebuilds Word zips and uploads. Verify live: /downloads/logos/ and the bundle members.
+- 2026-10-15 01:47: /downloads/logos/ LIVE (SHIP OK, 200, Copy works; screenshots logos-guide-live-*.png). Root cause of the
+  frozen Word bundle FIXED in translations 541e72c0e: the 10-08 review apply (b096d01e4) took all inline refs out of Origen's
+  Exhortation (Air copy had none); restored 143 (wrong s4/s6/s2 refs corrected). Scan of b096d01e4: only Evagrius files
+  also lost refs, and their fix notes show those removals were deliberate. Next auto-ship + shelf should build the Origen
+  Word zip and rebuild via-patrum-library-logos-word.zip WITH books.csv + HOW TO ADD TO LOGOS.txt. DONE 02:58: SHIP OK, Origen
+  page 136 verse links live; bundle 241 books + books.csv (241 rows) + guide, uploaded, bucket size 69,524,294 = local.
+- (resolved, see above) OPEN (found 22:59): the all-books Word zip (bundles/via-patrum-library-logos-word.zip) is still the 9 Oct build, so
+  books.csv + the guide are NOT in it yet. assemble keeps an uploaded bundle while any member is missing locally, and
+  word/origen-exhortation-to-martyrdom.zip is missing: the Word build now HOLDS it ("no Bible datatype links found")
+  while the shelf keeps the older R2 copy. Root: dist/works/origen-exhortation-to-martyrdom has 0 verse links today
+  (Cyprian 171, Clement 210), though martyrium_english.json still has 123 refs. Find why this one packed work lost its
+  Scripture spans; once its Word zip builds, the bundle rebuilds with the extras. Per-book Word zips already carry the
+  new README (22:56 shelf run).
+- (earlier) Owner asked (2026-10-14): buyer guide for adding the collection to Logos, by hand and for an AI assistant. Sketch of
+  /downloads/logos/ + books.csv in the Word bundle + corrected per-book README shown; awaiting owner approval. Logos
+  support says Tools > Personal Books > Add book (README's "Tools, Utilities" path is wrong; verify in the app first).
 - Was: scripts/backup_masters.py (new, uncommitted) uploads the Wesley + Origen m4b masters to private backup/ via the
   library admin route and writes outputs/backup-masters-receipt.json. Delete local copies only after that receipt is OK
   (infra/SaneProcess/AUDIO_CLEANUP_HANDOFF_2026-10-12.md step 2). Then kick com.saneapps.fathers-logos-build.
