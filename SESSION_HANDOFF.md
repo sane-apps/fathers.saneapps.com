@@ -1,3 +1,13 @@
+# FREE LIBRARY + YOUVERSION BIBLES LIVE (2026-10-22 11:46 PM ET, Claude Opus 5.5). Read first.
+- Owner: library is donation-based. Downloads are free (no key, no checkout); /downloads/ links GitHub Sponsors.
+  Lemon Squeezy product 1367367 "Via Patrum Library Pass" still PUBLISHED: owner to set it to Draft (LS signed out 2026-10-23).
+  YouVersion apps "Via Patrum" + "Via Patrum website" both LIVE (owner, 2026-10-23 9:40 AM ET); keys still return 200.
+- Scripture reader: NIV + NASB 2020 from YouVersion (app "Via Patrum website", key YOUVERSION_WEB_KEY in sane-env;
+  build reads it, warns and drops those buttons if missing). More menu: NASB 1995, NIrV, AMP, ASV, Geneva.
+  ESV/CSB still from bolls.life (likely unlicensed; Crossway formal licence or API.Bible commercial plan needed).
+- Licence rules: no paywall, no ads, no donation ask next to licensed Bible text (Scripture pages have no Sponsors
+  column), never feed YouVersion text to Ask/AI. Commit 7a8253a, SHIP OK deployment 524c3d2d.
+
 # SHIP FIXES + MASTERS BACKUP (2026-10-14 15:50, Claude Opus 5.5). Read first.
 - 13:49 auto-ship failed: check_catalogue_ui.cjs waited for old church lanes (.ot-card .tl-pt) on /explore/ that
   d51f149 removed; now waits for `.index .qt`. 14:59 auto-ship DEPLOYED (15:43, cleanup + churches redesign live,
