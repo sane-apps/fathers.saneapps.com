@@ -1,3 +1,17 @@
+# 2026-10-23 1:30 PM ET — voice change, Today's Scripture, topic repeats, author fix (Claude, Mini)
+- Owner voice: "fresh English translations" (never "new English"); theme "the way of the Fathers" — how the
+  Church Fathers spoke, acted, argued, lived and died. Home/About/footer/page descriptions/2,618 share cards (a08f339,
+  9050a72). make_og_cards.cjs now restarts the browser every 500 cards and saves its cache as it goes.
+- Today's Scripture (owner-approved sketch) under the home daily card: the verse the passage cites, else the
+  topic's most-cited chapter; 251/272 days; links /scripture/<book>/<ch>/#v<n>.
+- Topics show each passage once: drop_repeated_passages (31 copies in 17 topics); repeats keep their /e/ pages.
+- Twelve certified books without *_meta.json were credited to Origen (polycarp, perpetua-felicitas, lyons-vienne,
+  cyprian, other martyr acts, john-damascus dormition). Now book.yml's author; undated ones file under Acts of the
+  Martyrs (8670c1a). FOLLOW-UP: those works show the group date "c. 165 AD"; each act needs a sourced date.
+  /works/polycarp/ duplicates /works/martyrdom-polycarp/ (owner/translation lane to decide which stays).
+- Cloudflare AI hold (owner): ship's search upload embeds changed passages only (0 or a few cents per ship).
+- Data label to check: topic true-worship lists minucius_octavius_23 as "Octavius 22".
+
 # FREE LIBRARY + YOUVERSION BIBLES LIVE (2026-10-22 11:46 PM ET, Claude Opus 5.5). Read first.
 - Owner: library is donation-based. Downloads are free (no key, no checkout); /downloads/ links GitHub Sponsors.
   Lemon Squeezy product 1367367 "Via Patrum Library Pass" still PUBLISHED: owner to set it to Draft (LS signed out 2026-10-23).
