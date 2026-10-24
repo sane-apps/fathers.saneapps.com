@@ -1,3 +1,30 @@
+# 2026-10-23 11:10 PM ET: session restart, resume ledger (Claude Opus 5.5, Mini). Read first.
+- The 10:57 PM session died; its shelf upload and two workflows died with it. Cyril 9-16 SHIPPED 10:04 PM (live).
+- Shelf: steps 1-5 done (316 Word books; direct upload 1,083 sent). Step 6 "Upload via site" re-run under heavy lock
+  (outputs/shelf-upload-resume-20261023.sh, log outputs/shelf-rebuild-20261023.log). Stale outputs/downloads/.sync.lock
+  dir had to be removed first. Audiobook bundles skipped (disk floor, 5.9 GB short); old bundles stay up.
+- Wave A (18 held works): all 30 translations staged; 41/63 reviews done; resume workflow wf_bb139319-dee runs the other
+  22 reviews + 18 assembles. Against Celsus: 93/110 chunks translated, 0 checked; resume workflow wf_cee0bfdb-093.
+  Resume scripts + args: outputs/ultracode-review-20261023/*resume*. Both write only staging + book folders; no commits.
+- 24 Oct ~12:45 AM: Wave A ASSEMBLED, all 18 release_ok (wf_bb139319-dee; ad-optimum relabelled as Basil Letter 260;
+  2-Cor kept u05-open, u05-rem parked in backup/parked_u05_rem). Not shipped yet: cleanup pass wf_67d1e9f9-061 fixes
+  stale intro.md / translator_notes / justifications / book.yml in the 18 books and retranslates 1-Cor u04 (3 rows).
+  Ship Wave A after it; Against Celsus (wf_cee0bfdb-093) ships on its own when done.
+- 24 Oct ~2:30 AM: Wave A cleanup DONE (wf_67d1e9f9-061, 18/18 ship_ok; 1-Cor u04 retranslated). SHIP BLOCKED ON DISK:
+  9.95 GB free < 15 GB floor. 4 audiobook era zips (5.2 GB, sha256 == uploaded.json ledger, so R2 has them and
+  audio_bundles() keeps them) + safe cleanup moved to ~/.Trash (5.5 GB). Emptying Trash needs owner OK; then ship
+  (Wave A, plus Against Celsus if it has landed).
+- 24 Oct ~3:30 AM: Against Celsus ASSEMBLED (wf_cee0bfdb-093): Preface + Books I-VIII, 628 chapters, every chunk
+  clause-checked; staging bugs found and fixed (1200-char row cut: pref 1, 1.1; dropped last chapters 4.99, 8.76).
+  4.73 checked: not cut (chapter is exactly 1,200 chars); one wording fix. All 628 justifications pass. 3.37 has one unconstruable Greek phrase
+  left out with a note (needs-owner verdict, not blocking). Ship together with Wave A once Trash is emptied.
+- 24 Oct 12:29 PM SHIP OK: Wave A 18 works live (titles -> English for 5 Hesychius metas; Cyril loader now passes
+  meta scope -> "Part only:" shown). 12:45 PM SHIP OK: Against Celsus live (named holds released in
+  catalogue_quality.py after TEI comparison 628/628). way-verbs.json: 34 new entries. Cards from both ships committed.
+- Antigravity (agy) lane in clients/translations/scripts/plan_calls.py (agy/<model>), tools denied; see memory.
+- Check when assembled: cyril-alexandria-ad-optimum may be Basil Letter 260 (rv0 note); 2-Cor u05 duplicate source
+  (publish u05-open OR u05-rem rows, not both). Then ship, then rebuild shelf for the new works.
+
 # 2026-10-23 evening: owner put Claude in charge; review fixes LIVE (Claude Opus 5.5, Mini). Read first.
 - SHIP OK ~9:23 PM ET (deployment eb1291ef, log outputs/ship-20261023-review-retry2.log): 135 review findings fixed
   (outputs/ultracode-review-20261023/), /dl/ Turnstile check (verified live: GET without cookie = box, cookie bound to
