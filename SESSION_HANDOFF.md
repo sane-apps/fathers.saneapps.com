@@ -1,3 +1,10 @@
+# 2026-10-24 3:10 PM ET: session closed (Claude). PAUSED until the owner's weekly Claude reset (~26 Oct).
+- LIVE and verified: Wave A 18 works, Against Celsus (Preface + I-VIII, 628 ch.), cards with theme lines, downloads for
+  all new works (shelf 431 works; SHIP OK 2:58 PM with /dl/ links). Repo clean and pushed to GitHub.
+- Resume after the reset: VP jobs still on the 21 Oct hold; route bulk translation/checks to agy/<model> lanes, not
+  Claude; ~3,800 audio sections need re-reads; ~330 held works; Celsus has no audio; III.37 note; 3 Celsus source rows
+  show &lt; entities. Restore plan_calls Claude budget (outputs/plan-limits/budgets.json, see _note) after the reset.
+
 # 2026-10-23 11:10 PM ET: session restart, resume ledger (Claude Opus 5.5, Mini). Read first.
 - The 10:57 PM session died; its shelf upload and two workflows died with it. Cyril 9-16 SHIPPED 10:04 PM (live).
 - Shelf: steps 1-5 done (316 Word books; direct upload 1,083 sent). Step 6 "Upload via site" re-run under heavy lock
