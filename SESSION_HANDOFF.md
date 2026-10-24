@@ -1,3 +1,17 @@
+# 2026-10-23 evening: owner put Claude in charge; review fixes LIVE (Claude Opus 5.5, Mini). Read first.
+- SHIP OK ~9:23 PM ET (deployment eb1291ef, log outputs/ship-20261023-review-retry2.log): 135 review findings fixed
+  (outputs/ultracode-review-20261023/), /dl/ Turnstile check (verified live: GET without cookie = box, cookie bound to
+  network, HEAD open), WAF rate rule (/api/ + /dl/, 20 per 10 s per IP), new security headers, retired pass code +
+  Pages secrets removed, 2,633 share cards on the theme (data/way-verbs.json), Crocius 621 sections, martyr dates,
+  Polycarp/Justin duplicates 301, Gregory Thaumaturgus x6 whole + Annunciation I + Dormition I-III translated by Claude.
+- After eb1291ef, committed but not yet deployed: AI calls only on host viapatrum.org (1de193ac). Pages env now has
+  LIBRARY_ADMIN_TOKEN (keychain too); Cloudflare Access on preview/old deployment URLs (verified 302 to login).
+- Extended books: old reviews/work_receipt.json set aside (work_receipt.superseded-20261023.json) - re-certify later.
+- NEXT: Cyril On Adoration 9-16 re-translation (workflow wf_109ab7d0-a7e) -> spot-check -> remove cyril-adoration-10..16
+  from FORCED_WITHHOLD -> ship. Then shelf: build_ebooks, build_audiobooks, library_sync word/assemble/upload (commands in
+  outputs/ultracode-review-20261023/fixes-result.json, downloads notes). 25 live works lack files since 10-20.
+- Gotchas: commit assets/og right after a card redraw (dirty-work snapshots filled disk); ship.sh deploy now retries 3x.
+
 # 2026-10-23 1:30 PM ET — voice change, Today's Scripture, topic repeats, author fix (Claude, Mini)
 - Owner voice: "fresh English translations" (never "new English"); theme "the way of the Fathers" — how the
   Church Fathers spoke, acted, argued, lived and died. Home/About/footer/page descriptions/2,618 share cards (a08f339,
