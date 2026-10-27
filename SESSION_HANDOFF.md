@@ -1,3 +1,75 @@
+# 2026-10-24 3:10 PM ET: session closed (Claude). PAUSED until the owner's weekly Claude reset (~26 Oct).
+- LIVE and verified: Wave A 18 works, Against Celsus (Preface + I-VIII, 628 ch.), cards with theme lines, downloads for
+  all new works (shelf 431 works; SHIP OK 2:58 PM with /dl/ links). Repo clean and pushed to GitHub.
+- Resume after the reset: VP jobs still on the 21 Oct hold; route bulk translation/checks to agy/<model> lanes, not
+  Claude; ~3,800 audio sections need re-reads; ~330 held works; Celsus has no audio; III.37 note; 3 Celsus source rows
+  show &lt; entities. Restore plan_calls Claude budget (outputs/plan-limits/budgets.json, see _note) after the reset.
+
+# 2026-10-23 11:10 PM ET: session restart, resume ledger (Claude Opus 5.5, Mini). Read first.
+- The 10:57 PM session died; its shelf upload and two workflows died with it. Cyril 9-16 SHIPPED 10:04 PM (live).
+- Shelf: steps 1-5 done (316 Word books; direct upload 1,083 sent). Step 6 "Upload via site" re-run under heavy lock
+  (outputs/shelf-upload-resume-20261023.sh, log outputs/shelf-rebuild-20261023.log). Stale outputs/downloads/.sync.lock
+  dir had to be removed first. Audiobook bundles skipped (disk floor, 5.9 GB short); old bundles stay up.
+- Wave A (18 held works): all 30 translations staged; 41/63 reviews done; resume workflow wf_bb139319-dee runs the other
+  22 reviews + 18 assembles. Against Celsus: 93/110 chunks translated, 0 checked; resume workflow wf_cee0bfdb-093.
+  Resume scripts + args: outputs/ultracode-review-20261023/*resume*. Both write only staging + book folders; no commits.
+- 24 Oct ~12:45 AM: Wave A ASSEMBLED, all 18 release_ok (wf_bb139319-dee; ad-optimum relabelled as Basil Letter 260;
+  2-Cor kept u05-open, u05-rem parked in backup/parked_u05_rem). Not shipped yet: cleanup pass wf_67d1e9f9-061 fixes
+  stale intro.md / translator_notes / justifications / book.yml in the 18 books and retranslates 1-Cor u04 (3 rows).
+  Ship Wave A after it; Against Celsus (wf_cee0bfdb-093) ships on its own when done.
+- 24 Oct ~2:30 AM: Wave A cleanup DONE (wf_67d1e9f9-061, 18/18 ship_ok; 1-Cor u04 retranslated). SHIP BLOCKED ON DISK:
+  9.95 GB free < 15 GB floor. 4 audiobook era zips (5.2 GB, sha256 == uploaded.json ledger, so R2 has them and
+  audio_bundles() keeps them) + safe cleanup moved to ~/.Trash (5.5 GB). Emptying Trash needs owner OK; then ship
+  (Wave A, plus Against Celsus if it has landed).
+- 24 Oct ~3:30 AM: Against Celsus ASSEMBLED (wf_cee0bfdb-093): Preface + Books I-VIII, 628 chapters, every chunk
+  clause-checked; staging bugs found and fixed (1200-char row cut: pref 1, 1.1; dropped last chapters 4.99, 8.76).
+  4.73 checked: not cut (chapter is exactly 1,200 chars); one wording fix. All 628 justifications pass. 3.37 has one unconstruable Greek phrase
+  left out with a note (needs-owner verdict, not blocking). Ship together with Wave A once Trash is emptied.
+- 24 Oct 12:29 PM SHIP OK: Wave A 18 works live (titles -> English for 5 Hesychius metas; Cyril loader now passes
+  meta scope -> "Part only:" shown). 12:45 PM SHIP OK: Against Celsus live (named holds released in
+  catalogue_quality.py after TEI comparison 628/628). way-verbs.json: 34 new entries. Cards from both ships committed.
+- Antigravity (agy) lane in clients/translations/scripts/plan_calls.py (agy/<model>), tools denied; see memory.
+- Check when assembled: cyril-alexandria-ad-optimum may be Basil Letter 260 (rv0 note); 2-Cor u05 duplicate source
+  (publish u05-open OR u05-rem rows, not both). Then ship, then rebuild shelf for the new works.
+
+# 2026-10-23 evening: owner put Claude in charge; review fixes LIVE (Claude Opus 5.5, Mini). Read first.
+- SHIP OK ~9:23 PM ET (deployment eb1291ef, log outputs/ship-20261023-review-retry2.log): 135 review findings fixed
+  (outputs/ultracode-review-20261023/), /dl/ Turnstile check (verified live: GET without cookie = box, cookie bound to
+  network, HEAD open), WAF rate rule (/api/ + /dl/, 20 per 10 s per IP), new security headers, retired pass code +
+  Pages secrets removed, 2,633 share cards on the theme (data/way-verbs.json), Crocius 621 sections, martyr dates,
+  Polycarp/Justin duplicates 301, Gregory Thaumaturgus x6 whole + Annunciation I + Dormition I-III translated by Claude.
+- After eb1291ef, committed but not yet deployed: AI calls only on host viapatrum.org (1de193ac). Pages env now has
+  LIBRARY_ADMIN_TOKEN (keychain too); Cloudflare Access on preview/old deployment URLs (verified 302 to login).
+- Extended books: old reviews/work_receipt.json set aside (work_receipt.superseded-20261023.json) - re-certify later.
+- NEXT: Cyril On Adoration 9-16 re-translation (workflow wf_109ab7d0-a7e) -> spot-check -> remove cyril-adoration-10..16
+  from FORCED_WITHHOLD -> ship. Then shelf: build_ebooks, build_audiobooks, library_sync word/assemble/upload (commands in
+  outputs/ultracode-review-20261023/fixes-result.json, downloads notes). 25 live works lack files since 10-20.
+- Gotchas: commit assets/og right after a card redraw (dirty-work snapshots filled disk); ship.sh deploy now retries 3x.
+
+# 2026-10-23 1:30 PM ET — voice change, Today's Scripture, topic repeats, author fix (Claude, Mini)
+- Owner voice: "fresh English translations" (never "new English"); theme "the way of the Fathers" — how the
+  Church Fathers spoke, acted, argued, lived and died. Home/About/footer/page descriptions/2,618 share cards (a08f339,
+  9050a72). make_og_cards.cjs now restarts the browser every 500 cards and saves its cache as it goes.
+- Today's Scripture (owner-approved sketch) under the home daily card: the verse the passage cites, else the
+  topic's most-cited chapter; 251/272 days; links /scripture/<book>/<ch>/#v<n>.
+- Topics show each passage once: drop_repeated_passages (31 copies in 17 topics); repeats keep their /e/ pages.
+- Twelve certified books without *_meta.json were credited to Origen (polycarp, perpetua-felicitas, lyons-vienne,
+  cyprian, other martyr acts, john-damascus dormition). Now book.yml's author; undated ones file under Acts of the
+  Martyrs (8670c1a). FOLLOW-UP: those works show the group date "c. 165 AD"; each act needs a sourced date.
+  /works/polycarp/ duplicates /works/martyrdom-polycarp/ (owner/translation lane to decide which stays).
+- Cloudflare AI hold (owner): ship's search upload embeds changed passages only (0 or a few cents per ship).
+- Data label to check: topic true-worship lists minucius_octavius_23 as "Octavius 22".
+
+# FREE LIBRARY + YOUVERSION BIBLES LIVE (2026-10-22 11:46 PM ET, Claude Opus 5.5). Read first.
+- Owner: library is donation-based. Downloads are free (no key, no checkout); /downloads/ links GitHub Sponsors.
+  Lemon Squeezy product 1367367 "Via Patrum Library Pass" still PUBLISHED: owner to set it to Draft (LS signed out 2026-10-23).
+  YouVersion apps "Via Patrum" + "Via Patrum website" both LIVE (owner, 2026-10-23 9:40 AM ET); keys still return 200.
+- Scripture reader: NIV + NASB 2020 from YouVersion (app "Via Patrum website", key YOUVERSION_WEB_KEY in sane-env;
+  build reads it, warns and drops those buttons if missing). More menu: NASB 1995, NIrV, AMP, ASV, Geneva.
+  ESV/CSB still from bolls.life (likely unlicensed; Crossway formal licence or API.Bible commercial plan needed).
+- Licence rules: no paywall, no ads, no donation ask next to licensed Bible text (Scripture pages have no Sponsors
+  column), never feed YouVersion text to Ask/AI. Commit 7a8253a, SHIP OK deployment 524c3d2d.
+
 # SHIP FIXES + MASTERS BACKUP (2026-10-14 15:50, Claude Opus 5.5). Read first.
 - 13:49 auto-ship failed: check_catalogue_ui.cjs waited for old church lanes (.ot-card .tl-pt) on /explore/ that
   d51f149 removed; now waits for `.index .qt`. 14:59 auto-ship DEPLOYED (15:43, cleanup + churches redesign live,
@@ -8,6 +80,30 @@
 - Masters backed up + verified (outputs/backup-masters-receipt.json); local copies (~4 GB) in Trash, owner empties it.
 - Logos: Terminal route works. Book search fixed in translations 976ff2b7d (set scroll value via AX; title needle unique
   against the whole Logos list). Full batch kicked 16:38, ~5 min/book, holds outputs/build.lock ~2.5 h.
+- Logos batch 16:38-21:35: builds=30 uploads=30, 0 real failures (receipt translations outputs/logos_runs/20261014-163843.json).
+  21 wrong-row clicks cost restarts -> settle-before-click fix e33f72eeb (untested live). Catch-up now HOLDs books with no
+  Scripture link instead of failing (c04630bd9), so runs stop exiting 2. 41 books queued; 04:00 run takes 30.
+- Logos buyer guide BUILT (owner approved sketch): 880a015. scripts/logos_guide.py is the one text for /downloads/logos/,
+  HOW TO ADD TO LOGOS.txt + books.csv in the all-Word bundle (library_sync.logos_extras), and each Word README (word_version
+  now hashes the README, so all 240 Word zips rebuild once). Menu path checked in Logos 54: Tools button in the toolbar,
+  searchable panel. Local render screenshots PASS (outputs/visual-audit-20261014/logos-guide-*.png). Ships with the auto-ship
+  after the 21:36 one; then the shelf rebuilds Word zips and uploads. Verify live: /downloads/logos/ and the bundle members.
+- 2026-10-15 01:47: /downloads/logos/ LIVE (SHIP OK, 200, Copy works; screenshots logos-guide-live-*.png). Root cause of the
+  frozen Word bundle FIXED in translations 541e72c0e: the 10-08 review apply (b096d01e4) took all inline refs out of Origen's
+  Exhortation (Air copy had none); restored 143 (wrong s4/s6/s2 refs corrected). Scan of b096d01e4: only Evagrius files
+  also lost refs, and their fix notes show those removals were deliberate. Next auto-ship + shelf should build the Origen
+  Word zip and rebuild via-patrum-library-logos-word.zip WITH books.csv + HOW TO ADD TO LOGOS.txt. DONE 02:58: SHIP OK, Origen
+  page 136 verse links live; bundle 241 books + books.csv (241 rows) + guide, uploaded, bucket size 69,524,294 = local.
+- (resolved, see above) OPEN (found 22:59): the all-books Word zip (bundles/via-patrum-library-logos-word.zip) is still the 9 Oct build, so
+  books.csv + the guide are NOT in it yet. assemble keeps an uploaded bundle while any member is missing locally, and
+  word/origen-exhortation-to-martyrdom.zip is missing: the Word build now HOLDS it ("no Bible datatype links found")
+  while the shelf keeps the older R2 copy. Root: dist/works/origen-exhortation-to-martyrdom has 0 verse links today
+  (Cyprian 171, Clement 210), though martyrium_english.json still has 123 refs. Find why this one packed work lost its
+  Scripture spans; once its Word zip builds, the bundle rebuilds with the extras. Per-book Word zips already carry the
+  new README (22:56 shelf run).
+- (earlier) Owner asked (2026-10-14): buyer guide for adding the collection to Logos, by hand and for an AI assistant. Sketch of
+  /downloads/logos/ + books.csv in the Word bundle + corrected per-book README shown; awaiting owner approval. Logos
+  support says Tools > Personal Books > Add book (README's "Tools, Utilities" path is wrong; verify in the app first).
 - Was: scripts/backup_masters.py (new, uncommitted) uploads the Wesley + Origen m4b masters to private backup/ via the
   library admin route and writes outputs/backup-masters-receipt.json. Delete local copies only after that receipt is OK
   (infra/SaneProcess/AUDIO_CLEANUP_HANDOFF_2026-10-12.md step 2). Then kick com.saneapps.fathers-logos-build.
